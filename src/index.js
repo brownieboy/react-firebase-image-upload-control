@@ -1,11 +1,13 @@
-/* eslint-env browser */
-
 import React from "react";
-import PropTypes from "prop-types";
+import DummyComponent from "./DummyComponent.js";
 
+const App = () => {
+  return (
+    <>
+      <span>My app</span>
+      <DummyComponent />
+    </>
+  );
+};
 
-const myModule = () => {
-  return(<span>This is my module</span>);
-}
-
-export default myModule;
+export default App;

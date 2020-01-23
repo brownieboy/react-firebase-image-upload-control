@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import MyModule from "./dist/index.js";
+import MyModule from "./component/index.js";
 
 function App() {
   return (
