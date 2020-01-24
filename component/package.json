@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.8.3",
-    "@babel/core": "7.8.3",
+    "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "@babel/plugin-transform-modules-umd": "^7.8.3",
@@ -28,6 +28,8 @@
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.3",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
     "eslint": "^6.8.0",
     "eslint-config-react-app": "^5.1.0",
     "eslint-plugin-flowtype": "^4.6.0",
@@ -37,7 +39,9 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
@@ -45,8 +49,8 @@
     "react-dom": "^16.8.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production node_modules/.bin/babel ./src/index.js -o ./dist/index.js",
-    "buildforexamples": "NODE_ENV=production node_modules/.bin/babel ./src/index.js -o ./examples/src/component/index.js"
+    "build": "npx webpack",
+    "buildforexamples": "npx webpack"
   },
   "dependencies": {
     "@material-ui/core": "^4.8.3",
