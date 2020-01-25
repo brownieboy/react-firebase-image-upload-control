@@ -10,7 +10,7 @@
   "keywords": [
     "react-component",
     "react",
-    "boilerplat",
+    "boilerplatw",
     "component"
   ],
   "bugs": {
@@ -50,7 +50,8 @@
   },
   "scripts": {
     "build": "npx webpack",
-    "buildforexamples": "npx webpack"
+    "buildforexamples": "npx webpack",
+    "start": "watch 'npx webpack' ./src"
   },
   "dependencies": {
     "@material-ui/core": "^4.8.3",

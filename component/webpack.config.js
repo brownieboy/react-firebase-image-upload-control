@@ -2,12 +2,14 @@ const path = require("path");
 const webpack = require("webpack");
 
 const TARGET = process.env.npm_lifecycle_event;
-const DEVMODE = TARGET === "buildforexamples";
+const DEVMODE = TARGET === "start";
 
 let plugins = [];
 if (DEVMODE) {
-  // Necessary because otherwise Create React App will lint the file and fail to
-  // build due to "define is undefined" error
+  // Necessary to insert the /* eslint-disble */ comment at the top of the
+  // transpiled file in Dev Mode.  Otherwise Create React App will lint the file
+  // and fail to build due to "define is undefined" error.  (There's no way of
+  // turning this off in Create React App without ejecting.)
   plugins = [
     new webpack.BannerPlugin({
       banner: "/* eslint-disable */",
@@ -21,9 +23,9 @@ module.exports = {
   mode: DEVMODE ? "development" : "production",
   output: {
     path:
-      TARGET === "buildforexamples"
+      DEVMODE
         ? path.resolve(__dirname, "..", "rfiu-examples", "src", "component")
-        : path.resolve(__dirname, "../dist"),
+        : path.resolve(__dirname, "./dist"),
     filename: "index.js",
     library: "rfiu",
     libraryTarget: "umd"
