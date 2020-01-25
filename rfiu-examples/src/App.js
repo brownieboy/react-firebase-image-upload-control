@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import MyModule from "./component/index.js";
 
+// console.log(whatever);
+
 function App() {
   return (
     <div className="App">
