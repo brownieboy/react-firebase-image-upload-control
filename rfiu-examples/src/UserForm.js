@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import compose from "recompose/compose";
 import withState from "recompose/withState";
 
+const styles = {
+  field: {
+    width: "300px"
+  },
+  label: {
+    display: "inline-block",
+    width: "100px",
+    fontSize: 11
+  }
+};
+
 const Field = ({ children }) => (
-  <React.Fragment>
+  <>
     {children}
     <br />
-  </React.Fragment>
+  </>
 );
 
 const Input = ({ value, onChange, ...props }) => (
@@ -19,18 +30,46 @@ const Input = ({ value, onChange, ...props }) => (
 
 const SubmitButton = props => <button {...props}>submit</button>;
 
-const UserForm = ({ setEmail, setPassword, email, password, onSubmit }) => (
-  <React.Fragment>
-    <Field>
-      email: <Input value={email} onChange={setEmail} />
-    </Field>
-    <Field>
-      password:{" "}
-      <Input value={password} onChange={setPassword} type="password" />
-    </Field>
-    <SubmitButton onClick={() => onSubmit(email, password)} />
-  </React.Fragment>
-);
+const UserForm = ({ onSubmit }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
+
+  const handlePasswordChange = value => {
+    setPassword(value);
+  };
+
+  const handleSubmit = () => {
+    onSubmit(email, password);
+  };
+
+  return (
+    <>
+      <Field>
+        <span style={styles.label}>Email:</span>
+        <Input
+          value={email}
+          onChange={handleEmailChange}
+          style={styles.field}
+          type="email"
+        />
+      </Field>
+      <Field>
+        <span style={styles.label}>Password:</span>
+        <Input
+          value={password}
+          onChange={handlePasswordChange}
+          type="password"
+          style={styles.field}
+        />
+      </Field>
+      <SubmitButton onClick={handleSubmit} />
+    </>
+  );
+};
 
 const withUserFormState = compose(
   withState("email", "setEmail"),
