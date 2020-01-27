@@ -26,7 +26,7 @@ module.exports = {
       DEVMODE
         ? path.resolve(__dirname, "..", "rfiu-examples", "src", "component")
         : path.resolve(__dirname, "./dist"),
-    filename: "index.js",
+    filename: "react-firebase-image-uploader.js",
     library: "rfiu",
     libraryTarget: "umd"
   },
