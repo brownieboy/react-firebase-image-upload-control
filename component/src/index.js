@@ -1,6 +1,6 @@
 import React from "react";
 import FirebaseUploader from "./FirebaseUploader.js";
 
-const App = () => <FirebaseUploader />;
+const App = props => <FirebaseUploader {...props} />;
 
 export default App;

@@ -93,11 +93,12 @@ export default function FirebaseUploadImage({
   multiple = false,
   options = { styles: { imgPreview: {}, imagePreviewTitle: {} } }
 }) {
-  let fileUploader;
-
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState(0);
+  let fileUploader;
+  console.log("TCL: FirebaseUploadImage -> firebaseApp", firebaseApp);
+
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
