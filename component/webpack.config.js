@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const TARGET = process.env.npm_lifecycle_event;
-const DEVMODE = TARGET === "start";
+const DEVMODE = TARGET === "start" || TARGET === "builddev";
 
 let plugins = [];
 if (DEVMODE) {
@@ -23,7 +23,7 @@ module.exports = {
   mode: DEVMODE ? "development" : "production",
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "react-firebase-image-uploader.js",
+    filename: "index.js",
     library: "rfiu",
     libraryTarget: "umd"
   },

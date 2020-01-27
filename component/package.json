@@ -53,6 +53,7 @@
   },
   "scripts": {
     "build": "npx webpack",
+    "builddev": "npx webpack",
     "start": "watch 'npx webpack' ./src"
   },
   "dependencies": {
