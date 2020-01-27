@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ReactFirebaseImageUploader from "./component/react-firebase-image-uploader.js";
+import ReactFirebaseImageUploader from "react-firebase-image-uploader";
 
 const UploadImages = ({ firebaseApp }) => {
   console.log("TCL: UploadImages -> firebaseApp", firebaseApp);

@@ -4,3 +4,6 @@ node_modules
 .babelrc
 *.log
 *.lock
+*.tgz
+webpack.config.js
+src
