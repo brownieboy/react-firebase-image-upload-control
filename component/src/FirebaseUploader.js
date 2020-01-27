@@ -88,7 +88,7 @@ const styles = {
 export default function FirebaseUploadImage({
   firebaseApp,
   label = "image",
-  storageFolder,
+  storageFolder = "rfiu",
   disabled = false,
   multiple = false,
   options = { styles: { imgPreview: {}, imagePreviewTitle: {} } }

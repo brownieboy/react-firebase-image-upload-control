@@ -1,13 +1,6 @@
 import React from "react";
-import DummyComponent from "./DummyComponent.js";
+import FirebaseUploader from "./FirebaseUploader.js";
 
-const App = () => {
-  return (
-    <>
-      <span>My app</span>
-      <DummyComponent />
-    </>
-  );
-};
+const App = () => <FirebaseUploader />;
 
 export default App;

@@ -22,10 +22,9 @@ module.exports = {
   entry: "./src/index.js",
   mode: DEVMODE ? "development" : "production",
   output: {
-    path:
-      DEVMODE
-        ? path.resolve(__dirname, "..", "rfiu-examples", "src", "component")
-        : path.resolve(__dirname, "./dist"),
+    path: DEVMODE
+      ? path.resolve(__dirname, "..", "rfiu-examples", "src", "component")
+      : path.resolve(__dirname, "./dist"),
     filename: "react-firebase-image-uploader.js",
     library: "rfiu",
     libraryTarget: "umd"
@@ -41,6 +40,10 @@ module.exports = {
             presets: ["@babel/preset-env"]
           }
         }
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
