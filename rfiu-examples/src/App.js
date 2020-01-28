@@ -6,13 +6,12 @@ import "firebase/database";
 import "firebase/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
 
-import UploadImages from "./UploadImages";
+import ReactFirebaseImageUploader from "./package";
 import Login from "./Login";
 
 // You must supply this!
 import firebaseConfigObj from "./firebaseconfig/firebase-config.json";
 const firebaseApp = firebase.initializeApp(firebaseConfigObj);
-console.log("TCL: top firebaseApp", firebaseApp);
 const firebaseAppAuth = firebaseApp.auth();
 
 const providers = {
@@ -31,7 +30,7 @@ const App = props => {
       <h1>React Firebase Image Uploader Test</h1>
       <Login {...props} />
       <div style={{ marginTop: 40 }}>
-         { user ?  <UploadImages firebaseApp={firebaseApp} /> : <div>Login to upload images</div>}
+         { user ?  <ReactFirebaseImageUploader firebaseApp={firebaseApp} multiple /> : <div>Login to upload images</div>}
       </div>
     </div>
   );
