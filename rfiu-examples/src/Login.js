@@ -41,14 +41,12 @@ const Login = ({
     );
     console.log("TCL: matchLoginObj", matchLoginObj);
     const newSignInResult = await matchLoginObj.handler();
-    console.log("TCL: App -> newSignInResult", newSignInResult);
     setSignInResult({ type: loginButtonValue, callbackObj: newSignInResult });
   };
 
   const handleSignInWithEmailAndPassword = async (email, password) => {
     const newSignInResult = await signInWithEmailAndPassword(email, password);
     setSignInResult({ type: "email", callbackObj: newSignInResult });
-    console.log("TCL: App -> newSignInResult", newSignInResult);
   };
 
   const handleChangeLoginType = e => setLoginType(e.target.value);
@@ -110,7 +108,7 @@ const Login = ({
         <b>Last sign-in message:</b>
         <div style={{ fontSize: 11 }}>
           {signInResult.type === ""
-            ? "No logins yet.."
+            ? "No logins messages"
             : `${signInResult.type}: ${signInResult.callbackObj.message}`}
         </div>
       </div>

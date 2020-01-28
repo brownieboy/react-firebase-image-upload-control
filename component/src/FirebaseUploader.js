@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 // import { useDropzone } from "react-dropzone";
 
@@ -37,9 +37,6 @@ export default function FirebaseUploadImage({
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState(0);
   let fileUploader;
-  console.log("TCL: FirebaseUploadImage -> firebaseApp", firebaseApp);
-  console.log("TCL: FirebaseUploadImage -> firebaseApp.storage", firebaseApp.storage);
-
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
@@ -79,12 +76,12 @@ export default function FirebaseUploadImage({
     setUploadState(percent);
   };
 
-  const handleFileRemovalCheck = (event, isChecked, value) => {
-    if (isChecked) {
-      setFilesToRemove([...filesToRemove, event.target.id]);
+  const handleFileRemovalCheck = (event) => {
+    if (event.target.checked) {
+      setFilesToRemove([...filesToRemove, event.target.value]);
     } else {
       setFilesToRemove(
-        filesToRemove.filter(member => member !== event.target.id)
+        filesToRemove.filter(member => member !== event.target.value)
       );
     }
   };
@@ -160,6 +157,14 @@ export default function FirebaseUploadImage({
                     }
                     label={`${file.name} (${prettyBytes(file.size)})`}
                   /> */}
+                  <label htmlFor={file.name}>{file.name}</label>
+                  <input
+                    type="checkbox"
+                    checked={filesToRemove.includes(file.name)}
+                    onChange={handleFileRemovalCheck}
+                    id={file.name}
+                    value={file.name}
+                  />
                 </div>
               </div>
             ))
@@ -182,6 +187,7 @@ export default function FirebaseUploadImage({
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
           Upload All
         </button>
+        <span>{uploadState}%</span>
         {/* <div style={{ height: 70, width: 70 }}>
           <CircularProgressbar value={uploadState} text={`${uploadState}%`} />
         </div> */}
