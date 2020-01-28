@@ -3,77 +3,17 @@ import PropTypes from "prop-types";
 // import { useDropzone } from "react-dropzone";
 
 import FileUploader from "react-firebase-file-uploader";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import DeleteIcon from "@material-ui/icons/Delete";
+// import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+// import DeleteIcon from "@material-ui/icons/Delete";
 
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+// import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import { CircularProgressbar } from "react-circular-progressbar";
+// import "react-circular-progressbar/dist/styles.css";
 import _uniqBy from "lodash/fp/uniqBy";
 import prettyBytes from "pretty-bytes";
 
-import Button from "@material-ui/core/Button";
-
 import ImageDrop from "./ImageDrop.js";
-/*
-const baseStyle = {
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "20px",
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: "#eeeeee",
-  borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
-  outline: "none",
-  transition: "border .24s ease-in-out"
-};
-
-const activeStyle = {
-  borderColor: "#2196f3"
-};
-
-const acceptStyle = {
-  borderColor: "#00e676"
-};
-
-const rejectStyle = {
-  borderColor: "#ff1744"
-};
-
-const StyledDropzone = props => {
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject
-  } = useDropzone({ accept: "image/*", ...props });
-
-  const style = useMemo(
-    () => ({
-      ...baseStyle,
-      ...(isDragActive ? activeStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {})
-    }),
-    [isDragActive, isDragReject]
-  );
-
-  return (
-    <div className="container">
-      <div {...getRootProps({ style })}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
-      </div>
-    </div>
-  );
-};
-*/
 
 const styles = {
   imagePreview: {
@@ -98,6 +38,7 @@ export default function FirebaseUploadImage({
   const [uploadState, setUploadState] = useState(0);
   let fileUploader;
   console.log("TCL: FirebaseUploadImage -> firebaseApp", firebaseApp);
+  console.log("TCL: FirebaseUploadImage -> firebaseApp.storage", firebaseApp.storage);
 
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
@@ -209,7 +150,7 @@ export default function FirebaseUploadImage({
                 <div style={imgPreviewTitleStyles}>
                   {/* <Checkbox name="imageselector" />
                   {file.name} */}
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={
                       <Checkbox
                         checked={filesToRemove.includes(file.name)}
@@ -218,34 +159,32 @@ export default function FirebaseUploadImage({
                       />
                     }
                     label={`${file.name} (${prettyBytes(file.size)})`}
-                  />
+                  /> */}
                 </div>
               </div>
             ))
           : null}
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Button
-          variant="contained"
+        <button
           onClick={handleRemoveFiles}
           style={{ textTransform: "none", marginTop: 10, marginRight: 10 }}
           disabled={filesToRemove.length === 0}
         >
-          <DeleteIcon style={{ marginRight: 10 }} />
+          {/* <DeleteIcon style={{ marginRight: 10 }} /> */}
           Remove checked files
-        </Button>
-        <Button
-          variant="contained"
+        </button>
+        <button
           onClick={startUploadManually}
           style={{ textTransform: "none", marginTop: 10, marginRight: 10 }}
           disabled={disabled || filesToStore.length === 0}
         >
-          <CloudUploadIcon style={{ marginRight: 10 }} />
+          {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
           Upload All
-        </Button>
-        <div style={{ height: 70, width: 70 }}>
+        </button>
+        {/* <div style={{ height: 70, width: 70 }}>
           <CircularProgressbar value={uploadState} text={`${uploadState}%`} />
-        </div>
+        </div> */}
       </div>
     </>
   );
