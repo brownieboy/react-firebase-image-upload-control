@@ -2,7 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 
 const TARGET = process.env.npm_lifecycle_event;
-const DEVMODE = TARGET === "start" || TARGET === "builddev";
+const DEVMODE =
+  TARGET === "start" || TARGET === "builddev" || TARGET === "buildforexamples";
 
 let plugins = [];
 if (DEVMODE) {
@@ -21,8 +22,15 @@ if (DEVMODE) {
 module.exports = {
   entry: "./src/index.js",
   mode: DEVMODE ? "development" : "production",
+  externals: {
+    react: "react",
+    "react-dom": "react-dom"
+  },
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    path:
+      TARGET === "buildforexamples"
+        ? path.resolve(__dirname, "..", "rfiu-examples", "src", "package")
+        : path.resolve(__dirname, "./dist"),
     filename: "index.js",
     library: "rfiu",
     libraryTarget: "umd"

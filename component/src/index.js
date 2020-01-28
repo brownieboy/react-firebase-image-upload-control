@@ -4,8 +4,8 @@ import React, { useState } from "react";
 
 // const App = props => <FirebaseUploader {...props} />;
 const App = props => {
-  // const [dummy, useDummy] = useState("");
-  return <div>I have no hook</div>;
+  const [dummy, useDummy] = useState("");
+  return <div>I have a hook</div>;
 };
 
 export default App;
