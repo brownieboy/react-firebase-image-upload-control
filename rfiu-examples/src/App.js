@@ -5,6 +5,8 @@ import "firebase/auth";
 import "firebase/database";
 import "firebase/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 import ReactFirebaseImageUploader from "./package";
 import Login from "./Login";
@@ -23,7 +25,6 @@ const providers = {
 
 const App = props => {
   const { user } = props;
-  console.log("TCL: user", user);
 
   return (
     <div className="App">
@@ -31,11 +32,20 @@ const App = props => {
       <Login {...props} />
       <div style={{ marginTop: 40 }}>
         {user ? (
-          <ReactFirebaseImageUploader
-            firebaseApp={firebaseApp}
-            storageFolder="rfiu-test"
-            multiple
-          />
+          <>
+            <ReactFirebaseImageUploader
+              firebaseApp={firebaseApp}
+              storageFolder="rfiu-test"
+              multiple
+            />
+            <ReactFirebaseImageUploader
+              firebaseApp={firebaseApp}
+              storageFolder="rfiu-test"
+              progressControl={CircularProgressbar}
+              progressControlWrapperStyles={{ height: "40px", width: "40px" }}
+              multiple
+            />
+          </>
         ) : (
           <div>Login to upload images</div>
         )}

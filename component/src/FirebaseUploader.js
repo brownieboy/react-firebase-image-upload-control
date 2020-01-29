@@ -8,7 +8,6 @@ import FileUploader from "react-firebase-file-uploader";
 
 // import Checkbox from "@material-ui/core/Checkbox";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import { CircularProgressbar } from "react-circular-progressbar";
 // import "react-circular-progressbar/dist/styles.css";
 import _uniqBy from "lodash/fp/uniqBy";
 import prettyBytes from "pretty-bytes";
@@ -25,19 +24,42 @@ const styles = {
   }
 };
 
+const PlainProgressIndicator = ({ value }) => <span>{value}%</span>;
+
+const PassedPropProgressIndicator = ({
+  component,
+  value,
+  componentWrapperStyles
+}) => {
+  const PassedComponent = component;
+  if (componentWrapperStyles) {
+    return (
+      <div style={componentWrapperStyles}>
+        <PassedComponent value={`${value}%`} text={value} />
+      </div>
+    );
+  }
+  return <PassedComponent value={`${value}%`} />;
+};
+
 export default function FirebaseUploadImage({
   firebaseApp,
   label = "image",
   storageFolder = "rfiu",
   disabled = false,
   multiple = false,
-  options = { styles: { imgPreview: {}, imagePreviewTitle: {} } }
+  options = { styles: { imgPreview: {}, imagePreviewTitle: {} } },
+  progressControl,
+  progressControlWrapperStyles
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState(0);
   let fileUploader;
 
+  const ProgressControl = progressControl
+    ? PassedPropProgressIndicator
+    : PlainProgressIndicator;
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
@@ -72,11 +94,10 @@ export default function FirebaseUploadImage({
   };
 
   const handleProgress = (percent, ...args) => {
-    console.log("TCL: handleProgress -> args", args);
     setUploadState(percent);
   };
 
-  const handleFileRemovalCheck = (event) => {
+  const handleFileRemovalCheck = event => {
     if (event.target.checked) {
       setFilesToRemove([...filesToRemove, event.target.value]);
     } else {
@@ -187,10 +208,12 @@ export default function FirebaseUploadImage({
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
           Upload All
         </button>
-        <span>{uploadState}%</span>
-        {/* <div style={{ height: 70, width: 70 }}>
-          <CircularProgressbar value={uploadState} text={`${uploadState}%`} />
-        </div> */}
+        <ProgressControl
+          value={uploadState}
+          text={uploadState}
+          component={progressControl}
+          componentWrapperStyles={progressControlWrapperStyles}
+        />
       </div>
     </>
   );
@@ -201,5 +224,7 @@ FirebaseUploadImage.propTypes = {
   storageFolder: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  multiple: PropTypes.bool
+  multiple: PropTypes.bool,
+  progressControl: PropTypes.func,
+  progressControlWrapperStyles: PropTypes.object
 };
