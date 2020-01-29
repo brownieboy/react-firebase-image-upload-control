@@ -75,25 +75,31 @@ const Login = ({
 
   return (
     <div className="App">
-      <h1>My Module Test</h1>
-      {/* <MyModule /> */}
-      {user ? <h1>Hello, {user.displayName}</h1> : <h1>Log in</h1>}
-      <p>You need to log into Firebase first. Please choose your login type</p>
-      {loginMetaArray.map(type => (
-        <div key={type.id}>
-          <label>
-            <input
-              type="radio"
-              value={type.id}
-              onChange={handleChangeLoginType}
-              name="logintype"
-              checked={loginType === type.id}
-            />
-            {type.label}
-          </label>
-          <br />
-        </div>
-      ))}
+      {user ? (
+        <h1>Hello, {user.displayName}</h1>
+      ) : (
+        <>
+          <h1>Log in</h1>
+          <p>
+            You need to log into Firebase first. Please choose your login type
+          </p>
+          {loginMetaArray.map(type => (
+            <div key={type.id}>
+              <label>
+                <input
+                  type="radio"
+                  value={type.id}
+                  onChange={handleChangeLoginType}
+                  name="logintype"
+                  checked={loginType === type.id}
+                />
+                {type.label}
+              </label>
+              <br />
+            </div>
+          ))}
+        </>
+      )}
       {user ? (
         <button onClick={signOut}>Sign out</button>
       ) : (

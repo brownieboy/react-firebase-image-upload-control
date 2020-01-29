@@ -30,7 +30,15 @@ const App = props => {
       <h1>React Firebase Image Uploader Test</h1>
       <Login {...props} />
       <div style={{ marginTop: 40 }}>
-         { user ?  <ReactFirebaseImageUploader firebaseApp={firebaseApp} multiple /> : <div>Login to upload images</div>}
+        {user ? (
+          <ReactFirebaseImageUploader
+            firebaseApp={firebaseApp}
+            storageFolder="rfiu-test"
+            multiple
+          />
+        ) : (
+          <div>Login to upload images</div>
+        )}
       </div>
     </div>
   );
