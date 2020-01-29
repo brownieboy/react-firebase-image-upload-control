@@ -18,13 +18,14 @@ const styles = {
   imagePreview: {
     maxHeight: 150,
     maxWidth: 200
-  },
-  imagePreviewTitle: {
-    fontSize: 11
   }
+  // imagePreviewTitle: {
+  //   fontSize: 11
+  // }
 };
 
 const PlainProgressIndicator = ({ value }) => <span>{value}%</span>;
+const PlainCheckbox = props => <input type="checkbox" {...props} />;
 
 const PassedPropProgressIndicator = ({
   component,
@@ -48,9 +49,15 @@ export default function FirebaseUploadImage({
   storageFolder = "rfiu",
   disabled = false,
   multiple = false,
-  options = { styles: { imgPreview: {}, imagePreviewTitle: {} } },
+  options = {
+    styles: {
+      imgPreview: {},
+      imagePreviewTitle: {},
+      progressControlWrapper: {}
+    }
+  },
   progressControl,
-  progressControlWrapperStyles
+  checkboxControl
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
@@ -60,6 +67,9 @@ export default function FirebaseUploadImage({
   const ProgressControl = progressControl
     ? PassedPropProgressIndicator
     : PlainProgressIndicator;
+
+  const CheckboxControl = checkboxControl || PlainCheckbox;
+
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
@@ -169,8 +179,7 @@ export default function FirebaseUploadImage({
                   <label htmlFor={file.name}>
                     {`${file.name} (${prettyBytes(file.size)})`}
                   </label>
-                  <input
-                    type="checkbox"
+                  <CheckboxControl
                     checked={filesToRemove.includes(file.name)}
                     onChange={handleFileRemovalCheck}
                     id={file.name}
@@ -202,7 +211,7 @@ export default function FirebaseUploadImage({
           value={uploadState}
           text={uploadState}
           component={progressControl}
-          componentWrapperStyles={progressControlWrapperStyles}
+          componentWrapperStyles={options.styles.progressControlWrapper}
         />
       </div>
     </>
@@ -216,5 +225,5 @@ FirebaseUploadImage.propTypes = {
   label: PropTypes.string,
   multiple: PropTypes.bool,
   progressControl: PropTypes.func,
-  progressControlWrapperStyles: PropTypes.object
+  checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };

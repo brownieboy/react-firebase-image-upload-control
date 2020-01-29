@@ -5,6 +5,8 @@ import "firebase/auth";
 import "firebase/database";
 import "firebase/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
+import Checkbox from "@material-ui/core/Checkbox";
+
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -41,13 +43,19 @@ const App = props => {
                 multiple
               />
             </div>
-            <div style={{marginTop: "40px"}}>
-            <h4>Material with Circular Progress Bar Example</h4>
+            <div style={{ marginTop: "40px" }}>
+              <h4>Material with Circular Progress Bar Example</h4>
               <ReactFirebaseImageUploader
                 firebaseApp={firebaseApp}
                 storageFolder="rfiu-test"
                 progressControl={CircularProgressbar}
-                progressControlWrapperStyles={{ height: "40px", width: "40px" }}
+                checkboxControl={Checkbox}
+                options={{
+                  styles: {
+                    imgPreview: { maxWidth: "50px" },
+                    progressControlWrapper: { height: "40px", width: "40px" }
+                  }
+                }}
                 multiple
               />
             </div>
