@@ -19,7 +19,7 @@ const styles = {
     maxHeight: 150,
     maxWidth: 200
   }
-  // imagePreviewTitle: {
+  // imagePreviewLabel: {
   //   fontSize: 11
   // }
 };
@@ -52,7 +52,7 @@ export default function FirebaseUploadImage({
   options = {
     styles: {
       imgPreview: {},
-      imagePreviewTitle: {},
+      imgPreviewLabel: {},
       progressControlWrapper: {}
     }
   },
@@ -63,6 +63,7 @@ export default function FirebaseUploadImage({
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState(0);
   let fileUploader;
+  console.log("TCL: options", options);
 
   const ProgressControl = progressControl
     ? PassedPropProgressIndicator
@@ -176,7 +177,10 @@ export default function FirebaseUploadImage({
                   style={imgPreviewStyles}
                 />
                 <div style={imgPreviewTitleStyles}>
-                  <label htmlFor={file.name}>
+                  <label
+                    htmlFor={file.name}
+                    style={options.styles.imgPreviewLabel}
+                  >
                     {`${file.name} (${prettyBytes(file.size)})`}
                   </label>
                   <CheckboxControl

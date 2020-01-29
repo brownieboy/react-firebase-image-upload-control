@@ -53,6 +53,7 @@ const App = props => {
                 options={{
                   styles: {
                     imgPreview: { maxWidth: "50px" },
+                    imgPreviewLabel: {fontSize: "12px"},
                     progressControlWrapper: { height: "40px", width: "40px" }
                   }
                 }}
