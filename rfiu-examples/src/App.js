@@ -33,18 +33,24 @@ const App = props => {
       <div style={{ marginTop: 40 }}>
         {user ? (
           <>
-            <ReactFirebaseImageUploader
-              firebaseApp={firebaseApp}
-              storageFolder="rfiu-test"
-              multiple
-            />
-            <ReactFirebaseImageUploader
-              firebaseApp={firebaseApp}
-              storageFolder="rfiu-test"
-              progressControl={CircularProgressbar}
-              progressControlWrapperStyles={{ height: "40px", width: "40px" }}
-              multiple
-            />
+            <div>
+              <h4>Vanilla Example</h4>
+              <ReactFirebaseImageUploader
+                firebaseApp={firebaseApp}
+                storageFolder="rfiu-test"
+                multiple
+              />
+            </div>
+            <div style={{marginTop: "40px"}}>
+            <h4>Material with Circular Progress Bar Example</h4>
+              <ReactFirebaseImageUploader
+                firebaseApp={firebaseApp}
+                storageFolder="rfiu-test"
+                progressControl={CircularProgressbar}
+                progressControlWrapperStyles={{ height: "40px", width: "40px" }}
+                multiple
+              />
+            </div>
           </>
         ) : (
           <div>Login to upload images</div>

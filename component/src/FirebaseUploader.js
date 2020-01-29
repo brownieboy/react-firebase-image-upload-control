@@ -166,19 +166,9 @@ export default function FirebaseUploadImage({
                   style={imgPreviewStyles}
                 />
                 <div style={imgPreviewTitleStyles}>
-                  {/* <Checkbox name="imageselector" />
-                  {file.name} */}
-                  {/* <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={filesToRemove.includes(file.name)}
-                        onChange={handleFileRemovalCheck}
-                        id={file.name}
-                      />
-                    }
-                    label={`${file.name} (${prettyBytes(file.size)})`}
-                  /> */}
-                  <label htmlFor={file.name}>{file.name}</label>
+                  <label htmlFor={file.name}>
+                    {`${file.name} (${prettyBytes(file.size)})`}
+                  </label>
                   <input
                     type="checkbox"
                     checked={filesToRemove.includes(file.name)}
