@@ -61,14 +61,17 @@ export default function FirebaseUploadImage({
   },
   progressControl,
   checkboxControl,
-  buttonControl
+  buttonControl,
+  uploadButtonIcon,
+  removeButtonIcon
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState(0);
   let fileUploader;
   console.log("TCL: options", options);
-
+  const UploadButtonIcon = uploadButtonIcon;
+  const RemoveButtonIcon = removeButtonIcon;
   const ProgressControl = progressControl
     ? PassedPropProgressIndicator
     : PlainProgressIndicator;
@@ -207,6 +210,7 @@ export default function FirebaseUploadImage({
           disabled={filesToRemove.length === 0}
         >
           {/* <DeleteIcon style={{ marginRight: 10 }} /> */}
+          {removeButtonIcon ? <RemoveButtonIcon style={{marginRight: 10}} /> : null}
           Remove checked files
         </ButtonControl>
         <ButtonControl
@@ -217,6 +221,7 @@ export default function FirebaseUploadImage({
           disabled={disabled || filesToStore.length === 0}
         >
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
+          {uploadButtonIcon ? <UploadButtonIcon style={{marginRight: 10}} /> : null}
           Upload All
         </ButtonControl>
         <ProgressControl
@@ -238,5 +243,7 @@ FirebaseUploadImage.propTypes = {
   multiple: PropTypes.bool,
   progressControl: PropTypes.func,
   checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+  buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  uploadButtonIcon: PropTypes.func,
+  removeButtonIcon: PropTypes.func
 };

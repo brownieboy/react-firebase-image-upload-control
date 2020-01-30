@@ -7,6 +7,8 @@ import "firebase/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -52,6 +54,8 @@ const App = props => {
                 progressControl={CircularProgressbar}
                 checkboxControl={Checkbox}
                 buttonControl={Button}
+                uploadButtonIcon={CloudUploadIcon}
+                removeButtonIcon={DeleteIcon}
                 options={{
                   styles: {
                     imgPreview: { maxWidth: "50px" },
