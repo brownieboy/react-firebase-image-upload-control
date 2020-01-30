@@ -26,6 +26,9 @@ const styles = {
 
 const PlainProgressIndicator = ({ value }) => <span>{value}%</span>;
 const PlainCheckbox = props => <input type="checkbox" {...props} />;
+const PlainButton = ({ children, ...props }) => (
+  <button {...props}>{children}</button>
+);
 
 const PassedPropProgressIndicator = ({
   component,
@@ -57,7 +60,8 @@ export default function FirebaseUploadImage({
     }
   },
   progressControl,
-  checkboxControl
+  checkboxControl,
+  buttonControl
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
@@ -70,6 +74,7 @@ export default function FirebaseUploadImage({
     : PlainProgressIndicator;
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
+  const ButtonControl = buttonControl || PlainButton;
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
@@ -195,22 +200,25 @@ export default function FirebaseUploadImage({
           : null}
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <button
+        <ButtonControl
+          variant="contained"
           onClick={handleRemoveFiles}
           style={{ textTransform: "none", marginTop: 10, marginRight: 10 }}
           disabled={filesToRemove.length === 0}
         >
           {/* <DeleteIcon style={{ marginRight: 10 }} /> */}
           Remove checked files
-        </button>
-        <button
+        </ButtonControl>
+        <ButtonControl
+          color="primary"
+          variant="contained"
           onClick={startUploadManually}
           style={{ textTransform: "none", marginTop: 10, marginRight: 10 }}
           disabled={disabled || filesToStore.length === 0}
         >
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
           Upload All
-        </button>
+        </ButtonControl>
         <ProgressControl
           value={uploadState}
           text={uploadState}
@@ -229,5 +237,6 @@ FirebaseUploadImage.propTypes = {
   label: PropTypes.string,
   multiple: PropTypes.bool,
   progressControl: PropTypes.func,
-  checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+  checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
