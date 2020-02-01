@@ -48,7 +48,6 @@ const PassedPropProgressIndicator = ({
 
 export default function FirebaseUploadImage({
   firebaseApp,
-  label = "image",
   storageFolder = "rfiu",
   disabled = false,
   multiple = false,
@@ -68,6 +67,7 @@ export default function FirebaseUploadImage({
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState(0);
+  const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   let fileUploader;
   console.log("TCL: options", options);
   const UploadButtonIcon = uploadButtonIcon;
@@ -107,6 +107,7 @@ export default function FirebaseUploadImage({
   };
 
   const startUploadManually = () => {
+    setUploadButtonClicked(true);
     filesToStore.forEach(file => {
       fileUploader.startUpload(file);
     });
@@ -222,14 +223,14 @@ export default function FirebaseUploadImage({
         >
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
           {uploadButtonIcon ? <UploadButtonIcon style={{marginRight: 10}} /> : null}
-          Upload All
+          Upload all
         </ButtonControl>
-        <ProgressControl
+        {uploadButtonClicked && <ProgressControl
           value={uploadState}
           text={uploadState}
           component={progressControl}
           componentWrapperStyles={options.styles.progressControlWrapper}
-        />
+        />}
       </div>
     </>
   );
@@ -239,7 +240,6 @@ FirebaseUploadImage.propTypes = {
   firebaseApp: PropTypes.object.isRequired,
   storageFolder: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  label: PropTypes.string,
   multiple: PropTypes.bool,
   progressControl: PropTypes.func,
   checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),

@@ -22,6 +22,7 @@ if (DEVMODE) {
 module.exports = {
   entry: "./src/index.js",
   mode: DEVMODE ? "development" : "production",
+  devtool: DEVMODE ? "eval-source-map" : "cheap-source-map",
   externals: {
     react: "react",
     "react-dom": "react-dom"
