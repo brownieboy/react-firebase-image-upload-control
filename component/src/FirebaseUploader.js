@@ -39,7 +39,7 @@ const PassedPropProgressIndicator = ({
   if (componentWrapperStyles) {
     return (
       <div style={componentWrapperStyles}>
-        <PassedComponent value={`${value}%`} text={value} />
+        <PassedComponent value={value} text={`${value}%`} />
       </div>
     );
   }
@@ -227,7 +227,6 @@ export default function FirebaseUploadImage({
         </ButtonControl>
         {uploadButtonClicked && <ProgressControl
           value={uploadState}
-          text={uploadState}
           component={progressControl}
           componentWrapperStyles={options.styles.progressControlWrapper}
         />}

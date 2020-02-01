@@ -60,7 +60,7 @@ const App = props => {
                   styles: {
                     imgPreview: { maxWidth: "50px" },
                     imgPreviewLabel: { fontSize: "12px" },
-                    progressControlWrapper: { height: "40px", width: "40px" }
+                    progressControlWrapper: { height: "60px", width: "60px" }
                   }
                 }}
                 multiple
