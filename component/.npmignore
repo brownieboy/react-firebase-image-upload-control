@@ -7,3 +7,8 @@ node_modules
 *.tgz
 webpack.config.js
 src
+*.md
+*.gif
+*.tgz
+.browserslistrc
+
