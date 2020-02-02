@@ -75,8 +75,6 @@ export default function FirebaseUploadImage({
     ? PassedPropProgressIndicator
     : PlainProgressIndicator;
 
-    console.log("TCL: FileDatabaseuploader, multiple", multiple);
-
   const CheckboxControl = checkboxControl || PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
 
