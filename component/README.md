@@ -1,12 +1,12 @@
-# react-firebase-image-uploader
+# react-firebase-image-upload-control
 
 A image uploader for react that uploads images firebase storage.
 
-![react-firebase-image-uploader in action](react-firebase-image-uploader-demo.gif)
+![react-firebase-image-upload-control in action](react-firebase-image-upload-control-demo.gif)
 
 
 ## Installation
-Run `yarn add react-firebase-image-uploader` or `npm i --save-prod` to install the packing in your app. 
+Run `yarn add react-firebase-image-upload-control` or `npm i --save-prod` to install the packing in your app. 
 
 
 ## Prerequisites

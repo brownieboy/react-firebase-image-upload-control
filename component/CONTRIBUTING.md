@@ -1,12 +1,12 @@
-# Contributing to react-firebase-image-uploader
+# Contributing to react-firebase-image-upload-control
 
 ## Pull Requests
 PRs always welecome, even unsolicited ones.  Please try and explain what it is that you're trying to do with the PR though.
 
 ## Repository Layout
 The repository is split into two folders.
-- The **component** folder holds the source code and build for the react-firebase-image-uploader component itself.
-- The **rfiu-examples** folder holds source code and build for an example app that shows the react-firebase-image-uploader control.  This was built with Create React App
+- The **component** folder holds the source code and build for the react-firebase-image-upload-control component itself.
+- The **rfiu-examples** folder holds source code and build for an example app that shows the react-firebase-image-upload-control control.  This was built with Create React App
 
 ## Building the Component & Running The Example
 To develop the component, you should run both it and the example app at the same time.  Here's how to do that:
