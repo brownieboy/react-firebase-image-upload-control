@@ -43,7 +43,7 @@ const App = props => {
               <ReactFirebaseImageUploader
                 firebaseApp={firebaseApp}
                 storageFolder="rfiu-test"
-                multiple
+                // multiple
               />
             </div>
             <div style={{ marginTop: "40px" }}>
@@ -63,7 +63,7 @@ const App = props => {
                     progressControlWrapper: { height: "60px", width: "60px" }
                   }
                 }}
-                multiple
+                multiple={true}
               />
             </div>
           </>

@@ -48,11 +48,14 @@ const StyledDropzone = props => {
     [isDragActive, isDragAccept, isDragReject]
   );
 
+  const message = props.multiple
+    ? "Drag 'n' drop some files here, or click to select files"
+    : "Drag 'n' drop a file here, or click to select a file";
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>{message}</p>
       </div>
     </div>
   );

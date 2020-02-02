@@ -69,12 +69,13 @@ export default function FirebaseUploadImage({
   const [uploadState, setUploadState] = useState(0);
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   let fileUploader;
-  console.log("TCL: options", options);
   const UploadButtonIcon = uploadButtonIcon;
   const RemoveButtonIcon = removeButtonIcon;
   const ProgressControl = progressControl
     ? PassedPropProgressIndicator
     : PlainProgressIndicator;
+
+    console.log("TCL: FileDatabaseuploader, multiple", multiple);
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
@@ -159,7 +160,7 @@ export default function FirebaseUploadImage({
         storageRef={firebaseApp.storage().ref(storageFolder)}
         style={{ display: "none" }}
         onProgress={handleProgress}
-        // multiple={multiple}
+        multiple={multiple}
       />
       <div
         style={{
@@ -243,6 +244,6 @@ FirebaseUploadImage.propTypes = {
   progressControl: PropTypes.func,
   checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  uploadButtonIcon: PropTypes.func,
-  removeButtonIcon: PropTypes.func
+  uploadButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  removeButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
