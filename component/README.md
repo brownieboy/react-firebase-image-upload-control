@@ -2,7 +2,7 @@
 
 A image uploader for react that uploads images firebase storage.
 
-![react-firebase-image-upload-control in action](react-firebase-image-upload-control-demo.gif)
+![react-firebase-image-upload-control in action](react-firebase-image-uploader-demo.gif)
 
 
 ## Installation
