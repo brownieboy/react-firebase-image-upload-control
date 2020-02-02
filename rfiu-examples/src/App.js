@@ -35,7 +35,7 @@ const App = props => {
     <div className="App">
       <h1>React Firebase Image Uploader Test</h1>
       <Login {...props} />
-      <div style={{ marginTop: 40 }}>
+      <div style={{ marginTop: 40, marginBottom: 100 }}>
         {user ? (
           <>
             <div>
@@ -58,7 +58,7 @@ const App = props => {
                 removeButtonIcon={DeleteIcon}
                 options={{
                   styles: {
-                    imgPreview: { maxWidth: "50px" },
+                    // imgPreview: { maxWidth: "50px" },
                     imgPreviewLabel: { fontSize: "12px" },
                     progressControlWrapper: { height: "60px", width: "60px" }
                   }

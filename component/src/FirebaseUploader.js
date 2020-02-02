@@ -175,7 +175,7 @@ export default function FirebaseUploadImage({
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                   marginBottom: 10,
                   marginRight: 10
                 }}

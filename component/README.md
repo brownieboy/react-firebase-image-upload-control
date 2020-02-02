@@ -2,6 +2,9 @@
 
 A image uploader for react that uploads images firebase storage.
 
+![react-firebase-image-uploader in action](react-firebase-image-uploader-demo.gif)
+
+
 ## Installation
 Run `yarn add react-firebase-image-uploader` or `npm i --save-prod` to install the packing in your app. 
 
@@ -9,7 +12,7 @@ Run `yarn add react-firebase-image-uploader` or `npm i --save-prod` to install t
 ## Prerequisites
 You will need **react**, **react-dom** and **firebase** installed in your app.  They are listed as peer depenencies only for this package, so installing the package will _not_ automatically install those packages in your app.
 
-Make sure you have initialized firebase somewhere in your app using:
+Make sure you have initialized firebase somewhere in your app using your Firbase project's JSON file, e.g.:
 
 ```jsx
 import firebase from "firebase";
@@ -24,10 +27,12 @@ const firebaseApp = firebase.initializeApp(config);
 ```
 You can copy your firebase-config.json file down from your Firebase project.  See [Google's instructions on how download your config file](https://support.google.com/firebase/answer/7015592?hl=en#web); (you want the "web app" file).   Your project must be enabled for [Cloud Storage](https://firebase.google.com/docs/storage/web/start), in which case it will have the **storageBucket** property shown in the example apbove.
 
+You will need to have logged into your Firebase project in your app before attempting to use the control.   I use [react-with-firebase-auth](https://github.com/armand1m/react-with-firebase-auth) for that purpose in my example app.
+
 
 ## Props
 
-- `firebaseApp` (required) - A referrence to your Firebase app that was initialsed with a call such as `firebase.initializeApp(firebaseConfigObj)`
+- `firebaseApp` (required) - A reference to your Firebase app that was initialsed with a call such as `firebase.initializeApp(firebaseConfigObj)`
 - `storageFolder` (required) - The target folder in Firebase storage.
 - `disabled` (optional) - A boolean to display the control in a disabled state.  Defaults to `false`
 - `multiple` - A boolean to specify the control will accept multiple images.  Defaults to false, i.e. the control handles only one image.
@@ -36,6 +41,20 @@ You can copy your firebase-config.json file down from your Firebase project.  Se
 - `buttonControl` (optional) - A React control to display buttons for **Upload all** and **Remove checked files** buttons, e.g `@material-ui/core/Button`.  If not supplied, plain HTML buttons are used.
 - `uploadButtonIcon` (optional) - If `buttonControl` is supplied then this React icon component will be display on the **Upload all** button.  E.g. `@material-ui/icons/CloudUpload`.
 - `removeButtonIcon` (optional) - If `buttonControl` is supplied then this React icon component will be display on the **Remove checked files** button.  E.g. `@material-ui/icons/Delete`.
+- `options` (optional) - Use to pass additional styles to the control via the `styles` property.   The `styles` property had thee sub properties, which are:
+  - `imgPreview`: styles passed directly to the preview images
+  - `impPreviewLabel`: styles passed to the labels of the preview images
+  - `progressControlWrapper`: if you're passing a `progressControl` prop, then that prop will be automatically wrapped inside a `<div>` tag by the control.  The `progressControlWrapper` styles will be passed to that wrapper.
+
+```jsx
+options={{
+  styles: {
+    imgPreview: { maxWidth: "50px" },
+    imgPreviewLabel: { fontSize: "12px" },
+    progressControlWrapper: { height: "60px", width: "60px" }
+  }
+}}
+```
 
 
 
