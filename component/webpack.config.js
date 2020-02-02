@@ -24,6 +24,7 @@ module.exports = {
   mode: DEVMODE ? "development" : "production",
   devtool: DEVMODE ? "eval-source-map" : "cheap-source-map",
   externals: {
+    firebase: "firebase",
     react: "react",
     "react-dom": "react-dom"
   },
