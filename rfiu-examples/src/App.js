@@ -43,7 +43,7 @@ const App = props => {
               <ReactFirebaseImageUploader
                 firebaseApp={firebaseApp}
                 storageFolder="rfiu-test"
-                // multiple
+                multiple
               />
             </div>
             <div style={{ marginTop: "40px" }}>
@@ -60,10 +60,10 @@ const App = props => {
                   styles: {
                     // imgPreview: { maxWidth: "50px" },
                     imgPreviewLabel: { fontSize: "12px" },
-                    progressControlWrapper: { height: "60px", width: "60px" }
+                    progressControlWrapper: { height: 70, width: 70}
                   }
                 }}
-                multiple={true}
+                multiple
                 uploadCompleteCallback={status => {
                   console.log("uploadCompleteCallback, returned ", status);
                 }}

@@ -10,10 +10,27 @@ const styles = {
   imagePreview: {
     maxHeight: 150,
     maxWidth: 200
+  },
+  progressControl: {
+    label: {
+      fontSize: 10
+    }
   }
 };
 
-const PlainProgressIndicator = ({ value }) => <span>{value}%</span>;
+const PlainProgressIndicator = ({ value, fileName }) => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      marginRight: 5
+    }}
+  >
+    <div>{value}%</div>
+    <div style={styles.progressControl.label}>{fileName}</div>
+  </div>
+);
 const PlainCheckbox = props => <input type="checkbox" {...props} />;
 const PlainButton = ({ children, ...props }) => (
   <button {...props}>{children}</button>
@@ -22,13 +39,24 @@ const PlainButton = ({ children, ...props }) => (
 const PassedPropProgressIndicator = ({
   component,
   value,
-  componentWrapperStyles
+  componentWrapperStyles,
+  fileName
 }) => {
   const PassedComponent = component;
   if (componentWrapperStyles) {
     return (
-      <div style={componentWrapperStyles}>
-        <PassedComponent value={value} text={`${value}%`} />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          marginRight: 10
+        }}
+      >
+        <div style={componentWrapperStyles}>
+          <PassedComponent value={value} text={`${value}%`} />
+        </div>
+        <div style={styles.progressControl.label}>{fileName}</div>
       </div>
     );
   }
@@ -55,7 +83,7 @@ export default function FirebaseUploadImage({
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
-  const [uploadState, setUploadState] = useState(0);
+  const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   let fileUploader;
   const UploadButtonIcon = uploadButtonIcon;
@@ -66,6 +94,8 @@ export default function FirebaseUploadImage({
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
+
+  console.log("TCL: hook uploadState", uploadState);
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
@@ -123,15 +153,26 @@ export default function FirebaseUploadImage({
   };
 
   const handleProgress = (percent, ...args) => {
-    if (args[0].metadata_ && args[0].metadata_.name) {
+    console.log("TCL: handleProgress -> percent", percent);
+    console.log("TCL: handleProgress -> args", args);
+    if (args[0].blob_ && args[0].blob_.data_ && args[0].blob_.data_.name) {
       console.log(
-        "TCL: handleProgress -> args[0].metadata_.name",
-        args[0].metadata_.name
+        "TCL: handleProgress -> args[0].blob_.data_.name",
+        args[0].blob_.data_.name
       );
+      setUploadState(prevState => ({
+        ...prevState,
+        [args[0].blob_.data_.name]: percent
+      }));
     }
-
-    setUploadState(percent);
   };
+
+  /*
+  setState(prevState => {
+  // Object.assign would also work
+  return {...prevState, ...updatedValues};
+});
+  */
 
   const handleFileRemovalCheck = event => {
     if (event.target.checked) {
@@ -245,13 +286,20 @@ export default function FirebaseUploadImage({
           ) : null}
           Upload all
         </ButtonControl>
-        {uploadButtonClicked && (
-          <ProgressControl
-            value={uploadState}
-            component={progressControl}
-            componentWrapperStyles={options.styles.progressControlWrapper}
-          />
-        )}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", marginTop: 10 }}>
+        {/* {uploadButtonClicked && ( */}
+        {filesToStore.map(file => {
+          return (
+            <ProgressControl
+              value={uploadState[file.name] || 0}
+              key={file.name}
+              component={progressControl}
+              componentWrapperStyles={options.styles.progressControlWrapper}
+              fileName={file.name}
+            />
+          );
+        })}
       </div>
     </>
   );
