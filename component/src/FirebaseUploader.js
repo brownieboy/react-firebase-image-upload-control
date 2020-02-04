@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import { useDropzone } from "react-dropzone";
-
 import FileUploader from "react-firebase-file-uploader";
-// import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-// import DeleteIcon from "@material-ui/icons/Delete";
-
-// import Checkbox from "@material-ui/core/Checkbox";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import "react-circular-progressbar/dist/styles.css";
 import _uniqBy from "lodash/fp/uniqBy";
 import prettyBytes from "pretty-bytes";
 
@@ -19,9 +11,6 @@ const styles = {
     maxHeight: 150,
     maxWidth: 200
   }
-  // imagePreviewLabel: {
-  //   fontSize: 11
-  // }
 };
 
 const PlainProgressIndicator = ({ value }) => <span>{value}%</span>;
@@ -105,14 +94,42 @@ export default function FirebaseUploadImage({
     setFilesToRemove([]); // Important to clear this if we have new files
   };
 
+  /*
+
   const startUploadManually = () => {
     setUploadButtonClicked(true);
     filesToStore.forEach(file => {
       fileUploader.startUpload(file);
     });
   };
+  async function uploadFiles(files) {
+    await Promise.all(files.map(uploadImageAsPromise));
+ }
+ */
+
+  const startUploadManually = async () => {
+    setUploadButtonClicked(true);
+    const uploadResults = await Promise.all(
+      filesToStore.map(async file => {
+        const fileuploadResult = await fileUploader.startUpload(file);
+        console.log(
+          "TCL: startUploadManually -> fileuploadResult",
+          fileuploadResult
+        );
+        return fileuploadResult;
+      })
+    );
+    console.log("TCL: startUploadManually -> uploadResults", uploadResults);
+  };
 
   const handleProgress = (percent, ...args) => {
+    if (args[0].metadata_ && args[0].metadata_.name) {
+      console.log(
+        "TCL: handleProgress -> args[0].metadata_.name",
+        args[0].metadata_.name
+      );
+    }
+
     setUploadState(percent);
   };
 
@@ -210,7 +227,9 @@ export default function FirebaseUploadImage({
           disabled={filesToRemove.length === 0}
         >
           {/* <DeleteIcon style={{ marginRight: 10 }} /> */}
-          {removeButtonIcon ? <RemoveButtonIcon style={{marginRight: 10}} /> : null}
+          {removeButtonIcon ? (
+            <RemoveButtonIcon style={{ marginRight: 10 }} />
+          ) : null}
           Remove checked files
         </ButtonControl>
         <ButtonControl
@@ -221,14 +240,18 @@ export default function FirebaseUploadImage({
           disabled={disabled || filesToStore.length === 0}
         >
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
-          {uploadButtonIcon ? <UploadButtonIcon style={{marginRight: 10}} /> : null}
+          {uploadButtonIcon ? (
+            <UploadButtonIcon style={{ marginRight: 10 }} />
+          ) : null}
           Upload all
         </ButtonControl>
-        {uploadButtonClicked && <ProgressControl
-          value={uploadState}
-          component={progressControl}
-          componentWrapperStyles={options.styles.progressControlWrapper}
-        />}
+        {uploadButtonClicked && (
+          <ProgressControl
+            value={uploadState}
+            component={progressControl}
+            componentWrapperStyles={options.styles.progressControlWrapper}
+          />
+        )}
       </div>
     </>
   );
@@ -243,5 +266,6 @@ FirebaseUploadImage.propTypes = {
   checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   uploadButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  removeButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+  removeButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  uploadCompleteCallback: PropTypes.func
 };
