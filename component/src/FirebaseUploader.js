@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FileUploader from "react-firebase-file-uploader";
 import _uniqBy from "lodash/fp/uniqBy";
+import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 
 import ImageDrop from "./ImageDrop.js";
@@ -79,7 +80,8 @@ export default function FirebaseUploadImage({
   checkboxControl,
   buttonControl,
   uploadButtonIcon,
-  removeButtonIcon
+  removeButtonIcon,
+  uploadCompleteCallback
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
@@ -94,8 +96,6 @@ export default function FirebaseUploadImage({
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
-
-  console.log("TCL: hook uploadState", uploadState);
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
@@ -142,37 +142,41 @@ export default function FirebaseUploadImage({
     const uploadResults = await Promise.all(
       filesToStore.map(async file => {
         const fileuploadResult = await fileUploader.startUpload(file);
-        console.log(
-          "TCL: startUploadManually -> fileuploadResult",
-          fileuploadResult
-        );
+        // console.log(
+        //   "TCL: startUploadManually -> fileuploadResult",
+        //   fileuploadResult
+        // );
         return fileuploadResult;
       })
     );
-    console.log("TCL: startUploadManually -> uploadResults", uploadResults);
+    // console.log("TCL: startUploadManually -> uploadResults", uploadResults);
   };
 
   const handleProgress = (percent, ...args) => {
-    console.log("TCL: handleProgress -> percent", percent);
-    console.log("TCL: handleProgress -> args", args);
     if (args[0].blob_ && args[0].blob_.data_ && args[0].blob_.data_.name) {
-      console.log(
-        "TCL: handleProgress -> args[0].blob_.data_.name",
-        args[0].blob_.data_.name
-      );
-      setUploadState(prevState => ({
-        ...prevState,
-        [args[0].blob_.data_.name]: percent
-      }));
+      setUploadState(prevState => {
+        if (uploadCompleteCallback) {
+          if (percent === 100) {
+            const uploadsCompleted = _pickBy(
+              member => member === 100,
+              prevState
+            );
+            const uploadsCompletedLength = Object.keys(uploadsCompleted).length;
+            if (
+              filesToStore.length === 1 ||
+              uploadsCompletedLength === filesToStore.length - 1
+            ) {
+              uploadCompleteCallback();
+            }
+          }
+        }
+        return {
+          ...prevState,
+          [args[0].blob_.data_.name]: percent
+        };
+      });
     }
   };
-
-  /*
-  setState(prevState => {
-  // Object.assign would also work
-  return {...prevState, ...updatedValues};
-});
-  */
 
   const handleFileRemovalCheck = event => {
     if (event.target.checked) {
@@ -289,17 +293,18 @@ export default function FirebaseUploadImage({
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: 10 }}>
         {/* {uploadButtonClicked && ( */}
-        {filesToStore.map(file => {
-          return (
-            <ProgressControl
-              value={uploadState[file.name] || 0}
-              key={file.name}
-              component={progressControl}
-              componentWrapperStyles={options.styles.progressControlWrapper}
-              fileName={file.name}
-            />
-          );
-        })}
+        {uploadButtonClicked &&
+          filesToStore.map(file => {
+            return (
+              <ProgressControl
+                value={uploadState[file.name] || 0}
+                key={file.name}
+                component={progressControl}
+                componentWrapperStyles={options.styles.progressControlWrapper}
+                fileName={file.name}
+              />
+            );
+          })}
       </div>
     </>
   );
