@@ -41,6 +41,7 @@ You will need to have logged into your Firebase project in your app before attem
 - `buttonControl` (optional) - A React control to display buttons for **Upload all** and **Remove checked files** buttons, e.g `@material-ui/core/Button`.  If not supplied, plain HTML buttons are used.
 - `uploadButtonIcon` (optional) - If `buttonControl` is supplied then this React icon component will be display on the **Upload all** button.  E.g. `@material-ui/icons/CloudUpload`.
 - `removeButtonIcon` (optional) - If `buttonControl` is supplied then this React icon component will be display on the **Remove checked files** button.  E.g. `@material-ui/icons/Delete`.
+- `uploadCompleteCallback` (optional) - Function that is called when all uploads have completed.
 - `options` (optional) - Use to pass additional styles to the control via the `styles` property.   The `styles` property had thee sub properties, which are:
   - `imgPreview`: styles passed directly to the preview images
   - `impPreviewLabel`: styles passed to the labels of the preview images
