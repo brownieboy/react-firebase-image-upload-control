@@ -29,3 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - For multiple images, each image gets its own corresponding upload tracking control
 - New `uploadCompleteCallback` function that is called when all uploads have completed.
+
+## [1.2.0] - 2020-02-08
+
+### Added
+
+-  `uploadCompleteCallback` function that is called when all uploads have completed.  Now passes back an object of info from the control.
