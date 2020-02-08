@@ -155,21 +155,6 @@ export default function FirebaseUploadImage({
   const handleProgress = (percent, ...args) => {
     if (args[0].blob_ && args[0].blob_.data_ && args[0].blob_.data_.name) {
       setUploadState(prevState => {
-        if (uploadCompleteCallback) {
-          if (percent === 100) {
-            const uploadsCompleted = _pickBy(
-              member => member === 100,
-              prevState
-            );
-            const uploadsCompletedLength = Object.keys(uploadsCompleted).length;
-            if (
-              filesToStore.length === 1 ||
-              uploadsCompletedLength === filesToStore.length - 1
-            ) {
-              uploadCompleteCallback({ files: filesToStore });
-            }
-          }
-        }
         return {
           ...prevState,
           [args[0].blob_.data_.name]: percent
@@ -196,19 +181,37 @@ export default function FirebaseUploadImage({
   };
 
   const handleUploadSuccess = async (...args) => {
-    console.log("TCL: handleUploadSuccess -> args", args);
-    console.log(
-      "TCL: handleUploadSuccess -> args[1].location",
-      args[1].location
-    );
-    console.log("TCL: handleUploadSuccess -> firebaseApp", firebaseApp);
+    if (args[1].blob_ && args[1].blob_.data_ && args[1].blob_.data_.name) {
+      const fileName = args[1].blob_.data_.name;
+      const downloadUrl = await firebaseApp.firebase_
+        .storage()
+        .ref(storageFolder)
+        .child(fileName)
+        .getDownloadURL();
+      setFilesToStore(prevState => {
+        const currentFileIndex = prevState.findIndex(
+          member => member.name === fileName
+        );
 
-    const downloadURL = await firebaseApp.firebase_
-      .storage()
-      .ref(storageFolder)
-      .child(args[1].blob_.data_.name)
-      .getDownloadURL();
-    console.log("TCL: handleUploadSuccess -> downloadURL", downloadURL);
+        const newFileInfo = Object.assign(prevState[currentFileIndex]);
+        newFileInfo.downloadUrl = downloadUrl;
+
+        const newState = [
+          ...prevState.slice(0, currentFileIndex),
+          newFileInfo,
+          ...prevState.slice(currentFileIndex + 1)
+        ];
+        if (uploadCompleteCallback) {
+          const filesWithDownloadUrls = newState.filter(
+            member => member.downloadUrl
+          );
+          if (newState.length === filesWithDownloadUrls.length) {
+            uploadCompleteCallback({ files: newState });
+          }
+        }
+        return newState;
+      });
+    }
   };
 
   const imgPreviewStyles = {
