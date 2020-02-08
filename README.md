@@ -47,17 +47,6 @@ You will need to have logged into your Firebase project in your app before attem
   - `impPreviewLabel`: styles passed to the labels of the preview images
   - `progressControlWrapper`: if you're passing a `progressControl` prop, then that prop will be automatically wrapped inside a `<div>` tag by the control.  The `progressControlWrapper` styles will be passed to that wrapper.
 
-```jsx
-options={{
-  styles: {
-    imgPreview: { maxWidth: "50px" },
-    imgPreviewLabel: { fontSize: "12px" },
-    progressControlWrapper: { height: "60px", width: "60px" }
-  }
-}}
-```
-
-
 
 ## Example
 
@@ -127,6 +116,9 @@ const App = props => {
                     imgPreviewLabel: { fontSize: "12px" },
                     progressControlWrapper: { height: "40px", width: "40px" }
                   }
+                }}
+                uploadCompleteCallback={statusObj => {
+                  console.log("uploadCompleteCallback triggered, and we're done!, statusObj", statusObj);
                 }}
                 multiple
               />
