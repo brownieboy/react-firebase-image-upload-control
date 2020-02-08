@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -  `uploadCompleteCallback` function that is called when all uploads have completed.  Now passes back an object of info from the control.
 
+
 ## [1.2.1] - 2020-02-08
 
 ### Added
