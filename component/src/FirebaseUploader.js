@@ -166,7 +166,7 @@ export default function FirebaseUploadImage({
               filesToStore.length === 1 ||
               uploadsCompletedLength === filesToStore.length - 1
             ) {
-              uploadCompleteCallback();
+              uploadCompleteCallback({ files: filesToStore });
             }
           }
         }
@@ -195,6 +195,22 @@ export default function FirebaseUploadImage({
     setFilesToRemove([]); // Important to clear this after
   };
 
+  const handleUploadSuccess = async (...args) => {
+    console.log("TCL: handleUploadSuccess -> args", args);
+    console.log(
+      "TCL: handleUploadSuccess -> args[1].location",
+      args[1].location
+    );
+    console.log("TCL: handleUploadSuccess -> firebaseApp", firebaseApp);
+
+    const downloadURL = await firebaseApp.firebase_
+      .storage()
+      .ref(storageFolder)
+      .child(args[1].blob_.data_.name)
+      .getDownloadURL();
+    console.log("TCL: handleUploadSuccess -> downloadURL", downloadURL);
+  };
+
   const imgPreviewStyles = {
     ...styles.imagePreview,
     ...options.styles.imgPreview
@@ -220,6 +236,7 @@ export default function FirebaseUploadImage({
         storageRef={firebaseApp.storage().ref(storageFolder)}
         style={{ display: "none" }}
         onProgress={handleProgress}
+        onUploadSuccess={handleUploadSuccess}
         multiple={multiple}
       />
       <div

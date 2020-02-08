@@ -64,8 +64,8 @@ const App = props => {
                   }
                 }}
                 multiple
-                uploadCompleteCallback={status => {
-                  console.log("uploadCompleteCallback triggered, and we're done!");
+                uploadCompleteCallback={statusObj => {
+                  console.log("uploadCompleteCallback triggered, and we're done!, statusObj", statusObj);
                 }}
               />
             </div>
