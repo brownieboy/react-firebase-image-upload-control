@@ -60,12 +60,21 @@ const App = props => {
                   styles: {
                     // imgPreview: { maxWidth: "50px" },
                     imgPreviewLabel: { fontSize: "12px" },
-                    progressControlWrapper: { height: 70, width: 70}
+                    progressControlWrapper: { height: 70, width: 70 }
                   }
                 }}
                 multiple
+                uploadStartCallback={fileToStore => {
+                  console.log(
+                    "uploadStartCallback triggered, and we're done!, fileToStore",
+                    fileToStore
+                  );
+                }}
                 uploadCompleteCallback={statusObj => {
-                  console.log("uploadCompleteCallback triggered, and we're done!, statusObj", statusObj);
+                  console.log(
+                    "uploadCompleteCallback triggered, and we're done!, statusObj",
+                    statusObj
+                  );
                 }}
               />
             </div>

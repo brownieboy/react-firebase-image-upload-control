@@ -81,6 +81,7 @@ export default function FirebaseUploadImage({
   buttonControl,
   uploadButtonIcon,
   removeButtonIcon,
+  uploadStartCallback,
   uploadCompleteCallback
 }) {
   const [filesToStore, setFilesToStore] = useState([]);
@@ -138,6 +139,9 @@ export default function FirebaseUploadImage({
  */
 
   const startUploadManually = async () => {
+    if (uploadStartCallback) {
+      uploadStartCallback(filesToStore);
+    }
     setUploadButtonClicked(true);
     const uploadResults = await Promise.all(
       filesToStore.map(async file => {
@@ -308,7 +312,7 @@ export default function FirebaseUploadImage({
           {uploadButtonIcon ? (
             <UploadButtonIcon style={{ marginRight: 10 }} />
           ) : null}
-          Upload all
+          {filesToStore.length > 1 ? "Upload all" : "Upload"}
         </ButtonControl>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: 10 }}>
@@ -340,5 +344,6 @@ FirebaseUploadImage.propTypes = {
   buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   uploadButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   removeButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  uploadStartCallback: PropTypes.func,
   uploadCompleteCallback: PropTypes.func
 };
