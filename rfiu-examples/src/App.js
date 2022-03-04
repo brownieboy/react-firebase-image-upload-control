@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
-import "firebase/storage";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import "firebase/compat/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
