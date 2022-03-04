@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import FileUploader from "react-firebase-file-uploader";
+import FileUploader from "./react-firebase-file-uploader";
 import _uniqBy from "lodash/fp/uniqBy";
 import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
