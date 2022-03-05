@@ -12,7 +12,9 @@ Run `yarn add react-firebase-image-upload-control` or `npm i react-firebase-imag
 ## Prerequisites
 You will need **react**, **react-dom** and **firebase** installed in your app.  They are listed as peer depenencies only for this package, so installing the package will _not_ automatically install those packages in your app.
 
-Make sure you have initialized firebase somewhere in your app using your Firbase project's JSON file, e.g.:
+The current version has been tested with Firebase 9 only.  However, Firebase 9 was loaded in compatibility mode when I tested it, so it should work with Firebase 8 and perhaps even earlier versions.  I've not tested them though, so your mileage may vary.
+
+Make sure you have initialized firebase somewhere in your app using your Firebase project's JSON file, e.g.:
 
 ```jsx
 import firebase from "firebase";
@@ -51,93 +53,7 @@ You will need to have logged into your Firebase project in your app before attem
 
 ## Example
 
-```jsx
-// Example code created with Create React App
-import React, { useState } from "react";
-import "./App.css";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
-import "firebase/storage";
-import withFirebaseAuth from "react-with-firebase-auth";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import DeleteIcon from "@material-ui/icons/Delete";
-
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-
-import ReactFirebaseImageUploader from "./package";
-import Login from "./Login";
-
-// You must supply the Firebase config obj.  Download it from your Firebase project page
-import firebaseConfigObj from "./firebaseconfig/firebase-config.json";
-const firebaseApp = firebase.initializeApp(firebaseConfigObj);
-const firebaseAppAuth = firebaseApp.auth();
-
-const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider(),
-  githubProvider: new firebase.auth.GithubAuthProvider(),
-  twitterProvider: new firebase.auth.TwitterAuthProvider(),
-  facebookProvider: new firebase.auth.FacebookAuthProvider()
-};
-
-const App = props => {
-  const { user } = props;
-
-  return (
-    <div className="App">
-      <h1>React Firebase Image Uploader Test</h1>
-      <Login {...props} />
-      <div style={{ marginTop: 40 }}>
-        {user ? (
-          <>
-            <div>
-              <h4>Vanilla Example</h4>
-              <ReactFirebaseImageUploader
-                firebaseApp={firebaseApp}
-                storageFolder="rfiu-test"
-                multiple
-              />
-            </div>
-            <div style={{ marginTop: "40px" }}>
-              <h4>Material with Circular Progress Bar Example</h4>
-              <ReactFirebaseImageUploader
-                firebaseApp={firebaseApp}
-                storageFolder="rfiu-test"
-                progressControl={CircularProgressbar}
-                checkboxControl={Checkbox}
-                buttonControl={Button}
-                uploadButtonIcon={CloudUploadIcon}
-                removeButtonIcon={DeleteIcon}
-                options={{
-                  styles: {
-                    imgPreview: { maxWidth: "50px" },
-                    imgPreviewLabel: { fontSize: "12px" },
-                    progressControlWrapper: { height: "40px", width: "40px" }
-                  }
-                }}
-                uploadCompleteCallback={statusObj => {
-                  console.log("uploadCompleteCallback triggered, and we're done!, statusObj", statusObj);
-                }}
-                multiple
-              />
-            </div>
-          </>
-        ) : (
-          <div>Login to upload images</div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default withFirebaseAuth({
-  providers,
-  firebaseAppAuth
-})(App);
-```
+See the /demo folder for how an example of how you can use the component.  The Contributing Guide (see next section) will tell you how to run run the demo.
 
 
 
