@@ -172,21 +172,23 @@ export default function FirebaseUploadImage({
   };
 
   const handleUploadSuccess = async (...args) => {
-    console.log(
-      "TCL ~ file: FirebaseUploader.js ~ line 188 ~ handleUploadSuccess ~ args",
-      args
-    );
     if (
       args[1]._delegate._blob &&
       args[1]._delegate._blob.data_ &&
       args[1]._delegate._blob.data_.name
     ) {
       const fileName = args[1]._delegate._blob.data_.name;
-      const downloadUrl = await firebaseApp.firebase_
+      console.log(
+        "TCL ~ file: FirebaseUploader.js ~ line 190 ~ handleUploadSuccess ~ firebaseApp",
+        firebaseApp
+      );
+
+      const downloadUrl = await firebaseApp.firebase
         .storage()
         .ref(storageFolder)
         .child(fileName)
         .getDownloadURL();
+
       setFilesToStore((prevState) => {
         const currentFileIndex = prevState.findIndex(
           (member) => member.name === fileName
