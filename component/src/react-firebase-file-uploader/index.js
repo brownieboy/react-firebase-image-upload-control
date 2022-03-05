@@ -3,21 +3,20 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import generateRandomID from 'uuid/v4';
-import resizeAndCropImage from './utils/image';
+import React, { Component } from "react";
+import generateRandomID from "uuid/v4";
+import resizeAndCropImage from "./utils/image";
 
 const generateRandomFilename = (): string => generateRandomID();
 
 function extractExtension(filename: string): string {
   let ext = /(?:\.([^.]+))?$/.exec(filename);
   if (ext != null && ext[0] != null) {
-    return ext[0]
+    return ext[0];
   } else {
-    return ''
+    return "";
   }
 }
-
 
 export type Props = {
   storageRef: Object,
@@ -25,7 +24,7 @@ export type Props = {
   onProgress?: (progress: number, task: Object) => void,
   onUploadSuccess?: (filename: string, task: Object) => void,
   onUploadError?: (error: Object, task: Object) => void,
-  filename?: string | (file: File) => string,
+  filename?: string | ((file: File) => string),
   metadata?: Object,
   randomizeFilename?: boolean,
   as?: any,
@@ -43,7 +42,7 @@ export type Props = {
   readOnly?: boolean,
   required?: boolean,
   value?: string,
-  multiple?: boolean
+  multiple?: boolean,
 };
 
 export default class FirebaseFileUploader extends Component<Props> {
@@ -57,7 +56,7 @@ export default class FirebaseFileUploader extends Component<Props> {
   cancelRunningUploads() {
     while (this.uploadTasks.length > 0) {
       const task = this.uploadTasks.pop();
-      if (task.snapshot.state === 'running') {
+      if (task.snapshot.state === "running") {
         task.cancel();
       }
     }
@@ -79,14 +78,14 @@ export default class FirebaseFileUploader extends Component<Props> {
       storageRef,
       metadata,
       randomizeFilename,
-      filename
+      filename,
     } = this.props;
 
     let filenameToUse;
     if (filename) {
-      filenameToUse = typeof filename === 'function' ? filename(file) : filename;
-    }
-    else {
+      filenameToUse =
+        typeof filename === "function" ? filename(file) : filename;
+    } else {
       filenameToUse = randomizeFilename ? generateRandomFilename() : file.name;
     }
 
@@ -109,7 +108,7 @@ export default class FirebaseFileUploader extends Component<Props> {
         }
         return file;
       })
-      .then(file => {
+      .then((file) => {
         const task = storageRef.child(filenameToUse).put(file, metadata);
 
         if (onUploadStart) {
@@ -117,14 +116,26 @@ export default class FirebaseFileUploader extends Component<Props> {
         }
 
         task.on(
-          'state_changed',
-          snapshot =>
-            this.props.onProgress &&
-            this.props.onProgress(
-              Math.round(100 * snapshot.bytesTransferred / snapshot.totalBytes),
-              task
-            ),
-          error => this.props.onUploadError && this.props.onUploadError(error, task),
+          "state_changed",
+          (snapshot) => {
+            console.log(
+              "TCL ~ file: index.js ~ line 122 ~ FirebaseFileUploader ~ startUpload ~ snapshot",
+              snapshot
+            );
+            const {
+              _delegate: { bytesTransferred, totalBytes },
+            } = snapshot;
+              console.log("TCL ~ file: index.js ~ line 128 ~ FirebaseFileUploader ~ .then ~ { bytesTransferred, totalBytes },", { bytesTransferred, totalBytes },);
+            return (
+              this.props.onProgress &&
+              this.props.onProgress(
+                Math.round((100 * bytesTransferred) / totalBytes),
+                task
+              )
+            );
+          },
+          (error) =>
+            this.props.onUploadError && this.props.onUploadError(error, task),
           () => {
             this.removeTask(task);
             return (
@@ -138,7 +149,9 @@ export default class FirebaseFileUploader extends Component<Props> {
   }
 
   handleFileSelection = (event: Object) => {
-    const { target: { files } } = event;
+    const {
+      target: { files },
+    } = event;
     for (let i = 0; i < files.length; i++) {
       this.startUpload(files[i]);
     }
@@ -157,18 +170,18 @@ export default class FirebaseFileUploader extends Component<Props> {
       maxWidth,
       maxHeight,
       hidden,
-      as: Input = 'input',
+      as: Input = "input",
       ...props
     } = this.props;
 
     const inputStyle = hidden
       ? Object.assign({}, props.style, {
-          width: '0.1px',
-          height: '0.1px',
+          width: "0.1px",
+          height: "0.1px",
           opacity: 0,
-          overflow: 'hidden',
-          position: 'absolute',
-          zIndex: -1
+          overflow: "hidden",
+          position: "absolute",
+          zIndex: -1,
         })
       : props.style;
 

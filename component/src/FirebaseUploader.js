@@ -157,6 +157,7 @@ export default function FirebaseUploadImage({
   };
 
   const handleProgress = (percent, ...args) => {
+  console.log("TCL ~ file: FirebaseUploader.js ~ line 160 ~ handleProgress ~ args", [...args]);
     if (args[0].blob_ && args[0].blob_.data_ && args[0].blob_.data_.name) {
       setUploadState(prevState => {
         return {
@@ -185,6 +186,7 @@ export default function FirebaseUploadImage({
   };
 
   const handleUploadSuccess = async (...args) => {
+  console.log("TCL ~ file: FirebaseUploader.js ~ line 188 ~ handleUploadSuccess ~ args", args);
     if (args[1].blob_ && args[1].blob_.data_ && args[1].blob_.data_.name) {
       const fileName = args[1].blob_.data_.name;
       const downloadUrl = await firebaseApp.firebase_
