@@ -55,10 +55,8 @@
     "react-dom": "17.0.2"
   },
   "scripts": {
-    "build": "npx webpack",
-    "builddev": "npx webpack",
-    "buildforexamples": "npx webpack",
-    "start": "watch 'npm run buildforexamples' ./src"
+    "build": "webpack",
+    "start": "watch 'webpack' ./src"
   },
   "dependencies": {
     "lodash": "^4.17.15",

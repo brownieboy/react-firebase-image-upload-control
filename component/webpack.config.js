@@ -3,7 +3,7 @@ const webpack = require("webpack");
 
 const TARGET = process.env.npm_lifecycle_event;
 const DEVMODE =
-  TARGET === "start" || TARGET === "builddev" || TARGET === "buildforexamples";
+  TARGET === "start";
 
 let plugins = [];
 if (DEVMODE) {
@@ -30,8 +30,8 @@ module.exports = {
   },
   output: {
     path:
-      TARGET === "buildforexamples"
-        ? path.resolve(__dirname, "..", "rfiu-examples", "src", "package")
+      TARGET === "start"
+        ? path.resolve(__dirname, "..", "demo", "src", "package")
         : path.resolve(__dirname, "./dist"),
     filename: "index.js",
     library: "rfiu",
