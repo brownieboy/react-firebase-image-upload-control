@@ -2,8 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const TARGET = process.env.npm_lifecycle_event;
-const DEVMODE =
-  TARGET === "start";
+const DEVMODE = TARGET === "start";
 
 let plugins = [];
 if (DEVMODE) {
@@ -14,8 +13,8 @@ if (DEVMODE) {
   plugins = [
     new webpack.BannerPlugin({
       banner: "/* eslint-disable */",
-      raw: true
-    })
+      raw: true,
+    }),
   ];
 }
 
@@ -26,7 +25,7 @@ module.exports = {
   externals: {
     firebase: "firebase",
     react: "react",
-    "react-dom": "react-dom"
+    "react-dom": "react-dom",
   },
   output: {
     path:
@@ -35,7 +34,7 @@ module.exports = {
         : path.resolve(__dirname, "./dist"),
     filename: "index.js",
     library: "rfiu",
-    libraryTarget: "umd"
+    libraryTarget: "umd",
   },
   module: {
     rules: [
@@ -45,15 +44,15 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
-      }
-    ]
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
-  plugins
+  plugins,
 };
