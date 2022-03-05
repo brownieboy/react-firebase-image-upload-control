@@ -31,7 +31,7 @@ module.exports = {
     path:
       TARGET === "start"
         ? path.resolve(__dirname, "..", "demo", "src", "package")
-        : path.resolve(__dirname, "./dist"),
+        : path.resolve(__dirname, "../dist"),
     filename: "index.js",
     library: "rfiu",
     libraryTarget: "umd",
