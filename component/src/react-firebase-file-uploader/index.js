@@ -118,14 +118,9 @@ export default class FirebaseFileUploader extends Component<Props> {
         task.on(
           "state_changed",
           (snapshot) => {
-            console.log(
-              "TCL ~ file: index.js ~ line 122 ~ FirebaseFileUploader ~ startUpload ~ snapshot",
-              snapshot
-            );
             const {
               _delegate: { bytesTransferred, totalBytes },
             } = snapshot;
-              console.log("TCL ~ file: index.js ~ line 128 ~ FirebaseFileUploader ~ .then ~ { bytesTransferred, totalBytes },", { bytesTransferred, totalBytes },);
             return (
               this.props.onProgress &&
               this.props.onProgress(

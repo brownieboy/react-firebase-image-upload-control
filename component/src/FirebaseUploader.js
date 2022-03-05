@@ -157,10 +157,6 @@ export default function FirebaseUploadImage({
   };
 
   const handleProgress = (percent, ...args) => {
-    console.log(
-      "TCL ~ file: FirebaseUploader.js ~ line 160 ~ handleProgress ~ args",
-      [...args]
-    );
     if (
       args[0]._delegate._blob &&
       args[0]._delegate._blob.data_ &&
@@ -175,30 +171,17 @@ export default function FirebaseUploadImage({
     }
   };
 
-  const handleFileRemovalCheck = (event) => {
-    if (event.target.checked) {
-      setFilesToRemove([...filesToRemove, event.target.value]);
-    } else {
-      setFilesToRemove(
-        filesToRemove.filter((member) => member !== event.target.value)
-      );
-    }
-  };
-
-  const handleRemoveFiles = () => {
-    setFilesToStore(
-      filesToStore.filter((member) => !filesToRemove.includes(member.name))
-    );
-    setFilesToRemove([]); // Important to clear this after
-  };
-
   const handleUploadSuccess = async (...args) => {
     console.log(
       "TCL ~ file: FirebaseUploader.js ~ line 188 ~ handleUploadSuccess ~ args",
       args
     );
-    if (args[1].blob_ && args[1].blob_.data_ && args[1].blob_.data_.name) {
-      const fileName = args[1].blob_.data_.name;
+    if (
+      args[1]._delegate._blob &&
+      args[1]._delegate._blob.data_ &&
+      args[1]._delegate._blob.data_.name
+    ) {
+      const fileName = args[1]._delegate._blob.data_.name;
       const downloadUrl = await firebaseApp.firebase_
         .storage()
         .ref(storageFolder)
@@ -228,6 +211,23 @@ export default function FirebaseUploadImage({
         return newState;
       });
     }
+  };
+
+  const handleFileRemovalCheck = (event) => {
+    if (event.target.checked) {
+      setFilesToRemove([...filesToRemove, event.target.value]);
+    } else {
+      setFilesToRemove(
+        filesToRemove.filter((member) => member !== event.target.value)
+      );
+    }
+  };
+
+  const handleRemoveFiles = () => {
+    setFilesToStore(
+      filesToStore.filter((member) => !filesToRemove.includes(member.name))
+    );
+    setFilesToRemove([]); // Important to clear this after
   };
 
   const imgPreviewStyles = {
