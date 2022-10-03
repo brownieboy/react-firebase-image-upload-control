@@ -3,13 +3,13 @@
  * @flow
  */
 
-import React, { Component } from "react";
+import { Component } from "react";
 import generateRandomID from "uuid/v4";
 import resizeAndCropImage from "./utils/image";
 
-const generateRandomFilename = (): string => generateRandomID();
+const generateRandomFilename = () => generateRandomID();
 
-function extractExtension(filename: string): string {
+function extractExtension(filename) {
   let ext = /(?:\.([^.]+))?$/.exec(filename);
   if (ext != null && ext[0] != null) {
     return ext[0];

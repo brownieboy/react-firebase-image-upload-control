@@ -23,20 +23,20 @@ module.exports = {
       TARGET === "start"
         ? path.resolve(__dirname, "..", "demo2", "src", "package")
         : path.resolve(__dirname, "../dist"),
-    filename: "index.js",
+    filename: "index.ts",
     library: "rfiu",
     libraryTarget: "umd",
   },
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         include: path.resolve(__dirname, "./src"),
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
+            presets: ["@babel/preset-typescript"],
           },
         },
       },
