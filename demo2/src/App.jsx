@@ -3,7 +3,12 @@ import AppFirebaseUploader from "./App-firebase-uploader";
 
 class App extends React.Component {
   render() {
-    return <AppFirebaseUploader />;
+    return (
+      <>
+        <h2>Uploader App Wrapper</h2>
+        <AppFirebaseUploader />
+      </>
+    );
   }
 }
 
