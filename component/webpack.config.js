@@ -10,11 +10,11 @@ module.exports = {
   mode: DEVMODE ? "development" : "production",
   devtool: DEVMODE ? "eval-source-map" : "cheap-source-map",
   target: "node",
-  externals: {
-    firebase: "firebase",
-    react: "react",
-    "react-dom": "react-dom",
-  },
+  // externals: {
+  //   firebase: "firebase",
+  //   react: "react",
+  //   "react-dom": "react-dom",
+  // },
   externalsPresets: {
     node: true, // in order to ignore built-in modules like path, fs, etc.
   },
