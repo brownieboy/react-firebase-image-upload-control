@@ -30,7 +30,6 @@ const providers = {
 
 const App = (props) => {
   const { user } = props;
-  console.log("TCL ~ file: App.jsx ~ line 33 ~ App ~ user", user);
 
   return (
     <div className="App">
@@ -47,7 +46,7 @@ const App = (props) => {
                 multiple
               />
             </div>
-            {/* <div style={{ marginTop: "40px" }}>
+            <div style={{ marginTop: "40px" }}>
               <h4>Material with Circular Progress Bar Example</h4>
               <ReactFirebaseImageUploader
                 firebaseApp={firebaseApp}
@@ -78,7 +77,7 @@ const App = (props) => {
                   );
                 }}
               />
-            </div> */}
+            </div>
           </>
         ) : (
           <div>Login to upload images</div>

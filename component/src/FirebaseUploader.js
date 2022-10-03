@@ -146,14 +146,14 @@ export default function FirebaseUploadImage({
     const uploadResults = await Promise.all(
       filesToStore.map(async (file) => {
         const fileuploadResult = await fileUploader.startUpload(file);
-        // console.log(
-        //   "TCL: startUploadManually -> fileuploadResult",
-        //   fileuploadResult
-        // );
+        console.log(
+          "TCL: startUploadManually -> fileuploadResult",
+          fileuploadResult
+        );
         return fileuploadResult;
       })
     );
-    // console.log("TCL: startUploadManually -> uploadResults", uploadResults);
+    console.log("TCL: startUploadManually -> uploadResults", uploadResults);
   };
 
   const handleProgress = (percent, ...args) => {
@@ -178,10 +178,6 @@ export default function FirebaseUploadImage({
       args[1]._delegate._blob.data_.name
     ) {
       const fileName = args[1]._delegate._blob.data_.name;
-      console.log(
-        "TCL ~ file: FirebaseUploader.js ~ line 190 ~ handleUploadSuccess ~ firebaseApp",
-        firebaseApp
-      );
 
       const downloadUrl = await firebaseApp.firebase
         .storage()
