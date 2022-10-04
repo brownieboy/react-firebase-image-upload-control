@@ -245,9 +245,9 @@ const FirebaseUploadImage = ({
         multiple={multiple}
       />
       <FileUploader
-        ref={instance => {
-          fileUploader = instance;
-        }} // ⇐ reference the component
+        // ref={instance => {
+        //   fileUploader = instance;
+        // }} // ⇐ reference the component
         storageRef={firebaseApp.storage().ref(storageFolder)}
         style={{display: "none"}}
         onProgress={handleProgress}
