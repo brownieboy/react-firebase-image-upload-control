@@ -3,7 +3,9 @@ import "./App.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
-import "firebase/compat/storage";
+// import "firebase/compat/storage";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
 import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -49,6 +51,9 @@ const App = (props) => {
             <div style={{ marginTop: "40px" }}>
               <h4>Material with Circular Progress Bar Example</h4>
               <ReactFirebaseImageUploader
+                fbRef={ref}
+                getDownloadURL={getDownloadURL}
+                uploadBytesResumable={uploadBytesResumable}
                 firebaseApp={firebaseApp}
                 storageFolder="rfiu-test"
                 progressControl={CircularProgressbar}

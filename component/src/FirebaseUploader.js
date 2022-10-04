@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import FileUploader from "./react-firebase-file-uploader";
+// import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
+// import FileUploader from "./react-firebase-file-uploader";
 import _uniqBy from "lodash/fp/uniqBy";
 // import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
@@ -40,7 +42,10 @@ const PassedPropProgressIndicator = ({
   component,
   value,
   componentWrapperStyles,
-  fileName
+  fileName,
+  fbRef,
+  getDownloadURL,
+  uploadBytesResumable
 }) => {
   const PassedComponent = component;
   if (componentWrapperStyles) {
@@ -82,11 +87,18 @@ const FirebaseUploadImage = ({
   uploadStartCallback,
   uploadCompleteCallback
 }) => {
+  console.log(
+    "TCL ~ file: FirebaseUploader.js ~ line 87 ~ firebaseApp",
+    firebaseApp
+  );
   const [filesToStore, setFilesToStore] = useState([]);
+  console.log(
+    "TCL ~ file: FirebaseUploader.js ~ line 86 ~ filesToStore",
+    filesToStore
+  );
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
-  let fileUploader;
   const UploadButtonIcon = uploadButtonIcon;
   const RemoveButtonIcon = removeButtonIcon;
   const ProgressControl = progressControl
@@ -125,7 +137,7 @@ const FirebaseUploadImage = ({
 
   /*
 
-  const startUploadManually = () => {
+  const startUpload = () => {
     setUploadButtonClicked(true);
     filesToStore.forEach(file => {
       fileUploader.startUpload(file);
@@ -135,24 +147,6 @@ const FirebaseUploadImage = ({
     await Promise.all(files.map(uploadImageAsPromise));
  }
  */
-
-  const startUploadManually = async () => {
-    if (uploadStartCallback) {
-      uploadStartCallback(filesToStore);
-    }
-    setUploadButtonClicked(true);
-    const uploadResults = await Promise.all(
-      filesToStore.map(async file => {
-        const fileuploadResult = await fileUploader.startUpload(file);
-        console.log(
-          "TCL: startUploadManually -> fileuploadResult",
-          fileuploadResult
-        );
-        return fileuploadResult;
-      })
-    );
-    console.log("TCL: startUploadManually -> uploadResults", uploadResults);
-  };
 
   const handleProgress = (percent, ...args) => {
     if (
@@ -167,6 +161,25 @@ const FirebaseUploadImage = ({
         };
       });
     }
+  };
+
+  const startUpload = async () => {
+    if (uploadStartCallback) {
+      uploadStartCallback(filesToStore);
+    }
+    setUploadButtonClicked(true);
+
+    // const uploadResults = await Promise.all(
+    //   filesToStore.map(async file => {
+    //     const fileuploadResult = await fileUploader.startUpload(file);
+    //     console.log(
+    //       "TCL: startUpload -> fileuploadResult",
+    //       fileuploadResult
+    //     );
+    //     return fileuploadResult;
+    //   })
+    // );
+    // console.log("TCL: startUpload -> uploadResults", uploadResults);
   };
 
   const handleUploadSuccess = async (...args) => {
@@ -244,7 +257,7 @@ const FirebaseUploadImage = ({
         onDrop={handleImageChange}
         multiple={multiple}
       />
-      <FileUploader
+      {/* <FileUploader
         // ref={instance => {
         //   fileUploader = instance;
         // }} // ⇐ reference the component
@@ -253,7 +266,7 @@ const FirebaseUploadImage = ({
         onProgress={handleProgress}
         onUploadSuccess={handleUploadSuccess}
         multiple={multiple}
-      />
+      /> */}
       <div
         style={{
           display: "flex",
@@ -308,7 +321,7 @@ const FirebaseUploadImage = ({
         <ButtonControl
           color="primary"
           variant="contained"
-          onClick={startUploadManually}
+          onClick={startUpload}
           style={{textTransform: "none", marginTop: 10, marginRight: 10}}
           disabled={disabled || filesToStore.length === 0}>
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
@@ -352,4 +365,3 @@ FirebaseUploadImage.propTypes = {
 };
 
 export default FirebaseUploadImage;
-

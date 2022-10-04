@@ -26,7 +26,7 @@ const App = ({
       type="file"
       // onChange={this.handleFileSelection}
       // {...props}
-      style={inputStyle}
+      // style={inputStyle}
     />
   );
 };
