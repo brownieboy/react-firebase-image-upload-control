@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FileUploader from "./react-firebase-file-uploader";
 import _uniqBy from "lodash/fp/uniqBy";
-import _pickBy from "lodash/fp/pickBy";
+// import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 
 import ImageDrop from "./ImageDrop.js";
@@ -10,30 +10,29 @@ import ImageDrop from "./ImageDrop.js";
 const styles = {
   imagePreview: {
     maxHeight: 150,
-    maxWidth: 200,
+    maxWidth: 200
   },
   progressControl: {
     label: {
-      fontSize: 10,
-    },
-  },
+      fontSize: 10
+    }
+  }
 };
 
-const PlainProgressIndicator = ({ value, fileName }) => (
+const PlainProgressIndicator = ({value, fileName}) => (
   <div
     style={{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      marginRight: 5,
-    }}
-  >
+      marginRight: 5
+    }}>
     <div>{value}%</div>
     <div style={styles.progressControl.label}>{fileName}</div>
   </div>
 );
-const PlainCheckbox = (props) => <input type="checkbox" {...props} />;
-const PlainButton = ({ children, ...props }) => (
+const PlainCheckbox = props => <input type="checkbox" {...props} />;
+const PlainButton = ({children, ...props}) => (
   <button {...props}>{children}</button>
 );
 
@@ -41,7 +40,7 @@ const PassedPropProgressIndicator = ({
   component,
   value,
   componentWrapperStyles,
-  fileName,
+  fileName
 }) => {
   const PassedComponent = component;
   if (componentWrapperStyles) {
@@ -51,9 +50,8 @@ const PassedPropProgressIndicator = ({
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          marginRight: 10,
-        }}
-      >
+          marginRight: 10
+        }}>
         <div style={componentWrapperStyles}>
           <PassedComponent value={value} text={`${value}%`} />
         </div>
@@ -64,7 +62,7 @@ const PassedPropProgressIndicator = ({
   return <PassedComponent value={`${value}%`} />;
 };
 
-export default function FirebaseUploadImage({
+const FirebaseUploadImage = ({
   firebaseApp,
   storageFolder = "rfiu",
   disabled = false,
@@ -73,8 +71,8 @@ export default function FirebaseUploadImage({
     styles: {
       imgPreview: {},
       imgPreviewLabel: {},
-      progressControlWrapper: {},
-    },
+      progressControlWrapper: {}
+    }
   },
   progressControl,
   checkboxControl,
@@ -82,8 +80,8 @@ export default function FirebaseUploadImage({
   uploadButtonIcon,
   removeButtonIcon,
   uploadStartCallback,
-  uploadCompleteCallback,
-}) {
+  uploadCompleteCallback
+}) => {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState({});
@@ -102,22 +100,22 @@ export default function FirebaseUploadImage({
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
 
-      const uniqueFilesArray = _uniqBy((e) => e.name, [
-        ...filesToStore,
-        ...allFilesArray,
-      ]).map((file) =>
+      const uniqueFilesArray = _uniqBy(
+        e => e.name,
+        [...filesToStore, ...allFilesArray]
+      ).map(file =>
         // Spread operator didn't work here.  Has to be Object.assign()
         Object.assign(file, {
-          preview: URL.createObjectURL(file),
+          preview: URL.createObjectURL(file)
         })
       );
 
       setFilesToStore(uniqueFilesArray);
     } else {
       setFilesToStore(
-        currentFileArray.map((file) =>
+        currentFileArray.map(file =>
           Object.assign(file, {
-            preview: URL.createObjectURL(file),
+            preview: URL.createObjectURL(file)
           })
         )
       );
@@ -144,7 +142,7 @@ export default function FirebaseUploadImage({
     }
     setUploadButtonClicked(true);
     const uploadResults = await Promise.all(
-      filesToStore.map(async (file) => {
+      filesToStore.map(async file => {
         const fileuploadResult = await fileUploader.startUpload(file);
         console.log(
           "TCL: startUploadManually -> fileuploadResult",
@@ -162,10 +160,10 @@ export default function FirebaseUploadImage({
       args[0]._delegate._blob.data_ &&
       args[0]._delegate._blob.data_.name
     ) {
-      setUploadState((prevState) => {
+      setUploadState(prevState => {
         return {
           ...prevState,
-          [args[0]._delegate._blob.data_.name]: percent,
+          [args[0]._delegate._blob.data_.name]: percent
         };
       });
     }
@@ -185,9 +183,9 @@ export default function FirebaseUploadImage({
         .child(fileName)
         .getDownloadURL();
 
-      setFilesToStore((prevState) => {
+      setFilesToStore(prevState => {
         const currentFileIndex = prevState.findIndex(
-          (member) => member.name === fileName
+          member => member.name === fileName
         );
 
         const newFileInfo = Object.assign(prevState[currentFileIndex]);
@@ -196,14 +194,14 @@ export default function FirebaseUploadImage({
         const newState = [
           ...prevState.slice(0, currentFileIndex),
           newFileInfo,
-          ...prevState.slice(currentFileIndex + 1),
+          ...prevState.slice(currentFileIndex + 1)
         ];
         if (uploadCompleteCallback) {
           const filesWithDownloadUrls = newState.filter(
-            (member) => member.downloadUrl
+            member => member.downloadUrl
           );
           if (newState.length === filesWithDownloadUrls.length) {
-            uploadCompleteCallback({ files: newState });
+            uploadCompleteCallback({files: newState});
           }
         }
         return newState;
@@ -211,31 +209,31 @@ export default function FirebaseUploadImage({
     }
   };
 
-  const handleFileRemovalCheck = (event) => {
+  const handleFileRemovalCheck = event => {
     if (event.target.checked) {
       setFilesToRemove([...filesToRemove, event.target.value]);
     } else {
       setFilesToRemove(
-        filesToRemove.filter((member) => member !== event.target.value)
+        filesToRemove.filter(member => member !== event.target.value)
       );
     }
   };
 
   const handleRemoveFiles = () => {
     setFilesToStore(
-      filesToStore.filter((member) => !filesToRemove.includes(member.name))
+      filesToStore.filter(member => !filesToRemove.includes(member.name))
     );
     setFilesToRemove([]); // Important to clear this after
   };
 
   const imgPreviewStyles = {
     ...styles.imagePreview,
-    ...options.styles.imgPreview,
+    ...options.styles.imgPreview
   };
 
   const imgPreviewTitleStyles = {
     ...styles.imagePreviewTitle,
-    ...options.styles.imgPreviewTitle,
+    ...options.styles.imgPreviewTitle
   };
 
   return (
@@ -247,11 +245,11 @@ export default function FirebaseUploadImage({
         multiple={multiple}
       />
       <FileUploader
-        ref={(instance) => {
+        ref={instance => {
           fileUploader = instance;
         }} // ⇐ reference the component
         storageRef={firebaseApp.storage().ref(storageFolder)}
-        style={{ display: "none" }}
+        style={{display: "none"}}
         onProgress={handleProgress}
         onUploadSuccess={handleUploadSuccess}
         multiple={multiple}
@@ -259,11 +257,10 @@ export default function FirebaseUploadImage({
       <div
         style={{
           display: "flex",
-          flexWrap: "wrap",
-        }}
-      >
+          flexWrap: "wrap"
+        }}>
         {filesToStore.length > 0
-          ? filesToStore.map((file) => (
+          ? filesToStore.map(file => (
               <div
                 key={file.name}
                 style={{
@@ -271,9 +268,8 @@ export default function FirebaseUploadImage({
                   flexDirection: "column",
                   justifyContent: "space-between",
                   marginBottom: 10,
-                  marginRight: 10,
-                }}
-              >
+                  marginRight: 10
+                }}>
                 <img
                   src={file.preview}
                   title={file.name}
@@ -283,8 +279,7 @@ export default function FirebaseUploadImage({
                 <div style={imgPreviewTitleStyles}>
                   <label
                     htmlFor={file.name}
-                    style={options.styles.imgPreviewLabel}
-                  >
+                    style={options.styles.imgPreviewLabel}>
                     {`${file.name} (${prettyBytes(file.size)})`}
                   </label>
                   <CheckboxControl
@@ -298,16 +293,15 @@ export default function FirebaseUploadImage({
             ))
           : null}
       </div>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{display: "flex", alignItems: "center"}}>
         <ButtonControl
           variant="contained"
           onClick={handleRemoveFiles}
-          style={{ textTransform: "none", marginTop: 10, marginRight: 10 }}
-          disabled={filesToRemove.length === 0}
-        >
+          style={{textTransform: "none", marginTop: 10, marginRight: 10}}
+          disabled={filesToRemove.length === 0}>
           {/* <DeleteIcon style={{ marginRight: 10 }} /> */}
           {removeButtonIcon ? (
-            <RemoveButtonIcon style={{ marginRight: 10 }} />
+            <RemoveButtonIcon style={{marginRight: 10}} />
           ) : null}
           Remove checked files
         </ButtonControl>
@@ -315,20 +309,19 @@ export default function FirebaseUploadImage({
           color="primary"
           variant="contained"
           onClick={startUploadManually}
-          style={{ textTransform: "none", marginTop: 10, marginRight: 10 }}
-          disabled={disabled || filesToStore.length === 0}
-        >
+          style={{textTransform: "none", marginTop: 10, marginRight: 10}}
+          disabled={disabled || filesToStore.length === 0}>
           {/* <CloudUploadIcon style={{ marginRight: 10 }} /> */}
           {uploadButtonIcon ? (
-            <UploadButtonIcon style={{ marginRight: 10 }} />
+            <UploadButtonIcon style={{marginRight: 10}} />
           ) : null}
           {filesToStore.length > 1 ? "Upload all" : "Upload"}
         </ButtonControl>
       </div>
-      <div style={{ display: "flex", alignItems: "center", marginTop: 10 }}>
+      <div style={{display: "flex", alignItems: "center", marginTop: 10}}>
         {/* {uploadButtonClicked && ( */}
         {uploadButtonClicked &&
-          filesToStore.map((file) => {
+          filesToStore.map(file => {
             return (
               <ProgressControl
                 value={uploadState[file.name] || 0}
@@ -342,7 +335,7 @@ export default function FirebaseUploadImage({
       </div>
     </>
   );
-}
+};
 
 FirebaseUploadImage.propTypes = {
   firebaseApp: PropTypes.object.isRequired,
@@ -355,5 +348,8 @@ FirebaseUploadImage.propTypes = {
   uploadButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   removeButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   uploadStartCallback: PropTypes.func,
-  uploadCompleteCallback: PropTypes.func,
+  uploadCompleteCallback: PropTypes.func
 };
+
+export default FirebaseUploadImage;
+
