@@ -91,10 +91,6 @@ const FirebaseUploadImage = ({
   uploadCompleteCallback
 }) => {
   const [filesToStore, setFilesToStore] = useState([]);
-  console.log(
-    "TCL ~ file: FirebaseUploader.js ~ line 86 ~ filesToStore",
-    filesToStore
-  );
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
@@ -169,68 +165,39 @@ const FirebaseUploadImage = ({
           alert(error);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-            console.log(
-              "TCL ~ file: FirebaseUploader.js ~ line 192 ~ getDownloadURL ~ downloadURL",
-              downloadURL
-            );
-            // setImgUrl(downloadURL);
+          getDownloadURL(uploadTask.snapshot.ref).then(downloadUrl => {
+            handleUploadSuccess(uploadTask, downloadUrl);
           });
         }
       );
     });
-
-    // const uploadResults = await Promise.all(
-    //   filesToStore.map(async file => {
-    //     const fileuploadResult = await fileUploader.startUpload(file);
-    //     console.log(
-    //       "TCL: startUpload -> fileuploadResult",
-    //       fileuploadResult
-    //     );
-    //     return fileuploadResult;
-    //   })
-    // );
-    // console.log("TCL: startUpload -> uploadResults", uploadResults);
   };
 
-  const handleUploadSuccess = async (...args) => {
-    if (
-      args[1]._delegate._blob &&
-      args[1]._delegate._blob.data_ &&
-      args[1]._delegate._blob.data_.name
-    ) {
-      const fileName = args[1]._delegate._blob.data_.name;
+  const handleUploadSuccess = async (task, downloadUrl) => {
+    const fileName = task._blob?.data_?.name;
+    setFilesToStore(prevState => {
+      const currentFileIndex = prevState.findIndex(
+        member => member.name === fileName
+      );
 
-      const downloadUrl = await firebaseApp.firebase
-        .storage()
-        .ref(storageFolder)
-        .child(fileName)
-        .getDownloadURL();
+      const newFileInfo = Object.assign(prevState[currentFileIndex]);
+      newFileInfo.downloadUrl = downloadUrl;
 
-      setFilesToStore(prevState => {
-        const currentFileIndex = prevState.findIndex(
-          member => member.name === fileName
+      const newState = [
+        ...prevState.slice(0, currentFileIndex),
+        newFileInfo,
+        ...prevState.slice(currentFileIndex + 1)
+      ];
+      if (uploadCompleteCallback) {
+        const filesWithDownloadUrls = newState.filter(
+          member => member.downloadUrl
         );
-
-        const newFileInfo = Object.assign(prevState[currentFileIndex]);
-        newFileInfo.downloadUrl = downloadUrl;
-
-        const newState = [
-          ...prevState.slice(0, currentFileIndex),
-          newFileInfo,
-          ...prevState.slice(currentFileIndex + 1)
-        ];
-        if (uploadCompleteCallback) {
-          const filesWithDownloadUrls = newState.filter(
-            member => member.downloadUrl
-          );
-          if (newState.length === filesWithDownloadUrls.length) {
-            uploadCompleteCallback({files: newState});
-          }
+        if (newState.length === filesWithDownloadUrls.length) {
+          uploadCompleteCallback({files: newState});
         }
-        return newState;
-      });
-    }
+      }
+      return newState;
+    });
   };
 
   const handleFileRemovalCheck = event => {
