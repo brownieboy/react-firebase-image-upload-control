@@ -153,6 +153,7 @@ const FirebaseUploadImage = ({
     }
     setUploadButtonClicked(true);
     const file = filesToStore[0];
+
     const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
@@ -160,10 +161,6 @@ const FirebaseUploadImage = ({
       snapshot => {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        console.log(
-          "TCL ~ file: FirebaseUploader.js ~ line 185 ~ startUpload ~ progress",
-          progress
         );
         handleProgress(progress, uploadTask);
       },
