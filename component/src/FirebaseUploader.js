@@ -171,15 +171,13 @@ const FirebaseUploadImage = ({
     }
     setUploadButtonClicked(true);
     const file = filesToStore[0];
-    console.log(
-      "TCL ~ file: FirebaseUploader.js ~ line 172 ~ startUpload ~ file",
-      file
-    );
     const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
     console.log(
       "TCL ~ file: FirebaseUploader.js ~ line 177 ~ startUpload ~ storageRef",
       storageRef
     );
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
 
     // const uploadResults = await Promise.all(
     //   filesToStore.map(async file => {
