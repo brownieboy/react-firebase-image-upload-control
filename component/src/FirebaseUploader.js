@@ -109,7 +109,6 @@ const FirebaseUploadImage = ({
 
   const storage = getStorage(firebaseApp);
 
-
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
@@ -137,29 +136,12 @@ const FirebaseUploadImage = ({
     setFilesToRemove([]); // Important to clear this if we have new files
   };
 
-  /*
-
-  const startUpload = () => {
-    setUploadButtonClicked(true);
-    filesToStore.forEach(file => {
-      fileUploader.startUpload(file);
-    });
-  };
-  async function uploadFiles(files) {
-    await Promise.all(files.map(uploadImageAsPromise));
- }
- */
-
-  const handleProgress = (percent, ...args) => {
-    if (
-      args[0]._delegate._blob &&
-      args[0]._delegate._blob.data_ &&
-      args[0]._delegate._blob.data_.name
-    ) {
+  const handleProgress = (percent, task) => {
+    if (task._blob?.data_?.name) {
       setUploadState(prevState => {
         return {
           ...prevState,
-          [args[0]._delegate._blob.data_.name]: percent
+          [task._blob?.data_?.name]: percent
         };
       });
     }
@@ -172,12 +154,32 @@ const FirebaseUploadImage = ({
     setUploadButtonClicked(true);
     const file = filesToStore[0];
     const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
-    console.log(
-      "TCL ~ file: FirebaseUploader.js ~ line 177 ~ startUpload ~ storageRef",
-      storageRef
-    );
     const uploadTask = uploadBytesResumable(storageRef, file);
-
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        console.log(
+          "TCL ~ file: FirebaseUploader.js ~ line 185 ~ startUpload ~ progress",
+          progress
+        );
+        handleProgress(progress, uploadTask);
+      },
+      error => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+          console.log(
+            "TCL ~ file: FirebaseUploader.js ~ line 192 ~ getDownloadURL ~ downloadURL",
+            downloadURL
+          );
+          // setImgUrl(downloadURL);
+        });
+      }
+    );
 
     // const uploadResults = await Promise.all(
     //   filesToStore.map(async file => {
