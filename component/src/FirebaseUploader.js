@@ -165,16 +165,15 @@ const FirebaseUploadImage = ({
           alert(error);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(downloadUrl => {
-            handleUploadSuccess(uploadTask, downloadUrl);
-          });
+          handleUploadSuccess(uploadTask);
         }
       );
     });
   };
 
-  const handleUploadSuccess = async (task, downloadUrl) => {
+  const handleUploadSuccess = async task => {
     const fileName = task._blob?.data_?.name;
+    const downloadUrl = await getDownloadURL(task.snapshot?.ref);
     setFilesToStore(prevState => {
       const currentFileIndex = prevState.findIndex(
         member => member.name === fileName
