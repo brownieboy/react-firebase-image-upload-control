@@ -152,31 +152,33 @@ const FirebaseUploadImage = ({
       uploadStartCallback(filesToStore);
     }
     setUploadButtonClicked(true);
-    const file = filesToStore[0];
+    // const file = filesToStore[0];
 
-    const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      "state_changed",
-      snapshot => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        handleProgress(progress, uploadTask);
-      },
-      error => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-          console.log(
-            "TCL ~ file: FirebaseUploader.js ~ line 192 ~ getDownloadURL ~ downloadURL",
-            downloadURL
+    filesToStore.forEach(file => {
+      const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          // setImgUrl(downloadURL);
-        });
-      }
-    );
+          handleProgress(progress, uploadTask);
+        },
+        error => {
+          alert(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+            console.log(
+              "TCL ~ file: FirebaseUploader.js ~ line 192 ~ getDownloadURL ~ downloadURL",
+              downloadURL
+            );
+            // setImgUrl(downloadURL);
+          });
+        }
+      );
+    });
 
     // const uploadResults = await Promise.all(
     //   filesToStore.map(async file => {
