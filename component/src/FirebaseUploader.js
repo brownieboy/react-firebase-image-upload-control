@@ -1,4 +1,10 @@
 import React, {useState, useEffect} from "react";
+import {
+  ref as fbRef,
+  getDownloadURL,
+  getStorage,
+  uploadBytesResumable
+} from "firebase/storage";
 import PropTypes from "prop-types";
 // import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
@@ -66,10 +72,6 @@ const PassedPropProgressIndicator = ({
 
 const FirebaseUploadImage = ({
   firebaseApp,
-  fbRef,
-  getDownloadURL,
-  uploadBytesResumable,
-  storage,
   storageFolder = "rfiu",
   disabled = false,
   multiple = false,
@@ -88,13 +90,6 @@ const FirebaseUploadImage = ({
   uploadStartCallback,
   uploadCompleteCallback
 }) => {
-  console.log("TCL ~ file: FirebaseUploader.js ~ line 89 ~ fbRef", fbRef);
-  console.log("TCL ~ file: FirebaseUploader.js ~ line 88 ~ storage", storage);
-
-  console.log(
-    "TCL ~ file: FirebaseUploader.js ~ line 87 ~ firebaseApp",
-    firebaseApp
-  );
   const [filesToStore, setFilesToStore] = useState([]);
   console.log(
     "TCL ~ file: FirebaseUploader.js ~ line 86 ~ filesToStore",
@@ -111,6 +106,9 @@ const FirebaseUploadImage = ({
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
+
+  const storage = getStorage(firebaseApp);
+
 
   const handleImageChange = (currentFileArray, prevFileArray) => {
     if (multiple) {

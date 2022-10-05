@@ -3,12 +3,6 @@ import "./App.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
-import {
-  ref as fbRef,
-  getDownloadURL,
-  // getStorage,
-  uploadBytesResumable
-} from "firebase/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -35,14 +29,9 @@ const providers = {
 
 const App = props => {
   const {user} = props;
-  const storage = getStorage(firebaseApp);
 
   const imageUploaderSharedProps = {
-    firbaseApp,
-    fbRef,
-    getDownloadURL,
-    uploadBytesResumable,
-    storage,
+    firebaseApp,
     storageFolder: "rfiu-test"
   };
 

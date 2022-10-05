@@ -12,6 +12,7 @@ module.exports = {
   target: "node",
   externals: {
     firebase: "firebase",
+    "firebase/storage": "firebase/storage",
     react: "react",
     "react-dom": "react-dom",
   },
