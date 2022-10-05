@@ -1,18 +1,21 @@
-import React from "react";
+import React, {useRef} from "react";
 import "./App.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
-// import "firebase/compat/storage";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-
+import {
+  ref as fbRef,
+  getDownloadURL,
+  // getStorage,
+  uploadBytesResumable
+} from "firebase/storage";
 import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { CircularProgressbar } from "react-circular-progressbar";
+import {CircularProgressbar} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 import ReactFirebaseImageUploader from "./package";
@@ -27,35 +30,40 @@ const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
   githubProvider: new firebase.auth.GithubAuthProvider(),
   twitterProvider: new firebase.auth.TwitterAuthProvider(),
-  facebookProvider: new firebase.auth.FacebookAuthProvider(),
+  facebookProvider: new firebase.auth.FacebookAuthProvider()
 };
 
-const App = (props) => {
-  const { user } = props;
+const App = props => {
+  const {user} = props;
+  const storage = getStorage(firebaseApp);
+
+  const imageUploaderSharedProps = {
+    firbaseApp,
+    fbRef,
+    getDownloadURL,
+    uploadBytesResumable,
+    storage,
+    storageFolder: "rfiu-test"
+  };
 
   return (
     <div className="App">
       <h1>React Firebase Image Uploader Test</h1>
       <Login {...props} />
-      <div style={{ marginTop: 40, marginBottom: 100 }}>
+      <div style={{marginTop: 40, marginBottom: 100}}>
         {user ? (
           <>
             <div>
               <h4>Vanilla Example</h4>
               <ReactFirebaseImageUploader
-                firebaseApp={firebaseApp}
-                storageFolder="rfiu-test"
+                {...imageUploaderSharedProps}
                 multiple
               />
             </div>
-            <div style={{ marginTop: "40px" }}>
+            <div style={{marginTop: "40px"}}>
               <h4>Material with Circular Progress Bar Example</h4>
               <ReactFirebaseImageUploader
-                fbRef={ref}
-                getDownloadURL={getDownloadURL}
-                uploadBytesResumable={uploadBytesResumable}
-                firebaseApp={firebaseApp}
-                storageFolder="rfiu-test"
+                {...imageUploaderSharedProps}
                 progressControl={CircularProgressbar}
                 checkboxControl={Checkbox}
                 buttonControl={Button}
@@ -64,18 +72,18 @@ const App = (props) => {
                 options={{
                   styles: {
                     // imgPreview: { maxWidth: "50px" },
-                    imgPreviewLabel: { fontSize: "12px" },
-                    progressControlWrapper: { height: 70, width: 70 },
-                  },
+                    imgPreviewLabel: {fontSize: "12px"},
+                    progressControlWrapper: {height: 70, width: 70}
+                  }
                 }}
                 multiple
-                uploadStartCallback={(fileToStore) => {
+                uploadStartCallback={fileToStore => {
                   console.log(
                     "uploadStartCallback triggered, and we're done!, fileToStore",
                     fileToStore
                   );
                 }}
-                uploadCompleteCallback={(statusObj) => {
+                uploadCompleteCallback={statusObj => {
                   console.log(
                     "uploadCompleteCallback triggered, and we're done!, statusObj",
                     statusObj
@@ -94,5 +102,5 @@ const App = (props) => {
 
 export default withFirebaseAuth({
   providers,
-  firebaseAppAuth,
+  firebaseAppAuth
 })(App);

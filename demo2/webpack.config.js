@@ -42,12 +42,14 @@ module.exports = {
     extensions: [".js", ".jsx"],
     fallback: {
       // assert: require.resolve('assert'),
+      // "url": require.resolve("url/"),
       crypto: require.resolve("crypto-browserify"),
       http: require.resolve('stream-http'),
       https: require.resolve("https-browserify"),
       // os: require.resolve('os-browserify/browser'),
       stream: require.resolve('stream-browserify'),
       buffer: require.resolve("buffer/"),
+      // "zlib": require.resolve("browserify-zlib")
     },
   },
   plugins: [

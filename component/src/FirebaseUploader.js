@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 // import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
@@ -42,10 +42,7 @@ const PassedPropProgressIndicator = ({
   component,
   value,
   componentWrapperStyles,
-  fileName,
-  fbRef,
-  getDownloadURL,
-  uploadBytesResumable
+  fileName
 }) => {
   const PassedComponent = component;
   if (componentWrapperStyles) {
@@ -69,6 +66,10 @@ const PassedPropProgressIndicator = ({
 
 const FirebaseUploadImage = ({
   firebaseApp,
+  fbRef,
+  getDownloadURL,
+  uploadBytesResumable,
+  storage,
   storageFolder = "rfiu",
   disabled = false,
   multiple = false,
@@ -87,6 +88,9 @@ const FirebaseUploadImage = ({
   uploadStartCallback,
   uploadCompleteCallback
 }) => {
+  console.log("TCL ~ file: FirebaseUploader.js ~ line 89 ~ fbRef", fbRef);
+  console.log("TCL ~ file: FirebaseUploader.js ~ line 88 ~ storage", storage);
+
   console.log(
     "TCL ~ file: FirebaseUploader.js ~ line 87 ~ firebaseApp",
     firebaseApp
@@ -168,6 +172,16 @@ const FirebaseUploadImage = ({
       uploadStartCallback(filesToStore);
     }
     setUploadButtonClicked(true);
+    const file = filesToStore[0];
+    console.log(
+      "TCL ~ file: FirebaseUploader.js ~ line 172 ~ startUpload ~ file",
+      file
+    );
+    const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
+    console.log(
+      "TCL ~ file: FirebaseUploader.js ~ line 177 ~ startUpload ~ storageRef",
+      storageRef
+    );
 
     // const uploadResults = await Promise.all(
     //   filesToStore.map(async file => {
