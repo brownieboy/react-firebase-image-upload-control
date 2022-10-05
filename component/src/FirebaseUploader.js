@@ -234,16 +234,6 @@ const FirebaseUploadImage = ({
         onDrop={handleImageChange}
         multiple={multiple}
       />
-      {/* <FileUploader
-        // ref={instance => {
-        //   fileUploader = instance;
-        // }} // ⇐ reference the component
-        storageRef={firebaseApp.storage().ref(storageFolder)}
-        style={{display: "none"}}
-        onProgress={handleProgress}
-        onUploadSuccess={handleUploadSuccess}
-        multiple={multiple}
-      /> */}
       <div
         style={{
           display: "flex",
