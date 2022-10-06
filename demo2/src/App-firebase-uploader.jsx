@@ -1,8 +1,8 @@
-import React, {useRef} from "react";
+import React from "react";
 import "./App.css";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/database";
+import {initializeApp} from "firebase/app";
+import {getAuth, GoogleAuthProvider, GithubAuthProvider, TwitterAuthProvider, FacebookAuthProvider, signInWithEmailAndPassword} from "firebase/auth";
+import "firebase/database";
 import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -17,14 +17,14 @@ import Login from "./Login";
 
 // You must supply this!
 import firebaseConfigObj from "./firebaseconfig/firebase-config.json";
-const firebaseApp = firebase.initializeApp(firebaseConfigObj);
-const firebaseAppAuth = firebaseApp.auth();
+const firebaseApp = initializeApp(firebaseConfigObj);
+const firebaseAppAuth = getAuth();
 
 const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider(),
-  githubProvider: new firebase.auth.GithubAuthProvider(),
-  twitterProvider: new firebase.auth.TwitterAuthProvider(),
-  facebookProvider: new firebase.auth.FacebookAuthProvider()
+  googleProvider: new GoogleAuthProvider(),
+  githubProvider: new GithubAuthProvider(),
+  twitterProvider: new TwitterAuthProvider(),
+  facebookProvider: new FacebookAuthProvider()
 };
 
 const App = props => {
