@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./App.css";
 import {initializeApp} from "firebase/app";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import "firebase/database";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
@@ -19,7 +19,7 @@ import firebaseConfigObj from "./firebaseconfig/firebase-config.json";
 const firebaseApp = initializeApp(firebaseConfigObj);
 const auth = getAuth();
 
-const loginProviders = {signInWithEmailAndPassword};
+const loginProviders = {signInWithEmailAndPassword, signOut};
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -28,17 +28,19 @@ const App = () => {
     storageFolder: "rfiu-test"
   };
 
-  const handleUserCallBack = newUser => {
-    console.log(
-      "TCL ~ file: App-firebase-uploader.jsx ~ line 32 ~ handleUserCallBack ~ newUser",
-      newUser
-    );
+  const handleLogin = newUser => {
+    setUser(newUser);
   };
 
   return (
     <div className="App">
       <h1>React Firebase Image Uploader Test</h1>
-      <Login {...loginProviders} auth={auth} userCallback={handleUserCallBack} />
+      <Login
+        {...loginProviders}
+        auth={auth}
+        loginCallback={handleLogin}
+        user={user}
+      />
       <div style={{marginTop: 40, marginBottom: 100}}>
         {user ? (
           <>

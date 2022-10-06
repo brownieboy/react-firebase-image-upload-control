@@ -12,10 +12,6 @@ const Login = ({
   user
 }) => {
   const [lastLoginMessage, setLastLoginMessage] = useState(null);
-  console.log(
-    "TCL ~ file: Login.js ~ line 15 ~ lastLoginMessage",
-    lastLoginMessage
-  );
 
   const handleSignInWithEmailAndPassword = async (email, password) => {
     // const loginButtonValue = e.target.value;
@@ -26,6 +22,7 @@ const Login = ({
         "TCL ~ file: Login.js ~ line 45 ~ handleLoginButtonClick ~ newSignInResult",
         newSignInResult
       );
+      loginCallback(newSignInResult.user);
     } catch (e) {
       console.log(
         "TCL ~ file: Login.js ~ line 21 ~ handleSignInWithEmailAndPassword ~ e",
@@ -33,6 +30,12 @@ const Login = ({
       );
       setLastLoginMessage(e);
     }
+  };
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    setLastLoginMessage("Logged out");
+    loginCallback(null);
   };
 
   const getLoginButton = () => {
@@ -54,7 +57,7 @@ const Login = ({
         </>
       )}
       {user ? (
-        <button onClick={signOut}>Sign out</button>
+        <button onClick={handleSignOut}>Sign out</button>
       ) : (
         <>
           <h3>Sign in</h3>
