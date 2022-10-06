@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 import {initializeApp} from "firebase/app";
-import {getAuth, GoogleAuthProvider, GithubAuthProvider, TwitterAuthProvider, FacebookAuthProvider, signInWithEmailAndPassword} from "firebase/auth";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import "firebase/database";
-import withFirebaseAuth from "react-with-firebase-auth";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
@@ -18,27 +17,28 @@ import Login from "./Login";
 // You must supply this!
 import firebaseConfigObj from "./firebaseconfig/firebase-config.json";
 const firebaseApp = initializeApp(firebaseConfigObj);
-const firebaseAppAuth = getAuth();
+const auth = getAuth();
 
-const providers = {
-  googleProvider: new GoogleAuthProvider(),
-  githubProvider: new GithubAuthProvider(),
-  twitterProvider: new TwitterAuthProvider(),
-  facebookProvider: new FacebookAuthProvider()
-};
+const loginProviders = {signInWithEmailAndPassword};
 
-const App = props => {
-  const {user} = props;
-
+const App = () => {
+  const [user, setUser] = useState(null);
   const imageUploaderSharedProps = {
     firebaseApp,
     storageFolder: "rfiu-test"
   };
 
+  const handleUserCallBack = newUser => {
+    console.log(
+      "TCL ~ file: App-firebase-uploader.jsx ~ line 32 ~ handleUserCallBack ~ newUser",
+      newUser
+    );
+  };
+
   return (
     <div className="App">
       <h1>React Firebase Image Uploader Test</h1>
-      <Login {...props} />
+      <Login {...loginProviders} auth={auth} userCallback={handleUserCallBack} />
       <div style={{marginTop: 40, marginBottom: 100}}>
         {user ? (
           <>
@@ -89,7 +89,4 @@ const App = props => {
   );
 };
 
-export default withFirebaseAuth({
-  providers,
-  firebaseAppAuth
-})(App);
+export default App;

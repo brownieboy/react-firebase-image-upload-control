@@ -1,76 +1,46 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 // import withFirebaseAuth from "react-with-firebase-auth";
 // import * as firebase from "firebase/app";
 // import "firebase/auth";
 import UserForm from "./UserForm";
 
 const Login = ({
-  loading,
+  auth,
   signInWithEmailAndPassword,
-  signInWithGoogle,
-  signInWithFacebook,
-  signInWithGithub,
-  signInWithTwitter,
-  signInAnonymously,
+  loginCallback,
   signOut,
   user
 }) => {
-  const [signInResult, setSignInResult] = useState({
-    type: "",
-    callbackObj: {}
-  });
-  const [loginType, setLoginType] = useState("email");
-
-  const loginMetaArray = [
-    { id: "anonymous", label: "Anonymously", handler: signInAnonymously },
-    {
-      id: "email",
-      label: "Email and password",
-      handler: signInWithEmailAndPassword
-    },
-    { id: "google", label: "Google ID", handler: signInWithGoogle },
-    { id: "github", label: "Github", handler: signInWithGithub },
-    { id: "facebook", label: "Facebook", handler: signInWithFacebook },
-    { id: "twitter", label: "Twitter", handler: signInWithTwitter }
-  ];
-
-  const handleLoginButtonClick = async e => {
-    const loginButtonValue = e.target.value;
-    const matchLoginObj = loginMetaArray.find(
-      member => member.id === loginButtonValue
-    );
-    console.log("TCL: matchLoginObj", matchLoginObj);
-    const newSignInResult = await matchLoginObj.handler();
-    setSignInResult({ type: loginButtonValue, callbackObj: newSignInResult });
-  };
+  const [lastLoginMessage, setLastLoginMessage] = useState(null);
+  console.log(
+    "TCL ~ file: Login.js ~ line 15 ~ lastLoginMessage",
+    lastLoginMessage
+  );
 
   const handleSignInWithEmailAndPassword = async (email, password) => {
-    const newSignInResult = await signInWithEmailAndPassword(email, password);
-    setSignInResult({ type: "email", callbackObj: newSignInResult });
+    // const loginButtonValue = e.target.value;
+    let newSignInResult;
+    try {
+      newSignInResult = await signInWithEmailAndPassword(auth, email, password);
+      console.log(
+        "TCL ~ file: Login.js ~ line 45 ~ handleLoginButtonClick ~ newSignInResult",
+        newSignInResult
+      );
+    } catch (e) {
+      console.log(
+        "TCL ~ file: Login.js ~ line 21 ~ handleSignInWithEmailAndPassword ~ e",
+        e
+      );
+      setLastLoginMessage(e);
+    }
   };
 
-  const handleChangeLoginType = e => setLoginType(e.target.value);
-
   const getLoginButton = () => {
-    if (loginType === "email") {
-      return (
-        <div>
-          <UserForm onSubmit={handleSignInWithEmailAndPassword} />
-        </div>
-      );
-    } else {
-      const matchLoginObj = loginMetaArray.find(
-        member => member.id === loginType
-      );
-      return (
-        <div>
-          <button
-            onClick={handleLoginButtonClick}
-            value={loginType}
-          >{`Login with ${matchLoginObj.label}`}</button>
-        </div>
-      );
-    }
+    return (
+      <div>
+        <UserForm onSubmit={handleSignInWithEmailAndPassword} />
+      </div>
+    );
   };
 
   return (
@@ -80,24 +50,7 @@ const Login = ({
       ) : (
         <>
           <h1>Log in</h1>
-          <p>
-            You need to log into Firebase first. Please choose your login type
-          </p>
-          {loginMetaArray.map(type => (
-            <div key={type.id}>
-              <label>
-                <input
-                  type="radio"
-                  value={type.id}
-                  onChange={handleChangeLoginType}
-                  name="logintype"
-                  checked={loginType === type.id}
-                />
-                {type.label}
-              </label>
-              <br />
-            </div>
-          ))}
+          <p>You need to log into Firebase first.</p>
         </>
       )}
       {user ? (
@@ -110,12 +63,10 @@ const Login = ({
       )}
 
       {/* {loading && <h2>Loading..</h2>} */}
-      <div style={{ marginTop: 20 }}>
+      <div style={{marginTop: 20}}>
         <b>Last sign-in message:</b>
-        <div style={{ fontSize: 11 }}>
-          {signInResult.type === ""
-            ? "No logins messages"
-            : `${signInResult.type}: ${signInResult.callbackObj.message}`}
+        <div style={{fontSize: 11}}>
+          {lastLoginMessage ? `${lastLoginMessage}` : "No logins messages"}
         </div>
       </div>
     </div>
