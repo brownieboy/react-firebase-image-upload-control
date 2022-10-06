@@ -18,16 +18,8 @@ const Login = ({
     let newSignInResult;
     try {
       newSignInResult = await signInWithEmailAndPassword(auth, email, password);
-      console.log(
-        "TCL ~ file: Login.js ~ line 45 ~ handleLoginButtonClick ~ newSignInResult",
-        newSignInResult
-      );
       loginCallback(newSignInResult.user);
     } catch (e) {
-      console.log(
-        "TCL ~ file: Login.js ~ line 21 ~ handleSignInWithEmailAndPassword ~ e",
-        e
-      );
       setLastLoginMessage(e);
     }
   };
