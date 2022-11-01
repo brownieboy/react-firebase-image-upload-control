@@ -40,7 +40,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
-    fallback: {
+   /* fallback: {
       // assert: require.resolve('assert'),
       // "url": require.resolve("url/"),
       crypto: require.resolve("crypto-browserify"),
@@ -50,7 +50,7 @@ module.exports = {
       stream: require.resolve('stream-browserify'),
       buffer: require.resolve("buffer/"),
       // "zlib": require.resolve("browserify-zlib")
-    },
+    }, */
   },
   plugins: [
     new HTMLWebpackPlugin({
