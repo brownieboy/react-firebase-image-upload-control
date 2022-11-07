@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-env node */
 const path = require("path");
 
@@ -22,7 +21,7 @@ module.exports = {
   output: {
     path:
       TARGET === "start"
-        ? path.resolve(__dirname, "..", "demo2", "src", "package")
+        ? path.resolve(__dirname, "..", "demo3", "src", ".package")
         : path.resolve(__dirname, "../dist"),
     filename: "index.js",
     library: "rfiu",
