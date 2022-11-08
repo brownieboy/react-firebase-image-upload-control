@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from "react";
+/* eslint-disable indent */
+import React, {useState} from "react";
 import {
   ref as fbRef,
   getDownloadURL,
@@ -27,22 +28,29 @@ const styles = {
   }
 };
 
-const PlainProgressIndicator = ({value, fileName}) => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      marginRight: 5
-    }}>
-    <div>{value}%</div>
-    <div style={styles.progressControl.label}>{fileName}</div>
-  </div>
-);
+const PlainProgressIndicator = ({value, fileName}) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginRight: 5
+      }}>
+      <div>{value}%</div>
+      <div style={styles.progressControl.label}>{fileName}</div>
+    </div>
+  );
+};
+
 const PlainCheckbox = props => <input type="checkbox" {...props} />;
-const PlainButton = ({children, ...props}) => (
-  <button {...props}>{children}</button>
-);
+const PlainButton = ({children, ...props}) => {
+  console.log(
+    "TCL ~ file: FirebaseUploader.js ~ line 48 ~ PlainButton ~ children",
+    children
+  );
+  return <button {...props}>{children}</button>;
+};
 
 const PassedPropProgressIndicator = ({
   component,
@@ -50,6 +58,7 @@ const PassedPropProgressIndicator = ({
   componentWrapperStyles,
   fileName
 }) => {
+  console.log("TCL ~ file: FirebaseUploader.js ~ line 54 ~ value", value);
   const PassedComponent = component;
   if (componentWrapperStyles) {
     return (
@@ -322,6 +331,13 @@ FirebaseUploadImage.propTypes = {
   storageFolder: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
+  options: PropTypes.shape({
+    styles: PropTypes.shape({
+      imgPreview: PropTypes.object,
+      imgPreviewLabel: PropTypes.object,
+      progressControlWrapper: PropTypes.object
+    })
+  }),
   progressControl: PropTypes.func,
   checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
@@ -330,5 +346,29 @@ FirebaseUploadImage.propTypes = {
   uploadStartCallback: PropTypes.func,
   uploadCompleteCallback: PropTypes.func
 };
+
+PlainProgressIndicator.propTypes = {
+  value: PropTypes.number.isRequired,
+  fileName: PropTypes.string.isRequired
+};
+
+PassedPropProgressIndicator.propTypes = {
+  ...PlainProgressIndicator.propTypes
+};
+
+PlainButton.propTypes = {children: PropTypes.node.isRequired};
+
+// PlainButton.propTypes = {
+//   children: PropTypes.oneOfType([
+//     PropTypes.shape({
+//       type: PropTypes.oneOf([MyComponent])
+//     }),
+//     PropTypes.arrayOf(
+//       PropTypes.shape({
+//         type: PropTypes.oneOf([MyComponent])
+//       })
+//     )
+//   ]).isRequired
+// };
 
 export default FirebaseUploadImage;
