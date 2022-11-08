@@ -358,17 +358,4 @@ PassedPropProgressIndicator.propTypes = {
 
 PlainButton.propTypes = {children: PropTypes.node.isRequired};
 
-// PlainButton.propTypes = {
-//   children: PropTypes.oneOfType([
-//     PropTypes.shape({
-//       type: PropTypes.oneOf([MyComponent])
-//     }),
-//     PropTypes.arrayOf(
-//       PropTypes.shape({
-//         type: PropTypes.oneOf([MyComponent])
-//       })
-//     )
-//   ]).isRequired
-// };
-
 export default FirebaseUploadImage;
