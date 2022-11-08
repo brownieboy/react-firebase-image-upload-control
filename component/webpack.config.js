@@ -21,7 +21,7 @@ module.exports = {
   output: {
     path:
       TARGET === "start"
-        ? path.resolve(__dirname, "..", "demo3", "src", ".package")
+        ? path.resolve(__dirname, "..", "demo", "src", ".package")
         : path.resolve(__dirname, "../dist"),
     filename: "index.js",
     library: "rfiu",
