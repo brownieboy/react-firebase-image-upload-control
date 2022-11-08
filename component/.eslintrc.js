@@ -3,17 +3,15 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-  ],
+  extends: ["plugin:react/recommended"],
   overrides: [],
-  parser: "@babel/eslint-parser",
+  // parser: "@babel/eslint-parser",
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
-    sourceType: "module",
+    sourceType: "module"
   },
-  plugins: ["react"],
+  plugins: ["@typescript-eslint", "react"],
   rules: {
     indent: ["warn", 2],
     "linebreak-style": ["warn", "unix"],
@@ -21,5 +19,10 @@ module.exports = {
     "react/prop-types": ["warn"],
     quotes: ["error", "double"],
     semi: ["error", "always"]
+  },
+  settings: {
+    react: {
+      version: "detect"
+    }
   }
 };

@@ -5,7 +5,7 @@ const TARGET = process.env.npm_lifecycle_event;
 const DEVMODE = TARGET === "start";
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   mode: DEVMODE ? "development" : "production",
   devtool: DEVMODE ? "eval-source-map" : "cheap-source-map",
   target: "node",
@@ -13,10 +13,13 @@ module.exports = {
     firebase: "firebase",
     "firebase/storage": "firebase/storage",
     react: "react",
-    "react-dom": "react-dom",
+    "react-dom": "react-dom"
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".jsx"]
   },
   externalsPresets: {
-    node: true, // in order to ignore built-in modules like path, fs, etc.
+    node: true // in order to ignore built-in modules like path, fs, etc.
   },
   output: {
     path:
@@ -25,7 +28,7 @@ module.exports = {
         : path.resolve(__dirname, "../dist"),
     filename: "index.js",
     library: "rfiu",
-    libraryTarget: "umd",
+    libraryTarget: "umd"
   },
   module: {
     rules: [
@@ -33,17 +36,23 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /node_modules/,
         include: path.resolve(__dirname, "./src"),
+
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
-          },
-        },
+            presets: ["@babel/preset-env"]
+          }
+        }
+      },
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-    ],
-  },
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  }
 };
