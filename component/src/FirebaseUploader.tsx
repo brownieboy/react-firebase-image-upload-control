@@ -93,7 +93,7 @@ const PassedPropProgressIndicator = ({
   return <PassedComponent value={`${value}%`} />;
 };
 
-interface FirebaseUploadImageProps {
+export interface FirebaseUploadImageProps {
   firebaseApp: object;
   storageFolder: string;
   disabled?: boolean;
