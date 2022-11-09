@@ -13,7 +13,7 @@ import _uniqBy from "lodash/fp/uniqBy";
 // import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 
-import ImageDrop from "./ImageDrop.js";
+import ImageDrop from "./ImageDrop";
 
 const styles = {
   imagePreview: {
@@ -50,7 +50,11 @@ const PlainProgressIndicator = ({
   );
 };
 
-const PlainCheckbox = props => <input type="checkbox" {...props} />;
+const PlainCheckbox = (
+  props: JSX.IntrinsicAttributes &
+    React.ClassAttributes<HTMLInputElement> &
+    React.InputHTMLAttributes<HTMLInputElement>
+) => <input type="checkbox" {...props} />;
 
 interface PlainButtonProps {
   children: React.ReactNode;
@@ -64,14 +68,33 @@ const PlainButton = ({children, ...props}: PlainButtonProps) => {
   return <button {...props}>{children}</button>;
 };
 
-interface PassedPropProgressIndicatorProps {}
+// PlainProgressIndicator.propTypes = {
+//   value: PropTypes.number.isRequired,
+//   fileName: PropTypes.string.isRequired
+// };
+
+// PassedPropProgressIndicator.propTypes = {
+//   ...PlainProgressIndicator.propTypes
+// };
+
+// type MyFunctionType = (name: string) => number;
+
+type PassedPropProgressComponentType = (
+  value: number,
+  text?: string
+) => React.ElementType;
+
+interface PassedPropProgressIndicatorProps extends PlainProgressIndicatorProps {
+  componentWrapperStyles?: object;
+  component?: PassedPropProgressComponentType;
+}
 
 const PassedPropProgressIndicator = ({
   component,
   value,
   componentWrapperStyles,
   fileName
-}: PassedPropProgressIndicatorProps) => {
+}) => {
   console.log("TCL ~ file: FirebaseUploader.js ~ line 54 ~ value", value);
   const PassedComponent = component;
   if (componentWrapperStyles) {
@@ -105,13 +128,13 @@ export interface FirebaseUploadImageProps {
       progressControlWrapper?: object;
     };
   };
-  progressControl?(...args: unknown[]): unknown;
-  checkboxControl?: (...args: unknown[]) => unknown | object;
-  buttonControl?: (...args: unknown[]) => unknown | object;
-  uploadButtonIcon?: (...args: unknown[]) => unknown | object;
-  removeButtonIcon?: (...args: unknown[]) => unknown | object;
-  uploadStartCallback?(...args: unknown[]): unknown;
-  uploadCompleteCallback?(...args: unknown[]): unknown;
+  progressControl?: keyof JSX.IntrinsicElements;
+  checkboxControl?: keyof JSX.IntrinsicElements;
+  buttonControl?: keyof JSX.IntrinsicElements;
+  uploadButtonIcon?: keyof JSX.IntrinsicElements;
+  removeButtonIcon?: keyof JSX.IntrinsicElements;
+  uploadStartCallback?: Function;
+  uploadCompleteCallback?: Function;
 }
 
 const FirebaseUploadImage = ({

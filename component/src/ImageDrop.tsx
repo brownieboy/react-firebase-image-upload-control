@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { useDropzone } from "react-dropzone";
+import React, {useMemo} from "react";
+import {useDropzone, DropzoneOptions} from "react-dropzone";
 
 const baseStyle = {
   flex: 1,
@@ -29,14 +29,14 @@ const rejectStyle = {
   borderColor: "#ff1744"
 };
 
-const StyledDropzone = props => {
+const StyledDropzone = (props: DropzoneOptions | undefined) => {
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     isDragAccept,
     isDragReject
-  } = useDropzone({ accept: "image/*", ...props });
+  } = useDropzone({accept: "image/*", ...props});
 
   const style = useMemo(
     () => ({
@@ -47,13 +47,23 @@ const StyledDropzone = props => {
     }),
     [isDragActive, isDragAccept, isDragReject]
   );
+  console.log(
+    "TCL ~ file: ImageDrop.tsx ~ line 50 ~ StyledDropzone ~ style",
+    style
+  );
+  const rootProps = getRootProps(style);
+  console.log(
+    "TCL ~ file: ImageDrop.tsx ~ line 52 ~ StyledDropzone ~ rootProps",
+    rootProps
+  );
 
-  const message = props.multiple
+  const message = props?.multiple
     ? "Drag 'n' drop some files here, or click to select files"
     : "Drag 'n' drop a file here, or click to select a file";
   return (
     <div className="container">
-      <div {...getRootProps({ style })}>
+      {/* @ts-ignore */}
+      <div {...getRootProps({style})}>
         <input {...getInputProps()} />
         <p>{message}</p>
       </div>
