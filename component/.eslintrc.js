@@ -16,7 +16,7 @@ module.exports = {
     indent: ["warn", 2],
     "linebreak-style": ["warn", "unix"],
     "no-unused-vars": ["warn"],
-    "react/prop-types": ["warn"],
+    "react/prop-types": 0,
     quotes: ["error", "double"],
     semi: ["error", "always"]
   },

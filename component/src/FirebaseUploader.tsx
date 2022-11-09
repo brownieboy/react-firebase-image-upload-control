@@ -94,7 +94,8 @@ const PassedPropProgressIndicator = ({
   value,
   componentWrapperStyles,
   fileName
-}) => {
+}: PassedPropProgressIndicatorProps) => {
+  console.log("TCL ~ file: FirebaseUploader.tsx ~ line 98 ~ typeof component", typeof component);
   console.log("TCL ~ file: FirebaseUploader.js ~ line 54 ~ value", value);
   const PassedComponent = component;
   if (componentWrapperStyles) {

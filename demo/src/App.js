@@ -8,8 +8,8 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// import {CircularProgressbar} from "react-circular-progressbar";
-// import "react-circular-progressbar/dist/styles.css";
+import {CircularProgressbar} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 import ReactFirebaseImageUploader from "./.package";
 import Login from "./Login";
@@ -55,7 +55,7 @@ const App = () => {
               <h4>Material with Circular Progress Bar Example</h4>
               <ReactFirebaseImageUploader
                 {...imageUploaderSharedProps}
-                // progressControl={CircularProgressbar}
+                progressControl={CircularProgressbar}
                 checkboxControl={Checkbox}
                 buttonControl={Button}
                 uploadButtonIcon={CloudUploadIcon}

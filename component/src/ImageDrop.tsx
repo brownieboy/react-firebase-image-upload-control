@@ -47,16 +47,6 @@ const StyledDropzone = (props: DropzoneOptions | undefined) => {
     }),
     [isDragActive, isDragAccept, isDragReject]
   );
-  console.log(
-    "TCL ~ file: ImageDrop.tsx ~ line 50 ~ StyledDropzone ~ style",
-    style
-  );
-  const rootProps = getRootProps(style);
-  console.log(
-    "TCL ~ file: ImageDrop.tsx ~ line 52 ~ StyledDropzone ~ rootProps",
-    rootProps
-  );
-
   const message = props?.multiple
     ? "Drag 'n' drop some files here, or click to select files"
     : "Drag 'n' drop a file here, or click to select a file";
