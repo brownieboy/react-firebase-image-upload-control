@@ -6,7 +6,6 @@ import {
   getStorage,
   uploadBytesResumable
 } from "firebase/storage";
-import PropTypes from "prop-types";
 // import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 // import FileUploader from "./react-firebase-file-uploader";
@@ -28,7 +27,15 @@ const styles = {
   }
 };
 
-const PlainProgressIndicator = ({value, fileName}) => {
+interface PlainProgressIndicatorProps {
+  value: number;
+  fileName: string;
+}
+
+const PlainProgressIndicator = ({
+  value,
+  fileName
+}: PlainProgressIndicatorProps) => {
   return (
     <div
       style={{
@@ -44,7 +51,12 @@ const PlainProgressIndicator = ({value, fileName}) => {
 };
 
 const PlainCheckbox = props => <input type="checkbox" {...props} />;
-const PlainButton = ({children, ...props}) => {
+
+interface PlainButtonProps {
+  children: React.ReactNode;
+}
+
+const PlainButton = ({children, ...props}: PlainButtonProps) => {
   console.log(
     "TCL ~ file: FirebaseUploader.js ~ line 48 ~ PlainButton ~ children",
     children
@@ -52,12 +64,14 @@ const PlainButton = ({children, ...props}) => {
   return <button {...props}>{children}</button>;
 };
 
+interface PassedPropProgressIndicatorProps {}
+
 const PassedPropProgressIndicator = ({
   component,
   value,
   componentWrapperStyles,
   fileName
-}) => {
+}: PassedPropProgressIndicatorProps) => {
   console.log("TCL ~ file: FirebaseUploader.js ~ line 54 ~ value", value);
   const PassedComponent = component;
   if (componentWrapperStyles) {
@@ -79,11 +93,33 @@ const PassedPropProgressIndicator = ({
   return <PassedComponent value={`${value}%`} />;
 };
 
+interface FirebaseUploadImageProps {
+  firebaseApp: object;
+  storageFolder: string;
+  disabled?: boolean;
+  multiple?: boolean;
+  options?: {
+    styles?: {
+      imgPreview?: object;
+      imgPreviewLabel?: object;
+      progressControlWrapper?: object;
+    };
+  };
+  progressControl?(...args: unknown[]): unknown;
+  checkboxControl?: (...args: unknown[]) => unknown | object;
+  buttonControl?: (...args: unknown[]) => unknown | object;
+  uploadButtonIcon?: (...args: unknown[]) => unknown | object;
+  removeButtonIcon?: (...args: unknown[]) => unknown | object;
+  uploadStartCallback?(...args: unknown[]): unknown;
+  uploadCompleteCallback?(...args: unknown[]): unknown;
+}
+
 const FirebaseUploadImage = ({
   firebaseApp,
   storageFolder = "rfiu",
   disabled = false,
   multiple = false,
+
   options = {
     styles: {
       imgPreview: {},
@@ -91,6 +127,7 @@ const FirebaseUploadImage = ({
       progressControlWrapper: {}
     }
   },
+
   progressControl,
   checkboxControl,
   buttonControl,
@@ -98,7 +135,7 @@ const FirebaseUploadImage = ({
   removeButtonIcon,
   uploadStartCallback,
   uploadCompleteCallback
-}) => {
+}: FirebaseUploadImageProps) => {
   const [filesToStore, setFilesToStore] = useState([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState({});
@@ -325,37 +362,5 @@ const FirebaseUploadImage = ({
     </>
   );
 };
-
-FirebaseUploadImage.propTypes = {
-  firebaseApp: PropTypes.object.isRequired,
-  storageFolder: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  multiple: PropTypes.bool,
-  options: PropTypes.shape({
-    styles: PropTypes.shape({
-      imgPreview: PropTypes.object,
-      imgPreviewLabel: PropTypes.object,
-      progressControlWrapper: PropTypes.object
-    })
-  }),
-  progressControl: PropTypes.func,
-  checkboxControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  buttonControl: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  uploadButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  removeButtonIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  uploadStartCallback: PropTypes.func,
-  uploadCompleteCallback: PropTypes.func
-};
-
-PlainProgressIndicator.propTypes = {
-  value: PropTypes.number.isRequired,
-  fileName: PropTypes.string.isRequired
-};
-
-PassedPropProgressIndicator.propTypes = {
-  ...PlainProgressIndicator.propTypes
-};
-
-PlainButton.propTypes = {children: PropTypes.node.isRequired};
 
 export default FirebaseUploadImage;
