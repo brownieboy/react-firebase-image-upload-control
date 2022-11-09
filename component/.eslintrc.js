@@ -15,10 +15,11 @@ module.exports = {
   rules: {
     indent: ["warn", 2],
     "linebreak-style": ["warn", "unix"],
-    "no-unused-vars": ["warn"],
+    "no-unused-vars": "off",
     "react/prop-types": 0,
     quotes: ["error", "double"],
-    semi: ["error", "always"]
+    semi: ["error", "always"],
+    "@typescript-eslint/no-unused-vars": "warn"
   },
   settings: {
     react: {

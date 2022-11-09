@@ -68,20 +68,10 @@ const PlainButton = ({children, ...props}: PlainButtonProps) => {
   return <button {...props}>{children}</button>;
 };
 
-// PlainProgressIndicator.propTypes = {
-//   value: PropTypes.number.isRequired,
-//   fileName: PropTypes.string.isRequired
-// };
-
-// PassedPropProgressIndicator.propTypes = {
-//   ...PlainProgressIndicator.propTypes
-// };
-
 // type MyFunctionType = (name: string) => number;
 
 type PassedPropProgressComponentType = (
   value: number,
-  text?: string
 ) => React.ElementType;
 
 interface PassedPropProgressIndicatorProps extends PlainProgressIndicatorProps {
@@ -95,8 +85,7 @@ const PassedPropProgressIndicator = ({
   componentWrapperStyles,
   fileName
 }: PassedPropProgressIndicatorProps) => {
-  console.log("TCL ~ file: FirebaseUploader.tsx ~ line 98 ~ typeof component", typeof component);
-  console.log("TCL ~ file: FirebaseUploader.js ~ line 54 ~ value", value);
+
   const PassedComponent = component;
   if (componentWrapperStyles) {
     return (
@@ -108,7 +97,7 @@ const PassedPropProgressIndicator = ({
           marginRight: 10
         }}>
         <div style={componentWrapperStyles}>
-          <PassedComponent value={value} text={`${value}%`} />
+          <PassedComponent value={value} />
         </div>
         <div style={styles.progressControl.label}>{fileName}</div>
       </div>
