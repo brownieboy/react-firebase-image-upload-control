@@ -61,32 +61,44 @@ interface PlainButtonProps {
 }
 
 const PlainButton = ({children, ...props}: PlainButtonProps) => {
-  console.log(
-    "TCL ~ file: FirebaseUploader.js ~ line 48 ~ PlainButton ~ children",
-    children
-  );
   return <button {...props}>{children}</button>;
 };
 
 // type MyFunctionType = (name: string) => number;
 
+interface PassedPropProgressComponentTypeSignature {
+  value: number;
+}
+// type PassedPropProgressComponentType = (
+//   props: PassedPropProgressComponentTypeSignature
+// ) => React.ElementType;
+
 type PassedPropProgressComponentType = (
-  value: number,
-) => React.ElementType;
+  props: PassedPropProgressComponentTypeSignature
+) => JSX.Element;
 
 interface PassedPropProgressIndicatorProps extends PlainProgressIndicatorProps {
   componentWrapperStyles?: object;
-  component?: PassedPropProgressComponentType;
+  // component?: PassedPropProgressComponentType;
+  component: new () => React.Component<PassedPropProgressComponentTypeSignature>;
+  // component?: React.ComponentType;
+  wrapperFunc?: PassedPropProgressComponentType;
 }
 
 const PassedPropProgressIndicator = ({
-  component,
+  component: Component,
   value,
   componentWrapperStyles,
-  fileName
+  fileName,
+  wrapperFunc
 }: PassedPropProgressIndicatorProps) => {
+  const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
+  console.log(
+    "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
+    {wrapperFunc, wrapperFuncReturn}
+  );
 
-  const PassedComponent = component;
+  // const PassedComponent = Component;
   if (componentWrapperStyles) {
     return (
       <div
@@ -97,13 +109,13 @@ const PassedPropProgressIndicator = ({
           marginRight: 10
         }}>
         <div style={componentWrapperStyles}>
-          <PassedComponent value={value} />
+          <Component value={value} />
         </div>
         <div style={styles.progressControl.label}>{fileName}</div>
       </div>
     );
   }
-  return <PassedComponent value={`${value}%`} />;
+  return <Component value={`${value}%`} />;
 };
 
 export interface FirebaseUploadImageProps {
