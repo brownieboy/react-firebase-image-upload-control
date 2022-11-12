@@ -1,7 +1,12 @@
-import React, {useState} from "react";
-import "./App.css";
+import React, {useEffect, useState} from "react";
 import {initializeApp} from "firebase/app";
-import {getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {
+  browserSessionPersistence,
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signOut
+} from "firebase/auth";
 import "firebase/database";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
@@ -9,6 +14,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
+import "./App.css";
 
 import ReactFirebaseImageUploader from "./.package";
 import Login from "./Login";
@@ -18,18 +24,32 @@ import firebaseConfigObj from "./firebaseconfig/firebase-config.json";
 const firebaseApp = initializeApp(firebaseConfigObj);
 const auth = getAuth();
 
-const loginProviders = {signInWithEmailAndPassword, signOut};
+const loginProviders = {
+  signInWithEmailAndPassword,
+  signOut,
+  browserSessionPersistence,
+  setPersistence
+};
 
 const App = () => {
   const [user, setUser] = useState(null);
+  console.log("TCL ~ file: App.js ~ line 36 ~ App ~ user", user);
+
   const imageUploaderSharedProps = {
     firebaseApp,
     storageFolder: "rfiu-test"
   };
 
-  const handleLogin = newUser => {
-    setUser(newUser);
-  };
+  useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      if (auth?.currentUser?.email) {
+        setUser(auth.currentUser.email);
+      } else {
+        setUser(null);
+      }
+    });
+    return () => {};
+  }, []);
 
   return (
     <div className="App">
@@ -37,7 +57,6 @@ const App = () => {
       <Login
         {...loginProviders}
         auth={auth}
-        loginCallback={handleLogin}
         user={user}
       />
       <div style={{marginTop: 40, marginBottom: 100}}>
@@ -54,6 +73,7 @@ const App = () => {
               <h4>Material with Circular Progress Bar Example</h4>
               <ReactFirebaseImageUploader
                 {...imageUploaderSharedProps}
+                wrapperFunc={CircularProgressWithLabel}
                 progressControl={CircularProgressWithLabel}
                 checkboxControl={Checkbox}
                 buttonControl={Button}

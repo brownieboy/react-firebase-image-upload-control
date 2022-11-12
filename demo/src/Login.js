@@ -6,8 +6,10 @@ import UserForm from "./UserForm";
 
 const Login = ({
   auth,
+  browserSessionPersistence,
   signInWithEmailAndPassword,
   loginCallback,
+  setPersistence,
   signOut,
   user
 }) => {
@@ -17,8 +19,9 @@ const Login = ({
     // const loginButtonValue = e.target.value;
     let newSignInResult;
     try {
+      await setPersistence(auth, browserSessionPersistence);
       newSignInResult = await signInWithEmailAndPassword(auth, email, password);
-      loginCallback(newSignInResult.user);
+      setLastLoginMessage(`Last signed in as ${newSignInResult?.user?.email}`);
     } catch (e) {
       setLastLoginMessage(e);
     }
@@ -27,7 +30,6 @@ const Login = ({
   const handleSignOut = async () => {
     await signOut(auth);
     setLastLoginMessage("Logged out");
-    loginCallback(null);
   };
 
   const getLoginButton = () => {
