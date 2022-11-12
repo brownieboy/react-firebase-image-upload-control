@@ -36,7 +36,10 @@ const StyledDropzone = (props: DropzoneOptions | undefined) => {
     isDragActive,
     isDragAccept,
     isDragReject
-  } = useDropzone({accept: "image/*", ...props});
+  } = useDropzone({
+    accept: {"image/jpeg": [], "image/png": [], "image/gif": []},
+    ...props
+  });
 
   const style = useMemo(
     () => ({
