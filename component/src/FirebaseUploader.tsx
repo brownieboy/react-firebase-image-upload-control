@@ -7,6 +7,9 @@ import {
   getStorage,
   uploadBytesResumable
 } from "firebase/storage";
+
+import {FirebaseApp} from "firebase/app";
+
 // import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 // import FileUploader from "./react-firebase-file-uploader";
@@ -99,7 +102,6 @@ const PassedPropProgressIndicator = ({
     {wrapperFunc, wrapperFuncReturn}
   );
 
-  // const PassedComponent = Component;
   if (componentWrapperStyles) {
     return (
       <div
@@ -116,11 +118,16 @@ const PassedPropProgressIndicator = ({
       </div>
     );
   }
-  return <Component value={`${value}%`} />;
+  return (
+    <Component
+      value={value}
+      //  text={`${value}%`}
+    />
+  );
 };
 
 export interface FirebaseUploadImageProps {
-  firebaseApp: object;
+  firebaseApp: FirebaseApp;
   storageFolder: string;
   disabled?: boolean;
   multiple?: boolean;
