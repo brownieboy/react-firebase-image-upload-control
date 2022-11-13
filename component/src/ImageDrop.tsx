@@ -37,7 +37,9 @@ const StyledDropzone = (props: DropzoneOptions | undefined) => {
     isDragAccept,
     isDragReject
   } = useDropzone({
-    accept: {"image/jpeg": [], "image/png": [], "image/gif": []},
+    accept: {
+      "image/*": []
+    },
     ...props
   });
 
@@ -56,7 +58,7 @@ const StyledDropzone = (props: DropzoneOptions | undefined) => {
   return (
     <div className="container">
       {/* @ts-ignore */}
-      <div {...getRootProps({style})}>
+      <div {...getRootProps({className: "dropzone"})}>
         <input {...getInputProps()} />
         <p>{message}</p>
       </div>

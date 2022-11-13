@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import React, {useState} from "react";
+
 import {
   ref as fbRef,
   getDownloadURL,
@@ -12,7 +13,7 @@ import {
 import _uniqBy from "lodash/fp/uniqBy";
 // import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
-
+// @ts-ignore
 import ImageDrop from "./ImageDrop";
 
 const styles = {
