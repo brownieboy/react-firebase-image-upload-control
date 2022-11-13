@@ -58,7 +58,7 @@ const StyledDropzone = (props: DropzoneOptions | undefined) => {
   return (
     <div className="container">
       {/* @ts-ignore */}
-      <div {...getRootProps({className: "dropzone"})}>
+      <div {...getRootProps({style})}>
         <input {...getInputProps()} />
         <p>{message}</p>
       </div>
