@@ -5,7 +5,8 @@ import {
   ref as fbRef,
   getDownloadURL,
   getStorage,
-  uploadBytesResumable
+  uploadBytesResumable,
+  UploadTask
 } from "firebase/storage";
 
 import {FirebaseApp} from "firebase/app";
@@ -169,7 +170,10 @@ const FirebaseUploadImage = ({
   uploadStartCallback,
   uploadCompleteCallback
 }: FirebaseUploadImageProps) => {
-  const [filesToStore, setFilesToStore] = useState([]);
+  // Example: type of useState is an array of string
+  // const [items , setItems] = useState<string[]>([]);
+
+  const [filesToStore, setFilesToStore] = useState<File[]>([]);
   const [filesToRemove, setFilesToRemove] = useState([]);
   const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
@@ -184,7 +188,14 @@ const FirebaseUploadImage = ({
 
   const storage = getStorage(firebaseApp);
 
-  const handleImageChange = (currentFileArray, prevFileArray) => {
+  const handleImageChange = (
+    currentFileArray: File[],
+    prevFileArray: File[]
+  ) => {
+    console.log(
+      "TCL ~ file: FirebaseUploader.tsx ~ line 188 ~ handleImageChange ~ currentFileArray",
+      currentFileArray
+    );
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
 
@@ -211,15 +222,13 @@ const FirebaseUploadImage = ({
     setFilesToRemove([]); // Important to clear this if we have new files
   };
 
-  const handleProgress = (percent, task) => {
-    if (task._blob?.data_?.name) {
-      setUploadState(prevState => {
-        return {
-          ...prevState,
-          [task._blob?.data_?.name]: percent
-        };
-      });
-    }
+  const handleProgress = (percent: number, taskName: string) => {
+    setUploadState(prevState => {
+      return {
+        ...prevState,
+        [taskName]: percent
+      };
+    });
   };
 
   const startUpload = async () => {
@@ -232,13 +241,26 @@ const FirebaseUploadImage = ({
     filesToStore.forEach(file => {
       const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
+      console.log(
+        "TCL ~ file: FirebaseUploader.tsx ~ line 250 ~ startUpload ~ uploadTask",
+        uploadTask
+      );
       uploadTask.on(
         "state_changed",
         snapshot => {
+          console.log(
+            "TCL ~ file: FirebaseUploader.tsx ~ line 254 ~ startUpload ~ snapshot",
+            snapshot
+          );
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          handleProgress(progress, uploadTask);
+          const taskName = snapshot.ref.name;
+          console.log(
+            "TCL ~ file: FirebaseUploader.tsx ~ line 265 ~ startUpload ~ taskName",
+            taskName
+          );
+          handleProgress(progress, taskName);
         },
         error => {
           alert(error);
