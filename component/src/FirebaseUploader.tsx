@@ -222,11 +222,11 @@ const FirebaseUploadImage = ({
     setFilesToRemove([]); // Important to clear this if we have new files
   };
 
-  const handleProgress = (percent: number, taskName: string) => {
+  const handleProgress = (percent: number, fileName: string) => {
     setUploadState(prevState => {
       return {
         ...prevState,
-        [taskName]: percent
+        [fileName]: percent
       };
     });
   };
@@ -255,26 +255,27 @@ const FirebaseUploadImage = ({
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          const taskName = snapshot.ref.name;
+          const fileName = snapshot.ref.name;
           console.log(
-            "TCL ~ file: FirebaseUploader.tsx ~ line 265 ~ startUpload ~ taskName",
-            taskName
+            "TCL ~ file: FirebaseUploader.tsx ~ line 265 ~ startUpload ~ fileName",
+            fileName
           );
-          handleProgress(progress, taskName);
+          handleProgress(progress, fileName);
         },
         error => {
           alert(error);
         },
-        () => {
-          handleUploadSuccess(uploadTask);
+        async () => {
+          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          const fileName = uploadTask?.snapshot?.ref?.name;
+          handleUploadSuccess(fileName, downloadUrl);
         }
       );
     });
   };
 
-  const handleUploadSuccess = async task => {
-    const fileName = task._blob?.data_?.name;
-    const downloadUrl = await getDownloadURL(task.snapshot?.ref);
+  const handleUploadSuccess = async (fileName: string, downloadUrl: string) => {
+    // const fileName = task._blob?.data_?.name;
     setFilesToStore(prevState => {
       const currentFileIndex = prevState.findIndex(
         member => member.name === fileName
