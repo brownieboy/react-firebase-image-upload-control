@@ -1,12 +1,12 @@
 /* eslint-disable indent */
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 
 import {
   ref as fbRef,
   getDownloadURL,
   getStorage,
-  uploadBytesResumable,
-  UploadTask
+  uploadBytesResumable
+  // UploadTask
 } from "firebase/storage";
 
 import {FirebaseApp} from "firebase/app";
@@ -25,6 +25,7 @@ const styles = {
     maxHeight: 150,
     maxWidth: 200
   },
+  imagePreviewTitle: {},
   progressControl: {
     label: {
       fontSize: 10
@@ -137,6 +138,7 @@ export interface FirebaseUploadImageProps {
       imgPreview?: object;
       imgPreviewLabel?: object;
       progressControlWrapper?: object;
+      imgPreviewTitle?: object;
     };
   };
   progressControl?: keyof JSX.IntrinsicElements;
@@ -174,7 +176,7 @@ const FirebaseUploadImage = ({
   // const [items , setItems] = useState<string[]>([]);
 
   const [filesToStore, setFilesToStore] = useState<File[]>([]);
-  const [filesToRemove, setFilesToRemove] = useState([]);
+  const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
   const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   const UploadButtonIcon = uploadButtonIcon;
@@ -188,14 +190,17 @@ const FirebaseUploadImage = ({
 
   const storage = getStorage(firebaseApp);
 
+  // const handleImageChange = (...props) => {
+  //   console.log(
+  //     "TCL ~ file: FirebaseUploader.tsx ~ line 194 ~ handleImageChange ~ props",
+  //     props
+  //   );
+  // };
+
   const handleImageChange = (
     currentFileArray: File[],
     prevFileArray: File[]
   ) => {
-    console.log(
-      "TCL ~ file: FirebaseUploader.tsx ~ line 188 ~ handleImageChange ~ currentFileArray",
-      currentFileArray
-    );
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
 
@@ -241,25 +246,13 @@ const FirebaseUploadImage = ({
     filesToStore.forEach(file => {
       const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-      console.log(
-        "TCL ~ file: FirebaseUploader.tsx ~ line 250 ~ startUpload ~ uploadTask",
-        uploadTask
-      );
       uploadTask.on(
         "state_changed",
         snapshot => {
-          console.log(
-            "TCL ~ file: FirebaseUploader.tsx ~ line 254 ~ startUpload ~ snapshot",
-            snapshot
-          );
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
           const fileName = snapshot.ref.name;
-          console.log(
-            "TCL ~ file: FirebaseUploader.tsx ~ line 265 ~ startUpload ~ fileName",
-            fileName
-          );
           handleProgress(progress, fileName);
         },
         error => {
@@ -301,9 +294,9 @@ const FirebaseUploadImage = ({
     });
   };
 
-  const handleFileRemovalCheck = event => {
+  const handleFileRemovalCheck = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      setFilesToRemove([...filesToRemove, event.target.value]);
+      setFilesToRemove([...filesToRemove, event?.target?.value]);
     } else {
       setFilesToRemove(
         filesToRemove.filter(member => member !== event.target.value)
@@ -320,12 +313,12 @@ const FirebaseUploadImage = ({
 
   const imgPreviewStyles = {
     ...styles.imagePreview,
-    ...options.styles.imgPreview
+    ...options?.styles?.imgPreview
   };
 
   const imgPreviewTitleStyles = {
     ...styles.imagePreviewTitle,
-    ...options.styles.imgPreviewTitle
+    ...options?.styles?.imgPreviewTitle
   };
 
   return (
