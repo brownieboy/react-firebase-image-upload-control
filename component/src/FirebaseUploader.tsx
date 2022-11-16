@@ -18,7 +18,8 @@ import _uniqBy from "lodash/fp/uniqBy";
 // import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 // @ts-ignore
-import ImageDrop from "./ImageDrop";
+// import ImageDrop from "./ImageDrop";
+import DropZone from "./DropZone";
 
 const styles = {
   imagePreview: {
@@ -201,6 +202,10 @@ const FirebaseUploadImage = ({
     currentFileArray: File[],
     prevFileArray: File[]
   ) => {
+    console.log(
+      "TCL ~ file: FirebaseUploader.tsx ~ line 204 ~ currentFileArray",
+      {currentFileArray, prevFileArray}
+    );
     if (multiple) {
       const allFilesArray = [...currentFileArray, ...prevFileArray];
 
@@ -323,11 +328,11 @@ const FirebaseUploadImage = ({
 
   return (
     <>
-      <ImageDrop
-        // accept="image/*"
-        // options={{ onDrop: handleImageChange, multiple }}
-        onDrop={handleImageChange}
-        multiple={multiple}
+      <DropZone
+      // accept="image/*"
+      // options={{ onDrop: handleImageChange, multiple }}
+      // onDrop={handleImageChange}
+      // multiple={multiple}
       />
       <div
         style={{
