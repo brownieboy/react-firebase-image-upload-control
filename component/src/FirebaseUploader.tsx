@@ -11,7 +11,7 @@ import {
 } from "firebase/storage";
 
 import {FirebaseApp} from "firebase/app";
-
+// import { FileWithPreview } from "react-dropzone"
 // import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 // import FileUploader from "./react-firebase-file-uploader";
@@ -178,6 +178,7 @@ const FirebaseUploadImage = ({
   // const [items , setItems] = useState<string[]>([]);
 
   const [filesToStore, setFilesToStore] = useState<File[]>([]);
+  console.log("TCL ~ file: FirebaseUploader.tsx ~ line 181 ~ filesToStore", filesToStore);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
   const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
