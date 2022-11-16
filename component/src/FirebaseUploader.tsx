@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React, {ChangeEvent, useState} from "react";
-import {FileRejection} from "react-dropzone";
+// import {FileRejection} from "react-dropzone";
 
 import {
   ref as fbRef,
@@ -200,19 +200,15 @@ const FirebaseUploadImage = ({
   // };
 
   const handleImageChange = (
-    currentFileArray: File[],
-    prevFileArray: FileRejection[]
+    acceptedFilesArray: File[]
+    // prevFileArray: FileRejection[]
   ) => {
-    console.log(
-      "TCL ~ file: FirebaseUploader.tsx ~ line 204 ~ currentFileArray",
-      {currentFileArray, prevFileArray}
-    );
     if (multiple) {
-      const allFilesArray = [...currentFileArray, ...prevFileArray];
+      // const allFilesArray = [...currentFileArray];
 
       const uniqueFilesArray = _uniqBy(
         e => e.name,
-        [...filesToStore, ...allFilesArray]
+        [...filesToStore, ...acceptedFilesArray]
       ).map(file =>
         // Spread operator didn't work here.  Has to be Object.assign()
         Object.assign(file, {
@@ -223,7 +219,7 @@ const FirebaseUploadImage = ({
       setFilesToStore(uniqueFilesArray);
     } else {
       setFilesToStore(
-        currentFileArray.map(file =>
+        acceptedFilesArray.map(file =>
           Object.assign(file, {
             preview: URL.createObjectURL(file)
           })
