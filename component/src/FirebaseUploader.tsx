@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import React, {ChangeEvent, useState} from "react";
+import {FileRejection} from "react-dropzone";
 
 import {
   ref as fbRef,
@@ -18,8 +19,8 @@ import _uniqBy from "lodash/fp/uniqBy";
 // import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 // @ts-ignore
-// import ImageDrop from "./ImageDrop";
-import DropZone from "./DropZone";
+import ImageDrop from "./ImageDrop";
+// import DropZone from "./DropZone";
 
 const styles = {
   imagePreview: {
@@ -200,7 +201,7 @@ const FirebaseUploadImage = ({
 
   const handleImageChange = (
     currentFileArray: File[],
-    prevFileArray: File[]
+    prevFileArray: FileRejection[]
   ) => {
     console.log(
       "TCL ~ file: FirebaseUploader.tsx ~ line 204 ~ currentFileArray",
@@ -328,11 +329,11 @@ const FirebaseUploadImage = ({
 
   return (
     <>
-      <DropZone
-      // accept="image/*"
-      // options={{ onDrop: handleImageChange, multiple }}
-      // onDrop={handleImageChange}
-      // multiple={multiple}
+      <ImageDrop
+        // accept="image/*"
+        // options={{ onDrop: handleImageChange, multiple }}
+        onDrop={handleImageChange}
+        // multiple={multiple}
       />
       <div
         style={{
