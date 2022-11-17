@@ -40,10 +40,7 @@ interface PlainProgressIndicatorProps {
   fileName: string;
 }
 
-const PlainProgressIndicator = ({
-  value,
-  fileName
-}: PlainProgressIndicatorProps) => {
+const PlainProgressIndicator = ({value, fileName}: any) => {
   return (
     <div
       style={{
@@ -98,37 +95,40 @@ const PassedPropProgressIndicator = ({
   value,
   componentWrapperStyles,
   fileName
-}: // wrapperFunc
-PassedPropProgressIndicatorProps) => {
-  // const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
-  // console.log(
-  //   "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
-  //   {wrapperFunc, wrapperFuncReturn}
-  // );
+}: any) =>
+  // wrapperFunc
+  // PassedPropProgressIndicatorProps
 
-  if (componentWrapperStyles) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          marginRight: 10
-        }}>
-        <div style={componentWrapperStyles}>
-          <Component value={value} />
+  {
+    // const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
+    // console.log(
+    //   "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
+    //   {wrapperFunc, wrapperFuncReturn}
+    // );
+
+    if (componentWrapperStyles) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            marginRight: 10
+          }}>
+          <div style={componentWrapperStyles}>
+            <Component value={value} />
+          </div>
+          <div style={styles.progressControl.label}>{fileName}</div>
         </div>
-        <div style={styles.progressControl.label}>{fileName}</div>
-      </div>
+      );
+    }
+    return (
+      <Component
+        value={value}
+        //  text={`${value}%`}
+      />
     );
-  }
-  return (
-    <Component
-      value={value}
-      //  text={`${value}%`}
-    />
-  );
-};
+  };
 
 export interface FirebaseUploadImageProps {
   firebaseApp: FirebaseApp;
@@ -143,9 +143,9 @@ export interface FirebaseUploadImageProps {
       imgPreviewTitle?: object;
     };
   };
-  progressControl?: keyof JSX.IntrinsicElements;
-  checkboxControl?: keyof JSX.IntrinsicElements;
-  buttonControl?: any;  // "any" because passed as props
+  progressControl?: any;
+  checkboxControl?: any;
+  buttonControl?: any; // "any" because passed as props
   uploadButtonIcon?: any;
   removeButtonIcon?: any;
   uploadStartCallback?: Function;
@@ -179,7 +179,7 @@ const FirebaseUploadImage = ({
 
   const [filesToStore, setFilesToStore] = useState<FileWithPreview[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
-  const [uploadState, setUploadState] = useState({});
+  const [uploadState, setUploadState] = useState<any>({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   const UploadButtonIcon = uploadButtonIcon;
   const RemoveButtonIcon = removeButtonIcon;
@@ -233,7 +233,7 @@ const FirebaseUploadImage = ({
   };
 
   const handleProgress = (percent: number, fileName: string) => {
-    setUploadState(prevState => {
+    setUploadState((prevState:any) => {
       return {
         ...prevState,
         [fileName]: percent
@@ -409,7 +409,7 @@ const FirebaseUploadImage = ({
                 value={uploadState[file.name] || 0}
                 key={file.name}
                 component={progressControl}
-                componentWrapperStyles={options.styles.progressControlWrapper}
+                componentWrapperStyles={options?.styles?.progressControlWrapper}
                 fileName={file.name}
               />
             );
