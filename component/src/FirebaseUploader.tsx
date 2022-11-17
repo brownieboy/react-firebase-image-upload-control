@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, {ChangeEvent, useState} from "react";
+import React, {useState} from "react";
 // import {FileRejection} from "react-dropzone";
 
 import {
@@ -7,7 +7,6 @@ import {
   getDownloadURL,
   getStorage,
   uploadBytesResumable
-  // UploadTask
 } from "firebase/storage";
 
 import {FirebaseApp} from "firebase/app";
@@ -35,9 +34,13 @@ const styles = {
   }
 };
 
-interface PlainProgressIndicatorProps {
-  value: number;
-  fileName: string;
+// interface PlainProgressIndicatorProps {
+//   value: number;
+//   fileName: string;
+// }
+
+interface FileUploadState {
+  [key: string]: number;
 }
 
 const PlainProgressIndicator = ({value, fileName}: any) => {
@@ -71,24 +74,24 @@ const PlainButton = ({children, ...props}: PlainButtonProps) => {
 
 // type MyFunctionType = (name: string) => number;
 
-interface PassedPropProgressComponentTypeSignature {
-  value: number;
-}
+// interface PassedPropProgressComponentTypeSignature {
+//   value: number;
+// }
 // type PassedPropProgressComponentType = (
 //   props: PassedPropProgressComponentTypeSignature
 // ) => React.ElementType;
 
-type PassedPropProgressComponentType = (
-  props: PassedPropProgressComponentTypeSignature
-) => JSX.Element;
+// type PassedPropProgressComponentType = (
+//   props: PassedPropProgressComponentTypeSignature
+// ) => JSX.Element;
 
-interface PassedPropProgressIndicatorProps extends PlainProgressIndicatorProps {
-  componentWrapperStyles?: object;
-  // component?: PassedPropProgressComponentType;
-  component: new () => React.Component<PassedPropProgressComponentTypeSignature>;
-  // component?: React.ComponentType;
-  wrapperFunc?: PassedPropProgressComponentType;
-}
+// interface PassedPropProgressIndicatorProps extends PlainProgressIndicatorProps {
+//   componentWrapperStyles?: object;
+//   // component?: PassedPropProgressComponentType;
+//   component: new () => React.Component<PassedPropProgressComponentTypeSignature>;
+//   // component?: React.ComponentType;
+//   wrapperFunc?: PassedPropProgressComponentType;
+// }
 
 const PassedPropProgressIndicator = ({
   component: Component,
@@ -179,7 +182,11 @@ const FirebaseUploadImage = ({
 
   const [filesToStore, setFilesToStore] = useState<FileWithPreview[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
-  const [uploadState, setUploadState] = useState<any>({});
+  const [uploadState, setUploadState] = useState<FileUploadState>({});
+  console.log(
+    "TCL ~ file: FirebaseUploader.tsx ~ line 183 ~ uploadState",
+    uploadState
+  );
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   const UploadButtonIcon = uploadButtonIcon;
   const RemoveButtonIcon = removeButtonIcon;
@@ -233,7 +240,7 @@ const FirebaseUploadImage = ({
   };
 
   const handleProgress = (percent: number, fileName: string) => {
-    setUploadState((prevState:any) => {
+    setUploadState((prevState: any) => {
       return {
         ...prevState,
         [fileName]: percent
