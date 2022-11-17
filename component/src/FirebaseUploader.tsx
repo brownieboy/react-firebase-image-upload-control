@@ -1,25 +1,16 @@
 /* eslint-disable indent */
 import React, {useState} from "react";
-// import {FileRejection} from "react-dropzone";
-
 import {
   ref as fbRef,
   getDownloadURL,
   getStorage,
   uploadBytesResumable
 } from "firebase/storage";
-
 import {FirebaseApp} from "firebase/app";
-// import { FileWithPreview } from "react-dropzone"
-// import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-
-// import FileUploader from "./react-firebase-file-uploader";
 import _uniqBy from "lodash/fp/uniqBy";
-// import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 // @ts-ignore
 import ImageDrop, {FileWithPreview} from "./ImageDrop";
-// import DropZone from "./DropZone";
 
 const styles = {
   imagePreview: {
@@ -33,11 +24,6 @@ const styles = {
     }
   }
 };
-
-// interface PlainProgressIndicatorProps {
-//   value: number;
-//   fileName: string;
-// }
 
 interface FileUploadState {
   [key: string]: number;
@@ -72,43 +58,13 @@ const PlainButton = ({children, ...props}: PlainButtonProps) => {
   return <button {...props}>{children}</button>;
 };
 
-// type MyFunctionType = (name: string) => number;
-
-// interface PassedPropProgressComponentTypeSignature {
-//   value: number;
-// }
-// type PassedPropProgressComponentType = (
-//   props: PassedPropProgressComponentTypeSignature
-// ) => React.ElementType;
-
-// type PassedPropProgressComponentType = (
-//   props: PassedPropProgressComponentTypeSignature
-// ) => JSX.Element;
-
-// interface PassedPropProgressIndicatorProps extends PlainProgressIndicatorProps {
-//   componentWrapperStyles?: object;
-//   // component?: PassedPropProgressComponentType;
-//   component: new () => React.Component<PassedPropProgressComponentTypeSignature>;
-//   // component?: React.ComponentType;
-//   wrapperFunc?: PassedPropProgressComponentType;
-// }
-
 const PassedPropProgressIndicator = ({
   component: Component,
   value,
   componentWrapperStyles,
   fileName
 }: any) =>
-  // wrapperFunc
-  // PassedPropProgressIndicatorProps
-
   {
-    // const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
-    // console.log(
-    //   "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
-    //   {wrapperFunc, wrapperFuncReturn}
-    // );
-
     if (componentWrapperStyles) {
       return (
         <div
@@ -189,27 +145,14 @@ const FirebaseUploadImage = ({
     : PlainProgressIndicator;
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
-  // const CheckboxControl = PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
 
   const storage = getStorage(firebaseApp);
 
-  // const handleImageChange = (...props) => {
-  //   console.log(
-  //     "TCL ~ file: FirebaseUploader.tsx ~ line 194 ~ handleImageChange ~ props",
-  //     props
-  //   );
-  // };
-
-  // const handleImageChange = <T extends File>(
-  //   acceptedFilesArray: T[]
   const handleImageChange = (
     acceptedFilesArray: FileWithPreview[]
-    // prevFileArray: FileRejection[]
   ) => {
     if (multiple) {
-      // const allFilesArray = [...currentFileArray];
-
       const uniqueFilesArray = _uniqBy(
         e => e.name,
         [...filesToStore, ...acceptedFilesArray]
@@ -247,7 +190,6 @@ const FirebaseUploadImage = ({
       uploadStartCallback(filesToStore);
     }
     setUploadButtonClicked(true);
-    // const file = filesToStore[0];
 
     filesToStore.forEach(file => {
       const storageRef = fbRef(storage, `${storageFolder}/${file.name}`);
@@ -274,7 +216,6 @@ const FirebaseUploadImage = ({
   };
 
   const handleUploadSuccess = async (fileName: string, downloadUrl: string) => {
-    // const fileName = task._blob?.data_?.name;
     setFilesToStore(prevState => {
       const currentFileIndex = prevState.findIndex(
         member => member.name === fileName
@@ -332,10 +273,8 @@ const FirebaseUploadImage = ({
   return (
     <>
       <ImageDrop
-        // accept="image/*"
-        // options={{ onDrop: handleImageChange, multiple }}
         onDrop={handleImageChange}
-        // multiple={multiple}
+        multiple={multiple}
       />
       <div
         style={{
