@@ -48,7 +48,7 @@ const App = () => {
       setCurrentUser(user?.email);
     });
     return () => {};
-  }, []);
+  }, [loginDetailsPolled]);
 
   return (
     <div className="App">
