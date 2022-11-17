@@ -97,9 +97,9 @@ const PassedPropProgressIndicator = ({
   component: Component,
   value,
   componentWrapperStyles,
-  fileName,
-  // wrapperFunc
-}: PassedPropProgressIndicatorProps) => {
+  fileName
+}: // wrapperFunc
+PassedPropProgressIndicatorProps) => {
   // const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
   // console.log(
   //   "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
@@ -145,9 +145,9 @@ export interface FirebaseUploadImageProps {
   };
   progressControl?: keyof JSX.IntrinsicElements;
   checkboxControl?: keyof JSX.IntrinsicElements;
-  buttonControl?: keyof JSX.IntrinsicElements;
-  uploadButtonIcon?: keyof JSX.IntrinsicElements;
-  removeButtonIcon?: keyof JSX.IntrinsicElements;
+  buttonControl?: any;  // "any" because passed as props
+  uploadButtonIcon?: any;
+  removeButtonIcon?: any;
   uploadStartCallback?: Function;
   uploadCompleteCallback?: Function;
 }
@@ -188,6 +188,7 @@ const FirebaseUploadImage = ({
     : PlainProgressIndicator;
 
   const CheckboxControl = checkboxControl || PlainCheckbox;
+  // const CheckboxControl = PlainCheckbox;
   const ButtonControl = buttonControl || PlainButton;
 
   const storage = getStorage(firebaseApp);
@@ -298,7 +299,9 @@ const FirebaseUploadImage = ({
     });
   };
 
-  const handleFileRemovalCheck = (event: ChangeEvent<HTMLInputElement>) => {
+  // event prop defined as any because it might be an @mui checkbox or any other
+  // kind of checkbox, not just an HTML one.
+  const handleFileRemovalCheck = (event: any) => {
     if (event.target.checked) {
       setFilesToRemove([...filesToRemove, event?.target?.value]);
     } else {
