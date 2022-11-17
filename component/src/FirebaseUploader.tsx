@@ -40,6 +40,21 @@ interface PlainProgressIndicatorProps {
   fileName: string;
 }
 
+// interface FileWithPreview extends File {
+//   preview: string;
+// }
+
+export interface FileWithPreview extends File {
+  preview?: string;
+}
+
+// type FileWithPreview<T extends File> = {
+//   preview: string;
+//   acceptedFiles: T[],
+//   fileRejections?: any[],
+//   event?: any
+// };
+
 const PlainProgressIndicator = ({
   value,
   fileName
@@ -177,8 +192,7 @@ const FirebaseUploadImage = ({
   // Example: type of useState is an array of string
   // const [items , setItems] = useState<string[]>([]);
 
-  const [filesToStore, setFilesToStore] = useState<File[]>([]);
-  console.log("TCL ~ file: FirebaseUploader.tsx ~ line 181 ~ filesToStore", filesToStore);
+  const [filesToStore, setFilesToStore] = useState<FileWithPreview[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
   const [uploadState, setUploadState] = useState({});
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
@@ -200,8 +214,10 @@ const FirebaseUploadImage = ({
   //   );
   // };
 
+  // const handleImageChange = <T extends File>(
+  //   acceptedFilesArray: T[]
   const handleImageChange = (
-    acceptedFilesArray: File[]
+    acceptedFilesArray: FileWithPreview[]
     // prevFileArray: FileRejection[]
   ) => {
     if (multiple) {
