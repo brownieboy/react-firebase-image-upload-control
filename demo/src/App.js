@@ -32,7 +32,7 @@ const loginProviders = {
 };
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState();
   const [userPolled, setUserPolled] = useState(false);
 
   const imageUploaderSharedProps = {
@@ -43,11 +43,7 @@ const App = () => {
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       setUserPolled(true);
-      if (user?.email) {
-        setCurrentUser(user.email);
-      } else {
-        setCurrentUser(null);
-      }
+      setCurrentUser(user?.email);
     });
     return () => {};
   }, []);
