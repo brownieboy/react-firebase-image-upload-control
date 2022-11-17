@@ -33,7 +33,7 @@ const loginProviders = {
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState();
-  const [userPolled, setUserPolled] = useState(false);
+  const [loginDetailsPolled, setLoginDetailsPolled] = useState(false);
 
   const imageUploaderSharedProps = {
     firebaseApp,
@@ -42,7 +42,9 @@ const App = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
-      setUserPolled(true);
+      if (!loginDetailsPolled) {
+        setLoginDetailsPolled(true);
+      }
       setCurrentUser(user?.email);
     });
     return () => {};
@@ -51,7 +53,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>React Firebase Image Uploader Test</h1>
-      {userPolled ? (
+      {loginDetailsPolled ? (
         <Login {...loginProviders} auth={auth} user={currentUser} />
       ) : (
         "Checking login details..."
