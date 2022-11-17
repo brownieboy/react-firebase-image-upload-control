@@ -177,16 +177,10 @@ const FirebaseUploadImage = ({
   uploadStartCallback,
   uploadCompleteCallback
 }: FirebaseUploadImageProps) => {
-  // Example: type of useState is an array of string
-  // const [items , setItems] = useState<string[]>([]);
 
   const [filesToStore, setFilesToStore] = useState<FileWithPreview[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
   const [uploadState, setUploadState] = useState<FileUploadState>({});
-  console.log(
-    "TCL ~ file: FirebaseUploader.tsx ~ line 183 ~ uploadState",
-    uploadState
-  );
   const [uploadButtonClicked, setUploadButtonClicked] = useState(false);
   const UploadButtonIcon = uploadButtonIcon;
   const RemoveButtonIcon = removeButtonIcon;
