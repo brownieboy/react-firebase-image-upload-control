@@ -19,7 +19,7 @@ import _uniqBy from "lodash/fp/uniqBy";
 // import _pickBy from "lodash/fp/pickBy";
 import prettyBytes from "pretty-bytes";
 // @ts-ignore
-import ImageDrop from "./ImageDrop";
+import ImageDrop, {FileWithPreview} from "./ImageDrop";
 // import DropZone from "./DropZone";
 
 const styles = {
@@ -39,21 +39,6 @@ interface PlainProgressIndicatorProps {
   value: number;
   fileName: string;
 }
-
-// interface FileWithPreview extends File {
-//   preview: string;
-// }
-
-export interface FileWithPreview extends File {
-  preview?: string;
-}
-
-// type FileWithPreview<T extends File> = {
-//   preview: string;
-//   acceptedFiles: T[],
-//   fileRejections?: any[],
-//   event?: any
-// };
 
 const PlainProgressIndicator = ({
   value,
@@ -113,13 +98,13 @@ const PassedPropProgressIndicator = ({
   value,
   componentWrapperStyles,
   fileName,
-  wrapperFunc
+  // wrapperFunc
 }: PassedPropProgressIndicatorProps) => {
-  const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
-  console.log(
-    "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
-    {wrapperFunc, wrapperFuncReturn}
-  );
+  // const wrapperFuncReturn = wrapperFunc ? wrapperFunc({value: 10}) : null;
+  // console.log(
+  //   "TCL ~ file: FirebaseUploader.tsx ~ line 89 ~ wrapperFunc, wrapperFuncReturn",
+  //   {wrapperFunc, wrapperFuncReturn}
+  // );
 
   if (componentWrapperStyles) {
     return (
@@ -373,7 +358,7 @@ const FirebaseUploadImage = ({
                 <div style={imgPreviewTitleStyles}>
                   <label
                     htmlFor={file.name}
-                    style={options.styles.imgPreviewLabel}>
+                    style={options?.styles?.imgPreviewLabel}>
                     {`${file.name} (${prettyBytes(file.size)})`}
                   </label>
                   <CheckboxControl

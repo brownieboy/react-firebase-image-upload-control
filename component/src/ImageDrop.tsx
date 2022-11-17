@@ -1,6 +1,10 @@
 import React, {useMemo} from "react";
 import {useDropzone, DropzoneOptions} from "react-dropzone";
 
+export interface FileWithPreview extends File {
+  preview?: string;
+}
+
 const baseStyle = {
   flex: 1,
   display: "flex",
