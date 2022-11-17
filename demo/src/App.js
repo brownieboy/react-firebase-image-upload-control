@@ -42,10 +42,9 @@ const App = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
-      console.log("TCL ~ file: App.js ~ line 45 ~ user", user);
       setUserPolled(true);
-      if (auth?.currentUser?.email) {
-        setCurrentUser(auth.currentUser.email);
+      if (user?.email) {
+        setCurrentUser(user.email);
       } else {
         setCurrentUser(null);
       }
