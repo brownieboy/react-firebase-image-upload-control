@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Div renders correctly 1`] = `
+exports[`<ImageDrop /> should match the snapshot correctly 1`] = `
 <div>
   Facebook
 </div>

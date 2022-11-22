@@ -1,11 +1,21 @@
+/* eslint-env node */
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
+    jest: true
   },
   extends: ["plugin:react/recommended"],
-  overrides: [],
-  // parser: "@babel/eslint-parser",
+  overrides: [
+    {
+      files: ["*.ts", "*.mts", "*.cts", "*.tsx"],
+      rules: {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "warn"
+      }
+    }
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
@@ -15,11 +25,9 @@ module.exports = {
   rules: {
     indent: ["warn", 2],
     "linebreak-style": ["warn", "unix"],
-    "no-unused-vars": "off",
     "react/prop-types": 0,
     quotes: ["error", "double"],
-    semi: ["error", "always"],
-    "@typescript-eslint/no-unused-vars": "warn"
+    semi: ["error", "always"]
   },
   settings: {
     react: {
