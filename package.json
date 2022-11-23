@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "start": "lerna run start",
-    "test": "lerna run test"
+    "test": "lerna run test --scope=component"
   },
   "devDependencies": {
     "lerna": "^6.0.3"
