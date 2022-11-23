@@ -5,7 +5,7 @@ const TARGET = process.env.npm_lifecycle_event;
 const DEVMODE = TARGET === "start";
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: "./component/src/index.tsx",
   mode: DEVMODE ? "development" : "production",
   devtool: DEVMODE ? "eval-source-map" : "cheap-source-map",
   target: "node",
