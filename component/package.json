@@ -64,6 +64,7 @@
   },
   "scripts": {
     "build": "webpack --mode production && cp ./src/*.d.ts ../dist",
+    "build:dev": "webpack --mode development && cp ./src/*.d.ts ../dist",
     "start": "watch 'webpack' ./src",
     "test": "jest"
   },

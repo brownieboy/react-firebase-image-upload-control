@@ -22,10 +22,9 @@ module.exports = {
     node: true // in order to ignore built-in modules like path, fs, etc.
   },
   output: {
-    path:
-      TARGET === "start"
-        ? path.resolve(__dirname, "..", "demo", "src", ".package")
-        : path.resolve(__dirname, "../dist"),
+    path: ["start", "build:dev"].includes(TARGET)
+      ? path.resolve(__dirname, "..", "demo", "src", ".package")
+      : path.resolve(__dirname, "../dist"),
     filename: "index.js",
     library: "rfiu",
     libraryTarget: "umd"
