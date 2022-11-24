@@ -34,7 +34,7 @@ You will need to have logged into your Firebase project in your app before attem
 
 ## Props
 
-- `firebaseApp` (required) - A reference to your Firebase app that was initialsed with a call such as `firebase.initializeApp(firebaseConfigObj)`
+- `firebaseApp` (required) - A reference to your Firebase app that was initialised with a call such as `firebase.initializeApp(firebaseConfigObj)`
 - `storageFolder` (required) - The target folder in Firebase storage.
 - `disabled` (optional) - A boolean to display the control in a disabled state.  Defaults to `false`
 - `multiple` - A boolean to specify the control will accept multiple images.  Defaults to false, i.e. the control handles only one image.
