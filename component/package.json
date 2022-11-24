@@ -53,6 +53,7 @@
     "ts-loader": "^9.4.1",
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.21",
+    "typedoc-plugin-markdown": "^3.13.6",
     "typescript": "^4.8.4",
     "watch": "^1.0.2",
     "webpack": "^5.74.0",
@@ -66,7 +67,7 @@
   "scripts": {
     "build": "webpack --mode production && cp ./src/*.d.ts ../dist",
     "build:dev": "webpack --mode development && cp ./src/*.d.ts ../dist",
-    "docs": "typedoc ./src/index.tsx --name react-firebase-image-upload-control",
+    "docs": "typedoc ./src/index.tsx --name react-firebase-image-upload-control --plugin typedoc-plugin-markdown ",
     "start": "watch 'webpack' ./src",
     "test": "jest"
   },
