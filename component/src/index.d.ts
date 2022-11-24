@@ -1,4 +1,4 @@
-import { FirebaseUploadImageProps } from "./FirebaseUploader";
+import { FirebaseUploadImageProps, ExtendedFile } from "./FirebaseUploader";
 declare const App: (props: FirebaseUploadImageProps) => JSX.Element;
 export default App;
-export { FirebaseUploadImageProps };
+export { ExtendedFile, FirebaseUploadImageProps };

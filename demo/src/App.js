@@ -94,7 +94,7 @@ const App = () => {
                 }}
                 uploadCompleteCallback={statusObj => {
                   console.log(
-                    "uploadCompleteCallback triggered, and we're done!, statusObj",
+                    "uploadCompleteCallback triggered, statusObj ",
                     statusObj
                   );
                 }}

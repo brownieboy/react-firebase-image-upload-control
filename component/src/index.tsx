@@ -1,9 +1,9 @@
 import React from "react";
-import FirebaseUploader, {FirebaseUploadImageProps} from "./FirebaseUploader";
+import FirebaseUploader, {FirebaseUploadImageProps, ExtendedFile} from "./FirebaseUploader";
 
 const App = (props: FirebaseUploadImageProps) => (
   <FirebaseUploader {...props} />
 );
 
 export default App;
-export {FirebaseUploadImageProps};
+export {ExtendedFile, FirebaseUploadImageProps};

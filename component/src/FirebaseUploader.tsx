@@ -29,6 +29,11 @@ interface FileUploadState {
   [key: string]: number;
 }
 
+export interface ExtendedFile extends File {
+  /** The URL to the file that you just uploaded */
+  downloadUrl: string;
+}
+
 const PlainProgressIndicator = ({value, fileName}: any) => {
   return (
     <div
@@ -154,16 +159,13 @@ export interface FirebaseUploadImageProps {
    * @default
    * If prop not supplied then the button will have no icon */
   removeButtonIcon?: any;
-  /** Function that is called when the Upload button on the control is clicked.
-   *
-   * @returns
-   * The function will receive one parameter, which is an array of all the files about to be uploaded.  This is an array of type `File`.  */
-  uploadStartCallback?: Function;
+  /** Function that is called when the Upload button on the control is clicked.  */
+  uploadStartCallback?(fileToStore: Array<File>): any;
   /** Function that is called when all uploads have completed.
    *
    * @returns
    * The function receives one parameter, which is an object of info on the files that were uploaded.  The object has a `files` property, which is an array of all the files uploaded.  Each member of the `files` array is an object of `File` info, plus a `downloadUrl` property, which you can use to add the uploaded file to an HTML page as an `<img \>` tag. */
-  uploadCompleteCallback?: Function;
+  uploadCompleteCallback?(statusObj: {files: Array<ExtendedFile>}): any;
 }
 
 const FirebaseUploadImage = ({
