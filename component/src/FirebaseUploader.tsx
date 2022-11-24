@@ -94,7 +94,13 @@ export interface FirebaseUploadImageProps {
   firebaseApp: FirebaseApp;
   /** The target folder in Firebase storage. */
   storageFolder: string;
+  /** Set to `true` to display the control in a disabled state.
+   * @defaultValue `false`
+   */
   disabled?: boolean;
+    /** Set to `true` to specify the control will accept multiple images.
+   * @defaultValue `false`, the control accepts only one image
+   */
   multiple?: boolean;
   options?: {
     styles?: {
