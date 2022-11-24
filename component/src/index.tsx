@@ -6,3 +6,4 @@ const App = (props: FirebaseUploadImageProps) => (
 );
 
 export default App;
+export {FirebaseUploadImageProps};

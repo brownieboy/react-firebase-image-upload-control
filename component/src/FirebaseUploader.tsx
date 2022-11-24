@@ -90,7 +90,9 @@ const PassedPropProgressIndicator = ({
   };
 
 export interface FirebaseUploadImageProps {
+  /** A reference to your Firebase app that was initialised with a call such as `firebase.initializeApp(firebaseConfigObj)` */
   firebaseApp: FirebaseApp;
+  /** The target folder in Firebase storage. */
   storageFolder: string;
   disabled?: boolean;
   multiple?: boolean;
