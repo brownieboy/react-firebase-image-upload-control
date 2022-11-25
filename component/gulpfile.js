@@ -6,3 +6,8 @@ task("copy-readme-src", function () {
     .pipe(rename("./README.md"))
     .pipe(dest("."));
 });
+
+task("copy-docs-src", function () {
+  return src("./docs/**/*")
+    .pipe(dest(".."));
+});
