@@ -1,13 +1,13 @@
-react-firebase-image-upload-control / [Exports](modules.md)
-
 # react-firebase-image-upload-control
 
 A image uploader for react that uploads images firebase storage.
 
 ![react-firebase-image-upload-control in action](react-firebase-image-uploader-demo.gif)
 
+
 ## Installation
 Run `yarn add react-firebase-image-upload-control` or `npm i react-firebase-image-upload-control --save-prod` to install the package in your app.
+
 
 ## Prerequisites
 You will need **react**, **react-dom** and **firebase** installed in your app.  They are listed as peer depenencies only for this package, so installing the package will _not_ automatically install those packages in your app.
@@ -29,9 +29,11 @@ You can copy your firebase-config.json file down from your Firebase project.  Se
 
 You will need to have logged into your Firebase project in your app before attempting to use the control.   I use [react-with-firebase-auth](https://github.com/armand1m/react-with-firebase-auth) for that purpose in my example app.
 
+
 ## Props
 
 Link here 2
+
 
 ## Example
 
@@ -123,11 +125,15 @@ export default withFirebaseAuth({
 })(App);
 ```
 
+
+
 ## Contributing
 You're a Dev and you want implement a fix or add a feature?  Read [the instructions on how to contribute to the this package](CONTRIBUTING.md).
 
+
 ## Changes
 Read the [change log](CHANGELOG.md).
+
 
 ## Acknowledges
 This package is really just a stiching together of two other projects, [react-firebase-file-uploader](https://github.com/fris-fruitig/react-firebase-file-uploader) and [react-dropzone](https://github.com/react-dropzone/react-dropzone).
