@@ -67,7 +67,7 @@
   },
   "scripts": {
     "build": "webpack --mode production && cp ./src/*.d.ts ../dist",
-    "docs": "../node_modules/rimraf/bin.js docs && typedoc ./src/index.tsx --name react-firebase-image-upload-control",
+    "docs": "cp README-source.md README.md && ../node_modules/rimraf/bin.js docs && typedoc ./src/index.tsx --name react-firebase-image-upload-control --plugin typedoc-plugin-markdown",
     "start": "watch 'webpack' ./src",
     "test": "jest"
   },

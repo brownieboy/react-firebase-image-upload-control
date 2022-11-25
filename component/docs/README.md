@@ -7,7 +7,7 @@ A image uploader for react that uploads images firebase storage.
 ![react-firebase-image-upload-control in action](react-firebase-image-uploader-demo.gif)
 
 ## Installation
-Run `yarn add react-firebase-image-upload-control` or `npm i react-firebase-image-upload-control --save-prod` to install the package in your app. 
+Run `yarn add react-firebase-image-upload-control` or `npm i react-firebase-image-upload-control --save-prod` to install the package in your app.
 
 ## Prerequisites
 You will need **react**, **react-dom** and **firebase** installed in your app.  They are listed as peer depenencies only for this package, so installing the package will _not_ automatically install those packages in your app.
@@ -31,21 +31,7 @@ You will need to have logged into your Firebase project in your app before attem
 
 ## Props
 
-- `firebaseApp` (required) - A reference to your Firebase app that was initialsed with a call such as `firebase.initializeApp(firebaseConfigObj)`
-- `storageFolder` (required) - The target folder in Firebase storage.
-- `disabled` (optional) - A boolean to display the control in a disabled state.  Defaults to `false`
-- `multiple` - A boolean to specify the control will accept multiple images.  Defaults to false, i.e. the control handles only one image.
-- `progressControl` (optional) - A React component that you can use to show upload progress as percentage.   The control must take a `value` prop, which is a number between 0 and 100.   I use react-circular-progressbar for this in my example code.  If not specified, the upload percentage will displayed as plain text.
-- `checkboxControl` (optional) - A React control to display checkboxes next to each image preview, e.g. `@material-ui/core/Checkbox`.  If not supplied, plain HTML checkboxes are used, i.e `<input type="checkbox">`.
-- `buttonControl` (optional) - A React control to display buttons for **Upload all** and **Remove checked files** buttons, e.g `@material-ui/core/Button`.  If not supplied, plain HTML buttons are used.
-- `uploadButtonIcon` (optional) - If `buttonControl` is supplied then this React icon component will be display on the **Upload all** button.  E.g. `@material-ui/icons/CloudUpload`.
-- `removeButtonIcon` (optional) - If `buttonControl` is supplied then this React icon component will be display on the **Remove checked files** button.  E.g. `@material-ui/icons/Delete`.
-- `uploadStartCallback` (optional) - Function that is called when the Upload button on the control is clicked.  This passes back one parameter, which is an array of all the files about to be uploaded.
-- `uploadCompleteCallback` (optional) - Function that is called when all uploads have completed.  This passes back one parameter, which is an object of info on the files that were uploaded.  The object has a `files` property, which is an array of all the files uploaded.  Each member of the `files` array is an object of File info, plus a `downloadUrl` property, which you can use to add the uploaded file to an HTML page as an `<img \>` tag.
-- `options` (optional) - Use to pass additional styles to the control via the `styles` property.   The `styles` property had thee sub properties, which are:
-  - `imgPreview`: styles passed directly to the preview images
-  - `impPreviewLabel`: styles passed to the labels of the preview images
-  - `progressControlWrapper`: if you're passing a `progressControl` prop, then that prop will be automatically wrapped inside a `<div>` tag by the control.  The `progressControlWrapper` styles will be passed to that wrapper.
+Link here 2
 
 ## Example
 
