@@ -31,4 +31,4 @@
 
 #### Defined in
 
-[component/src/index.tsx:4](https://github.com/brownieboy/react-firebase-image-upload-control/blob/ca3025a/component/src/index.tsx#L4)
+[component/src/index.tsx:4](https://github.com/brownieboy/react-firebase-image-upload-control/blob/125e807/component/src/index.tsx#L4)
