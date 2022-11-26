@@ -1,5 +1,3 @@
-[react-firebase-image-upload-control](../README.md) / [Exports](../modules.md) / FirebaseUploadImageProps
-
 # Interface: FirebaseUploadImageProps
 
 ## Table of contents
@@ -40,7 +38,7 @@ If not supplied, plain HTML buttons are used.
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:145](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L145)
+[component/src/FirebaseUploader.tsx:145](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L145)
 
 ___
 
@@ -60,7 +58,7 @@ If not supplied, plain HTML checkboxes are used, i.e `<input type="checkbox">`.
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:137](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L137)
+[component/src/FirebaseUploader.tsx:137](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L137)
 
 ___
 
@@ -76,7 +74,7 @@ Set to `true` to display the control in a disabled state.
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:104](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L104)
+[component/src/FirebaseUploader.tsx:104](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L104)
 
 ___
 
@@ -88,7 +86,7 @@ A reference to your Firebase app that was initialised with a call such as `fireb
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:98](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L98)
+[component/src/FirebaseUploader.tsx:98](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L98)
 
 ___
 
@@ -104,7 +102,7 @@ Set to `true` to specify the control will accept multiple images.
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:108](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L108)
+[component/src/FirebaseUploader.tsx:108](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L108)
 
 ___
 
@@ -126,7 +124,7 @@ Additional styles passed to the control via the `styles` property
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:110](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L110)
+[component/src/FirebaseUploader.tsx:110](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L110)
 
 ___
 
@@ -143,7 +141,7 @@ Note: you're passing the function to create the component, not a component that'
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:128](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L128)
+[component/src/FirebaseUploader.tsx:128](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L128)
 
 ___
 
@@ -163,7 +161,7 @@ If prop not supplied then the button will have no icon
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:161](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L161)
+[component/src/FirebaseUploader.tsx:161](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L161)
 
 ___
 
@@ -175,7 +173,7 @@ The target folder in Firebase storage.
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:100](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L100)
+[component/src/FirebaseUploader.tsx:100](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L100)
 
 ___
 
@@ -195,7 +193,7 @@ If prop not supplied then the button will have no icon
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:153](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L153)
+[component/src/FirebaseUploader.tsx:153](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L153)
 
 ## Methods
 
@@ -220,7 +218,7 @@ The function receives one parameter, which is an object of info on the files tha
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:168](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L168)
+[component/src/FirebaseUploader.tsx:168](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L168)
 
 ___
 
@@ -242,4 +240,4 @@ Function that is called when the Upload button on the control is clicked.
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:163](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L163)
+[component/src/FirebaseUploader.tsx:163](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L163)

@@ -1,5 +1,3 @@
-[react-firebase-image-upload-control](../README.md) / [Exports](../modules.md) / ExtendedFile
-
 # Interface: ExtendedFile
 
 ## Hierarchy
@@ -62,7 +60,7 @@ The URL to the file that you just uploaded
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:34](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/FirebaseUploader.tsx#L34)
+[component/src/FirebaseUploader.tsx:34](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/FirebaseUploader.tsx#L34)
 
 ___
 

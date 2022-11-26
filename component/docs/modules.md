@@ -1,5 +1,3 @@
-[react-firebase-image-upload-control](README.md) / Exports
-
 # react-firebase-image-upload-control
 
 ## Table of contents
@@ -31,4 +29,4 @@
 
 #### Defined in
 
-[component/src/index.tsx:4](https://github.com/brownieboy/react-firebase-image-upload-control/blob/00e009a/component/src/index.tsx#L4)
+[component/src/index.tsx:4](https://github.com/brownieboy/react-firebase-image-upload-control/blob/0a3cb42/component/src/index.tsx#L4)
