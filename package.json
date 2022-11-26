@@ -1,7 +1,7 @@
 {
   "name": "react-firebase-image-upload-control",
   "version": "2.0.0",
-  "main": "dist/index.js",
+  "main": "demo/src/.package/index.js",
   "description": "An image uploader control for Firebase Storage",
   "repository": {
     "type": "git",

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { DropzoneOptions } from "react-dropzone";
 export interface FileWithPreview extends File {
     preview?: string;

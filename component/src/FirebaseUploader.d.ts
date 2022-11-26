@@ -1,11 +1,10 @@
-import { FirebaseApp } from "firebase/app";
 export interface ExtendedFile extends File {
     /** The URL to the file that you just uploaded */
     downloadUrl: string;
 }
 export interface FirebaseUploadImageProps {
     /** A reference to your Firebase app that was initialised with a call such as `firebase.initializeApp(firebaseConfigObj)` */
-    firebaseApp: FirebaseApp;
+    firebaseApp: any;
     /** The target folder in Firebase storage. */
     storageFolder: string;
     /** Set to `true` to display the control in a disabled state.
@@ -79,5 +78,5 @@ export interface FirebaseUploadImageProps {
         files: Array<ExtendedFile>;
     }): any;
 }
-declare const FirebaseUploadImage: ({ firebaseApp, storageFolder, disabled, multiple, options, progressControl, checkboxControl, buttonControl, uploadButtonIcon, removeButtonIcon, uploadStartCallback, uploadCompleteCallback }: FirebaseUploadImageProps) => JSX.Element;
+declare const FirebaseUploadImage: () => JSX.Element;
 export default FirebaseUploadImage;
