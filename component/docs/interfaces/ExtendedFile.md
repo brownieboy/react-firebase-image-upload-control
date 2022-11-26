@@ -62,7 +62,7 @@ The URL to the file that you just uploaded
 
 #### Defined in
 
-[component/src/FirebaseUploader.tsx:34](https://github.com/brownieboy/react-firebase-image-upload-control/blob/2daadd2/component/src/FirebaseUploader.tsx#L34)
+[component/src/FirebaseUploader.tsx:34](https://github.com/brownieboy/react-firebase-image-upload-control/blob/611650b/component/src/FirebaseUploader.tsx#L34)
 
 ___
 

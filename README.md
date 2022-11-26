@@ -1,5 +1,3 @@
-react-firebase-image-upload-control / [Exports](modules.md)
-
 # react-firebase-image-upload-control
 
 A image uploader for react that uploads images firebase storage.

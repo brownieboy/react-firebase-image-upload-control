@@ -69,7 +69,7 @@
   },
   "scripts": {
     "build": "webpack --mode production && cp ./src/*.d.ts ../dist",
-    "docs": "gulp copy-readme-src && ../node_modules/rimraf/bin.js docs && typedoc ./src/index.tsx --name react-firebase-image-upload-control --plugin typedoc-plugin-markdown && gulp copy-docs-src",
+    "docs": "../node_modules/rimraf/bin.js docs && typedoc ./src/index.tsx --name react-firebase-image-upload-control --plugin typedoc-plugin-markdown && gulp copy-docs-src",
     "start": "watch 'webpack' ./src",
     "test": "jest"
   },
