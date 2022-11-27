@@ -1,0 +1,31 @@
+# https://docs.npmjs.com/misc/developers#keeping-files-out-of-your-package
+
+/demo
+/interfaces
+/component
+*.md
+react-firebase-image-uploader-demo.gif
+*.tgz
+lerna.json
+
+
+#tests
+test
+coverage
+
+#build tools
+.travis.yml
+.jenkins.yml
+.codeclimate.yml
+
+#linters
+.jscsrc
+.jshintrc
+.eslintrc*
+
+#editor settings
+.idea
+.editorconfig
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
