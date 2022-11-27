@@ -34,16 +34,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
--  `uploadCompleteCallback` function that is called when all uploads have completed.  Now passes back an object of info from the control.
+- `uploadCompleteCallback` function that is called when all uploads have completed. Now passes back an object of info from the control.
 
 ## [1.2.1] - 2020-02-08
 
 ### Added
 
--  Restored README.md for NPJS.  (No actual code changes.)
+- Restored README.md for NPJS. (No actual code changes.)
 
 ## [1.3.0] - 2020-02-16
 
 ### Added
 
--  Added uploadStartCallback function
+- Added uploadStartCallback function
+
+## [2.0.0] - 2022-11-27
+
+### Added
+
+- Added Firebase 9 support. Should still work with earlier Firebase versions too, but not fully tested.
+- Rewritten in TypeScript
+- Rewritten demo in latest version of Create React App
+- Basic Jest snapshot unit tests
